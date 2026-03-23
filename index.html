@@ -163,6 +163,8 @@
     .full-width{width:100%}
 
     .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:16px;background:#fff;max-width:100%}
+    .desktop-order-table{display:block}
+    .mobile-order-items{display:none}
     table{width:100%;border-collapse:collapse;min-width:820px;background:#fff}
     th,td{padding:12px 14px;border-bottom:1px solid #edf4ef;text-align:left;vertical-align:top}
     th{background:var(--green-050);color:var(--green-900);font-size:14px;position:sticky;top:0;z-index:1}
@@ -200,9 +202,72 @@
     .placeholder{color:var(--muted);font-size:13px;text-align:center;line-height:1.5}
 
     .compare-note{margin-top:14px;padding:14px 16px;border-radius:14px;background:#f7fcf9;border:1px solid var(--border);color:var(--muted);line-height:1.55}
+    .mobile-reception-summary{display:none;margin-bottom:12px;background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:var(--shadow-soft)}
+    .mobile-summary-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .mobile-summary-kicker{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:var(--green-050);border:1px solid var(--border);font-size:12px;color:var(--green-900);font-weight:700;margin-bottom:8px}
+    .mobile-summary-head strong{display:block;color:var(--green-900);font-size:18px;line-height:1.3}
+    .mobile-summary-head small{display:block;color:var(--muted);line-height:1.45;margin-top:4px}
+    .mobile-summary-extra{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);color:var(--muted);font-size:13px;line-height:1.6}
+    .mobile-reception-summary.expanded .mobile-summary-extra{display:block}
+    .mobile-step-nav{display:none;gap:8px;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 12px}
+    .mobile-step-btn{border:none;border-radius:14px;padding:11px 10px;background:#fff;border:1px solid var(--border);color:var(--green-900);font-weight:700;font-size:13px;box-shadow:var(--shadow-soft);cursor:pointer}
+    .mobile-step-btn.active{background:var(--green-700);color:#fff;border-color:transparent}
+    .receiver-progress-float{display:none;margin:0 0 12px;padding:12px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-soft);position:sticky;top:10px;z-index:5}
+    .receiver-progress-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+    .receiver-progress-pill{padding:10px;border-radius:14px;background:#f7fcf9;border:1px solid var(--border);text-align:center}
+    .receiver-progress-pill b{display:block;color:var(--green-900);font-size:18px;line-height:1.1;margin-bottom:4px}
+    .receiver-progress-pill span{display:block;color:var(--muted);font-size:12px;line-height:1.2}
+    .mobile-confirm-box{border:1px solid var(--border);border-radius:16px;background:#fbfefc;padding:14px;margin-bottom:12px}
+    .mobile-confirm-box h3{margin:0 0 8px;color:var(--green-900)}
+    .confirm-summary-box{display:grid;gap:10px;margin-top:12px}
+    .confirm-line{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid #edf4ef}
+    .confirm-line span{color:var(--muted);font-size:13px}
+    .confirm-line strong{color:var(--green-900);text-align:right;line-height:1.35}
+    .mobile-product-search{margin-top:8px}
+    .order-mobile-card{border:1px solid var(--border);border-radius:18px;padding:14px;background:#fbfefc;display:grid;gap:12px;box-shadow:0 8px 20px rgba(18,77,47,.04)}
+    .order-mobile-card-header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+    .order-mobile-card-title{font-weight:700;color:var(--green-900);line-height:1.35}
+    .order-mobile-topline{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .order-mobile-status{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid var(--border)}
+    .order-mobile-status.ok{background:#e8f8ee;color:var(--green-800)}
+    .order-mobile-status.warn{background:#fff5df;color:var(--warning)}
+    .order-mobile-status.danger{background:#fdeeee;color:var(--danger)}
+    .order-mobile-status.neutral{background:#edf4ef;color:var(--muted)}
+    .order-mobile-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .order-mobile-actions{display:flex;justify-content:flex-end}
+    .order-mobile-diff{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;background:#f7fcf9;border:1px solid var(--border);font-size:12px;font-weight:700;color:var(--green-900)}
+    .order-mobile-diff.ok{background:#e8f8ee;color:var(--green-800);border-color:#cfead7}
+    .order-mobile-diff.warn{background:#fff5df;color:var(--warning);border-color:#f2ddb0}
+    .order-mobile-diff.danger{background:#fdeeee;color:var(--danger);border-color:#f5d1ce}
+    .order-mobile-diff.neutral{background:#edf4ef;color:var(--muted)}
+    .order-mobile-alert{padding:10px 12px;border-radius:14px;font-size:13px;font-weight:700;line-height:1.4}
+    .order-mobile-alert.ok{background:#e8f8ee;color:var(--green-800)}
+    .order-mobile-alert.warn{background:#fff5df;color:var(--warning)}
+    .order-mobile-alert.danger{background:#fdeeee;color:var(--danger)}
+    .order-mobile-alert.neutral{background:#edf4ef;color:var(--muted)}
+    .qty-quick-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .qty-quick-row .btn{padding:10px 8px}
+    .support-action-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
+    .mobile-reception-actions{display:none;position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--border);box-shadow:0 -10px 26px rgba(15,63,39,.12);grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;z-index:900}
+    .mobile-reception-actions .btn{min-height:46px;padding:10px 8px;font-size:13px}
     .empty-state{padding:26px;border:1px dashed var(--border);border-radius:18px;background:#fbfefc;color:var(--muted);text-align:center}
     .totals-inline{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px}
     .pill{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#f7fcf9;border:1px solid var(--border);color:var(--green-900);font-size:13px;font-weight:700}
+    .desktop-data-table{display:block}
+    .mobile-history-list,.mobile-expense-list,.mobile-money-list{display:none}
+    .mobile-record-card{border:1px solid var(--border);border-radius:18px;padding:14px;background:#fbfefc;display:grid;gap:12px;box-shadow:0 8px 20px rgba(18,77,47,.04)}
+    .mobile-record-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+    .mobile-record-head strong{display:block;color:var(--green-900);font-size:16px;line-height:1.35}
+    .mobile-record-sub{color:var(--muted);font-size:13px;line-height:1.5}
+    .mobile-record-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mobile-record-item{padding:10px 12px;border-radius:14px;background:#fff;border:1px solid #edf4ef;min-width:0}
+    .mobile-record-item span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+    .mobile-record-item strong{display:block;color:var(--green-900);font-size:14px;line-height:1.45;overflow-wrap:anywhere}
+    .mobile-record-item.full{grid-column:1 / -1}
+    .mobile-record-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .mobile-record-actions.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mobile-support-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .mobile-card-note{padding:10px 12px;border-radius:14px;background:#fff;border:1px solid #edf4ef;color:var(--muted);font-size:13px;line-height:1.5}
 
     .modal-backdrop{position:fixed;inset:0;background:rgba(12,28,18,.58);display:none;align-items:center;justify-content:center;padding:18px;z-index:1000}
     .modal-backdrop.active{display:flex}
@@ -243,8 +308,59 @@
     .login-selected{padding:14px 16px;border-radius:16px;background:#f7fcf9;border:1px solid #d9e8dd;color:#124d2f;font-weight:700}
     .login-error{min-height:20px;color:#c0392b;font-size:14px;font-weight:700}
     .login-helper{padding:14px 16px;border-radius:16px;border:1px dashed #d9e8dd;background:#fbfefc;color:#66756d;line-height:1.55;font-size:14px}
+    .login-role-select{display:none}
+    body[data-role="receiver"] #panel-recepcion .kpi-grid,
+    body[data-role="buyer"] .hero-cards,
+    body[data-role="receiver"] .hero-cards{display:none!important}
 
     body[data-role="buyer"] #panel-compras .purchase-card .stack .action-only-admin{display:none!important}
+
+
+    .admin-mobile-hub,.admin-mobile-filters,.admin-mobile-panel-head,.admin-mobile-finance,.admin-bottom-nav,.floating-batch-bar{display:none}
+    .admin-mobile-hub{margin:4px 0 16px}
+    .admin-mobile-summary{background:#fff;border:1px solid var(--border);border-radius:20px;padding:16px;box-shadow:var(--shadow-soft);display:grid;gap:14px}
+    .admin-mobile-summary-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .admin-mobile-summary-head strong{display:block;color:var(--green-900);font-size:18px}
+    .admin-mobile-summary-head small{display:block;color:var(--muted);line-height:1.5;margin-top:4px}
+    .admin-mobile-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .admin-mobile-stat{padding:12px;border-radius:16px;background:var(--green-050);border:1px solid var(--border)}
+    .admin-mobile-stat span{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+    .admin-mobile-stat strong{display:block;color:var(--green-900);font-size:20px;line-height:1.1}
+    .admin-mobile-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .admin-mobile-filters{margin:0 0 16px}
+    .admin-chip-row{display:flex;gap:8px;overflow:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .admin-chip-row::-webkit-scrollbar{display:none}
+    .admin-chip{border:none;border-radius:999px;padding:10px 12px;background:#fff;border:1px solid var(--border);color:var(--green-900);font-weight:700;white-space:nowrap;box-shadow:var(--shadow-soft);cursor:pointer}
+    .admin-chip.active{background:var(--green-700);color:#fff;border-color:transparent}
+    .admin-mobile-panel-head{margin:0 0 12px;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:var(--shadow-soft)}
+    .admin-mobile-panel-head strong{display:block;color:var(--green-900);font-size:16px}
+    .admin-mobile-panel-head small{display:block;color:var(--muted);line-height:1.45;margin-top:4px}
+    .admin-collapse-target.collapsed{display:none!important}
+    .list-first-mobile .card:last-child{order:-1}
+    .status-banner{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;font-size:12px;font-weight:700;width:max-content;border:1px solid var(--border)}
+    .status-banner.ok{background:#e8f8ee;color:var(--green-800)}
+    .status-banner.warn{background:#fff5df;color:var(--warning)}
+    .status-banner.danger{background:#fdeeee;color:var(--danger)}
+    .status-banner.neutral{background:#edf4ef;color:var(--muted)}
+    .admin-mobile-finance{margin:0 0 12px}
+    .admin-finance-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:var(--shadow-soft);display:grid;gap:10px}
+    .admin-finance-card strong{color:var(--green-900);font-size:18px}
+    .admin-finance-inline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .admin-finance-pill{padding:10px;border-radius:14px;background:var(--green-050);border:1px solid var(--border)}
+    .admin-finance-pill span{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}
+    .admin-finance-pill b{display:block;color:var(--green-900);font-size:15px;line-height:1.3}
+    .record-select{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+    .record-select input{width:18px;height:18px}
+    .floating-batch-bar{position:fixed;left:12px;right:12px;bottom:84px;z-index:940;background:#fff;border:1px solid var(--border);border-radius:18px;padding:12px;box-shadow:0 18px 34px rgba(15,63,39,.16)}
+    .floating-batch-bar .stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .floating-batch-bar strong{display:block;color:var(--green-900);margin-bottom:10px}
+    .admin-bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:930;background:#fff;border-top:1px solid var(--border);box-shadow:0 -10px 26px rgba(15,63,39,.12);padding:8px 10px calc(8px + env(safe-area-inset-bottom));grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+    .admin-bottom-btn{border:none;border-radius:14px;background:#f7fcf9;border:1px solid var(--border);padding:10px 8px;color:var(--green-900);font-weight:700;display:grid;gap:4px;place-items:center;cursor:pointer}
+    .admin-bottom-btn small{font-size:11px}
+    .admin-bottom-btn.active{background:var(--green-700);color:#fff;border-color:transparent}
+    .compact-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+    .compact-subtle{font-size:13px;line-height:1.45}
+    .quick-actions-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 
     @media (max-width:1200px){
       .layout,.order-grid,.accounting-grid,.hero{grid-template-columns:1fr}
@@ -255,12 +371,74 @@
       .kpi-grid,.kpi-grid.contable,.hero-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
     @media (max-width:720px){
-      .app{padding:14px}
-      .field-grid,.inline-upload,.detail-grid,.support-grid,.preview-strip,.field-grid-3,.login-features,.hero-cards,.kpi-grid,.kpi-grid.contable{grid-template-columns:1fr}
+      .app{padding:12px}
+      .login-shell{padding:14px}
+      .login-card{border-radius:24px}
+      .login-visual{display:none}
+      .login-panel{padding:22px}
+      .login-panel > div:first-child p,.login-role-grid,.login-selected,.login-helper{display:none}
+      .login-role-select{display:block}
+      .hero{padding:20px;border-radius:22px}
+      .field-grid,.inline-upload,.detail-grid,.support-grid,.preview-strip,.field-grid-3,.login-features,.hero-cards,.kpi-grid,.kpi-grid.contable,.order-mobile-fields,.receiver-progress-grid{grid-template-columns:1fr}
       .toolbar{flex-direction:column;align-items:stretch}
-      .toolbar-actions,.toolbar-search{width:100%}
+      .toolbar-actions,.toolbar-search,.role-box,.session-box{width:100%}
+      .toolbar-actions{justify-content:stretch}
+      .toolbar-actions .btn,.toolbar-actions label.btn,.toolbar-search input,.stack .btn{width:100%}
       .toolbar-search input{flex:1;min-width:0}
+      .tabs{gap:8px}
+      .tab-btn{flex:1 1 100%;justify-content:center;padding:12px 14px}
       .mini-card strong,.kpi strong{font-size:24px}
+      .purchase-grid{grid-template-columns:1fr}
+      .purchase-card{padding:12px}
+      .purchase-image{height:200px}
+      .order-grid,.layout,.accounting-grid{gap:14px}
+      .card{padding:15px}
+      .desktop-order-table,.desktop-data-table{display:none}
+      .mobile-order-items,.mobile-history-list,.mobile-expense-list,.mobile-money-list{display:grid;gap:12px}
+      .order-mobile-actions .btn{width:100%}
+      .mobile-reception-summary{display:block}
+      .mobile-step-nav{display:grid}
+      .role-bar{margin-top:14px}
+      .mobile-record-grid{grid-template-columns:1fr}
+      .mobile-record-actions,.mobile-record-actions.three{grid-template-columns:1fr}
+      #panel-recepcion[data-mobile-step="1"] [data-mobile-step],
+      #panel-recepcion[data-mobile-step="2"] [data-mobile-step],
+      #panel-recepcion[data-mobile-step="3"] [data-mobile-step],
+      #panel-recepcion[data-mobile-step="4"] [data-mobile-step]{display:none}
+      #panel-recepcion[data-mobile-step="1"] [data-mobile-step="1"],
+      #panel-recepcion[data-mobile-step="2"] [data-mobile-step="2"],
+      #panel-recepcion[data-mobile-step="3"] [data-mobile-step="3"],
+      #panel-recepcion[data-mobile-step="4"] [data-mobile-step="4"]{display:block}
+      #panel-recepcion[data-mobile-step="2"] .receiver-progress-float{display:block}
+      body[data-role="receiver"] .app, body[data-role="admin"] .app{padding-bottom:92px}
+      body[data-role="buyer"] .hero p,
+      body[data-role="receiver"] .hero p{font-size:14px}
+      body[data-role="buyer"] .hero-cards,
+      body[data-role="receiver"] .hero-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+      body[data-role="buyer"] .role-box,
+      body[data-role="receiver"] .role-box{padding:12px 14px}
+      body[data-role="admin"] .tabs{display:none}
+      body[data-role="admin"] .toolbar-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      body[data-role="admin"] .toolbar-search{position:sticky;top:8px;z-index:40;background:linear-gradient(180deg,#eef7f0 0%,rgba(238,247,240,.96) 100%);padding-bottom:8px}
+      body[data-role="admin"] .hero{gap:14px}
+      body[data-role="admin"] .hero p{display:none}
+      body[data-role="admin"] .hero-cards{display:none!important}
+      body[data-role="admin"] .kpi-grid,body[data-role="admin"] .kpi-grid.contable{grid-template-columns:repeat(2,minmax(0,1fr))}
+      body[data-role="admin"] .mini-card,body[data-role="admin"] .kpi{padding:14px}
+      body[data-role="admin"] .mini-card strong,body[data-role="admin"] .kpi strong{font-size:22px}
+      body[data-role="admin"] .totals-inline{display:grid;grid-template-columns:1fr;gap:8px}
+      body[data-role="admin"] #panel-historial .card,body[data-role="admin"] #panel-contable .card,body[data-role="admin"] #panel-compras .card,body[data-role="admin"] #panel-recepcion .card{padding:14px}
+      body[data-role="admin"] .admin-mobile-hub,body[data-role="admin"] .admin-mobile-filters,body[data-role="admin"] .admin-mobile-panel-head,body[data-role="admin"] .admin-mobile-finance,body[data-role="admin"] .admin-bottom-nav{display:block}
+      body[data-role="admin"] .admin-bottom-nav{display:grid}
+      body[data-role="admin"] .accounting-grid,body[data-role="admin"] #purchaseLayout{display:grid}
+      body[data-role="admin"] #purchaseLayout{grid-template-columns:1fr}
+      body[data-role="admin"] .accounting-grid{grid-template-columns:1fr}
+      body[data-role="admin"] #purchaseListCard{order:-1}
+      body[data-role="admin"] #panel-contable .accounting-grid > :last-child{order:-1}
+      body[data-role="admin"] .admin-mobile-actions,.quick-actions-row,.floating-batch-bar .stack{grid-template-columns:1fr 1fr}
+      body[data-role="admin"] .admin-finance-inline{grid-template-columns:1fr}
+      body[data-role="admin"] #accountingKpis.admin-metrics-collapsed{display:none}
+      body[data-role="admin"] #receptionFormCard.collapsed,body[data-role="admin"] #purchaseFormCard.collapsed,body[data-role="admin"] #expenseFormCard.collapsed{display:none!important}
     }
   </style>
 </head>
@@ -293,6 +471,14 @@
         <div class="login-selected" id="loginRoleLabel">Perfil seleccionado: Administrador general</div>
         <form id="loginForm">
           <input type="hidden" id="loginRole" value="admin">
+          <div class="field login-role-select">
+            <label for="loginRoleMobile">Perfil</label>
+            <select id="loginRoleMobile">
+              <option value="admin">Administrador general</option>
+              <option value="receiver">Recepción y verificación</option>
+              <option value="buyer">Compras y abastecimiento</option>
+            </select>
+          </div>
           <div class="field">
             <label for="loginPassword">Contraseña</label>
             <input id="loginPassword" type="password" placeholder="Escribe la contraseña" required autocomplete="current-password" />
@@ -308,12 +494,12 @@
   <div class="app" id="appShell" style="display:none">
     <section class="hero">
       <div>
-        <h1>Control de compras, pedidos, recepción y gastos</h1>
-        <p>
+        <h1 id="heroTitle">Control de compras, pedidos, recepción y gastos</h1>
+        <p id="heroText">
           Lleva el registro de lo que falta comprar, compara lo pedido contra lo recibido, guarda el historial con soportes y organiza los gastos desde pedidos y manuales en un solo lugar.
         </p>
       </div>
-      <div class="hero-cards">
+      <div class="hero-cards" id="heroCards">
         <div class="mini-card"><span>Compras pendientes</span><strong id="heroPending">0</strong></div>
         <div class="mini-card"><span>Pedidos registrados</span><strong id="heroOrders">0</strong></div>
         <div class="mini-card"><span>Total desde pedidos</span><strong class="money" id="heroOrderMoney">$0</strong></div>
@@ -329,7 +515,7 @@
         </div>
         <span class="session-tag">Acceso protegido</span>
       </div>
-      <div class="role-box" style="flex:1">
+      <div class="role-box" style="flex:1; display:none">
         <div>
           <strong style="display:block;color:#124d2f;margin-bottom:4px">Permisos del perfil</strong>
           <div class="role-hint" id="roleDescription"></div>
@@ -338,14 +524,10 @@
       <div class="role-box"><button class="btn btn-secondary" id="btnLogout" type="button">Cerrar sesión</button></div>
     </div>
 
+    <div class="admin-mobile-hub" id="adminMobileHub"></div>
+
     <div class="toolbar">
-      <div class="toolbar-actions" id="toolbarActions">
-        <button class="btn btn-primary" id="btnExport" type="button">Exportar respaldo</button>
-        <label class="btn btn-secondary" for="importFile">Importar respaldo</label>
-        <input type="file" id="importFile" accept="application/json" hidden>
-        <button class="btn btn-ghost" id="btnSeed" type="button">Cargar ejemplo</button>
-        <button class="btn btn-danger" id="btnReset" type="button">Borrar todo</button>
-      </div>
+      <div class="toolbar-actions" id="toolbarActions" hidden></div>
       <div class="toolbar-search">
         <input type="text" id="globalSearch" placeholder="Buscar por producto, referencia, proveedor, pedido o estado..." />
       </div>
@@ -358,9 +540,20 @@
       <button class="tab-btn" type="button" data-tab="contable">Módulo contable</button>
     </div>
 
+    <div class="admin-mobile-filters" id="adminMobileFilters"></div>
+
     <section class="panel active" id="panel-compras">
+      <div class="admin-mobile-panel-head">
+        <div>
+          <strong>Compras</strong>
+          <small>Consulta primero la lista y abre el formulario solo cuando lo necesites.</small>
+        </div>
+        <div class="stack">
+          <button class="btn btn-secondary btn-small" type="button" id="togglePurchaseForm">Nuevo producto</button>
+        </div>
+      </div>
       <div class="layout" id="purchaseLayout">
-        <div class="card" id="purchaseFormCard">
+        <div class="card admin-collapse-target" id="purchaseFormCard">
           <h2 id="purchaseFormTitle">Agregar producto por comprar</h2>
           <p class="subtle" id="purchaseFormHint">Guarda referencia, nombre, cantidad y foto para identificar bien el producto.</p>
           <form id="purchaseForm">
@@ -422,6 +615,15 @@
     </section>
 
     <section class="panel" id="panel-recepcion">
+      <div class="admin-mobile-panel-head">
+        <div>
+          <strong>Recepción</strong>
+          <small>Captura el pedido por pasos y usa accesos rápidos para guardar o finalizar.</small>
+        </div>
+        <div class="stack">
+          <button class="btn btn-secondary btn-small" type="button" id="toggleReceptionForm">Abrir captura</button>
+        </div>
+      </div>
       <div class="kpi-grid">
         <div class="kpi"><span>Pedidos registrados</span><strong id="kpiOrders">0</strong></div>
         <div class="kpi"><span>Completos</span><strong id="kpiComplete">0</strong></div>
@@ -429,83 +631,145 @@
         <div class="kpi"><span>Sin fecha de pago</span><strong id="kpiUnpaid">0</strong></div>
       </div>
 
+      <div class="mobile-reception-summary" id="mobileReceptionSummary">
+        <div class="mobile-summary-head">
+          <div>
+            <div class="mobile-summary-kicker">Resumen del pedido</div>
+            <strong id="mobileReceptionSummaryMain">Pedido sin identificar</strong>
+            <small id="mobileReceptionSummaryState">Completa los datos del pedido y avanza por pasos.</small>
+          </div>
+          <button class="btn btn-ghost btn-small" type="button" id="receptionSummaryToggle">Ver más</button>
+        </div>
+        <div class="mobile-summary-extra" id="mobileReceptionSummaryExtra"></div>
+      </div>
+
+      <div class="mobile-step-nav" id="receptionStepNav">
+        <button class="mobile-step-btn active" type="button" data-go-step="1">1. Datos</button>
+        <button class="mobile-step-btn" type="button" data-go-step="2">2. Productos</button>
+        <button class="mobile-step-btn" type="button" data-go-step="3">3. Soportes</button>
+        <button class="mobile-step-btn" type="button" data-go-step="4">4. Cierre</button>
+      </div>
+
+      <div class="receiver-progress-float" id="receiverProgressFloat"></div>
+
       <div class="order-grid">
-        <div class="card">
+        <div class="card admin-collapse-target" id="receptionFormCard">
           <h2 id="orderFormTitle">Registrar pedido recibido</h2>
           <p class="subtle" id="orderFormHint">Aquí comparas lo que pediste contra lo que realmente llegó.</p>
-          <div class="note-box">El valor total de la compra registrado aquí entra automáticamente al módulo contable como gasto desde pedidos.</div>
+          <div class="note-box" id="orderAccountingNote">El valor total de la compra registrado aquí entra automáticamente al módulo contable como gasto desde pedidos.</div>
           <form id="orderForm">
             <input type="hidden" id="editingOrderId" value="">
-            <div class="field-grid">
-              <div class="field">
-                <label for="orderSupplier">Proveedor / empresa</label>
-                <input id="orderSupplier" required placeholder="Nombre del proveedor" />
+
+            <div class="mobile-step-section" data-mobile-step="1">
+              <div class="field-grid">
+                <div class="field">
+                  <label for="orderSupplier">Proveedor / empresa</label>
+                  <input id="orderSupplier" placeholder="Nombre del proveedor" />
+                </div>
+                <div class="field">
+                  <label for="orderCode">Código o número de pedido</label>
+                  <input id="orderCode" placeholder="PED-2026-001" />
+                </div>
               </div>
+
+              <div class="field-grid-3">
+                <div class="field">
+                  <label for="orderDate">Fecha del pedido</label>
+                  <input id="orderDate" type="date" />
+                </div>
+                <div class="field">
+                  <label for="paymentDate">Fecha de pago</label>
+                  <input id="paymentDate" type="date" />
+                </div>
+                <div class="field">
+                  <label for="receiveDate">Fecha de recibido</label>
+                  <input id="receiveDate" type="date" />
+                </div>
+              </div>
+
+              <div class="field" id="orderTotalField">
+                <label for="orderTotal">Valor total de la compra</label>
+                <input id="orderTotal" type="number" min="0" step="0.01" placeholder="0" />
+              </div>
+
               <div class="field">
-                <label for="orderCode">Código o número de pedido</label>
-                <input id="orderCode" required placeholder="PED-2026-001" />
+                <label for="orderNotes">Observaciones generales</label>
+                <textarea id="orderNotes" placeholder="Novedades del pedido, faltantes, observaciones, etc."></textarea>
+              </div>
+
+              <div class="stack" style="margin-top:12px">
+                <button class="btn btn-secondary" type="button" data-go-step="2">Continuar a productos</button>
+                <button class="btn btn-ghost" type="button" data-go-step="3">Ir a soportes</button>
               </div>
             </div>
 
-            <div class="field-grid-3">
-              <div class="field">
-                <label for="orderDate">Fecha del pedido</label>
-                <input id="orderDate" type="date" required />
+            <div class="mobile-step-section" data-mobile-step="3">
+              <div class="inline-upload">
+                <div class="field">
+                  <label for="purchaseReceipt">Soporte: recibo de compra</label>
+                  <input id="purchaseReceipt" type="file" accept="image/*" capture="environment" />
+                  <div class="support-action-row">
+                    <button class="btn btn-secondary btn-small" type="button" id="btnCapturePurchase">Tomar o subir foto</button>
+                    <button class="btn btn-danger btn-small" type="button" id="btnClearPurchaseSupport">Quitar</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="receivedReceipt">Soporte: recibido de la empresa</label>
+                  <input id="receivedReceipt" type="file" accept="image/*" capture="environment" />
+                  <div class="support-action-row">
+                    <button class="btn btn-secondary btn-small" type="button" id="btnCaptureReceived">Tomar o subir foto</button>
+                    <button class="btn btn-danger btn-small" type="button" id="btnClearReceivedSupport">Quitar</button>
+                  </div>
+                </div>
               </div>
-              <div class="field">
-                <label for="paymentDate">Fecha de pago</label>
-                <input id="paymentDate" type="date" />
+
+              <div class="preview-strip" id="orderSupportPreviewStrip" style="display:none">
+                <div class="preview-card">
+                  <h4>Soporte actual de compra</h4>
+                  <div class="image-preview-box" id="orderCurrentPurchaseSupport"></div>
+                </div>
+                <div class="preview-card">
+                  <h4>Soporte actual recibido</h4>
+                  <div class="image-preview-box" id="orderCurrentReceivedSupport"></div>
+                </div>
               </div>
-              <div class="field">
-                <label for="receiveDate">Fecha de recibido</label>
-                <input id="receiveDate" type="date" />
+
+              <div class="stack" style="margin-top:12px">
+                <button class="btn btn-secondary" type="button" data-go-step="2">Volver a productos</button>
+                <button class="btn btn-ghost" type="button" data-go-step="4">Continuar a cierre</button>
               </div>
             </div>
 
-            <div class="field">
-              <label for="orderTotal">Valor total de la compra</label>
-              <input id="orderTotal" type="number" min="0" step="0.01" placeholder="0" />
-            </div>
-
-            <div class="field">
-              <label for="orderNotes">Observaciones generales</label>
-              <textarea id="orderNotes" placeholder="Novedades del pedido, faltantes, observaciones, etc."></textarea>
-            </div>
-
-            <div class="inline-upload">
-              <div class="field">
-                <label for="purchaseReceipt">Soporte: recibo de compra</label>
-                <input id="purchaseReceipt" type="file" accept="image/*" />
+            <div class="mobile-step-section" data-mobile-step="4">
+              <div class="mobile-confirm-box">
+                <h3>Revisión final</h3>
+                <p class="subtle">Revisa el estado del pedido antes de guardarlo o finalizarlo.</p>
+                <div class="confirm-summary-box" id="mobileConfirmSummary"></div>
+                <div class="note-box" style="margin:10px 0 0">Si finalizas con diferencias, el sistema te pedirá confirmación para evitar errores.</div>
               </div>
-              <div class="field">
-                <label for="receivedReceipt">Soporte: recibido de la empresa</label>
-                <input id="receivedReceipt" type="file" accept="image/*" />
-              </div>
-            </div>
 
-            <div class="preview-strip" id="orderSupportPreviewStrip" style="display:none">
-              <div class="preview-card">
-                <h4>Soporte actual de compra</h4>
-                <div class="image-preview-box small" id="orderCurrentPurchaseSupport"></div>
+              <div class="stack" style="margin-top:12px">
+                <button class="btn btn-secondary" type="button" data-go-step="2">Revisar productos</button>
+                <button class="btn btn-ghost" type="button" data-go-step="3">Revisar soportes</button>
+                <button class="btn btn-primary" id="orderSubmitBtn" type="submit">Guardar pedido</button>
+                <button class="btn btn-ghost" id="orderCancelBtn" type="button" style="display:none">Cancelar edición</button>
               </div>
-              <div class="preview-card">
-                <h4>Soporte actual recibido</h4>
-                <div class="image-preview-box small" id="orderCurrentReceivedSupport"></div>
-              </div>
-            </div>
-
-            <div class="stack" style="margin-top:12px">
-              <button class="btn btn-secondary" type="button" id="addOrderRow">Agregar producto al pedido</button>
-              <button class="btn btn-primary" id="orderSubmitBtn" type="submit">Guardar pedido</button>
-              <button class="btn btn-ghost" id="orderCancelBtn" type="button" style="display:none">Cancelar edición</button>
             </div>
           </form>
         </div>
 
-        <div class="card">
+        <div class="card mobile-step-section" data-mobile-step="2">
           <h2>Productos del pedido</h2>
-          <p class="subtle">Agrega una fila por cada producto para validar si llegó completo. Ya puedes escribir sin que se quite el cursor.</p>
-          <div class="table-wrap">
+          <p class="subtle">Busca, compara y ajusta rápido cada producto. En celular tienes botones para igualar, sumar o restar cantidades.</p>
+          <div class="field mobile-product-search">
+            <label for="orderProductSearch">Buscar dentro del pedido</label>
+            <input id="orderProductSearch" placeholder="Escribe referencia o nombre" />
+          </div>
+          <div class="stack" style="margin-top:12px">
+            <button class="btn btn-secondary" type="button" id="addOrderRow">Agregar producto al pedido</button>
+            <button class="btn btn-ghost" type="button" data-go-step="4">Ir a cierre</button>
+          </div>
+          <div class="table-wrap desktop-order-table">
             <table>
               <thead>
                 <tr>
@@ -520,12 +784,25 @@
               <tbody id="orderItemsBody"></tbody>
             </table>
           </div>
+          <div class="mobile-order-items" id="orderItemsMobile"></div>
           <div class="compare-note" id="compareSummary">Aún no hay productos en el pedido.</div>
         </div>
+      </div>
+
+      <div class="mobile-reception-actions" id="mobileReceptionActions">
+        <button class="btn btn-secondary" type="button" id="mobileSupportShortcut">Tomar foto / soporte</button>
+        <button class="btn btn-ghost" type="button" id="mobileSaveDraft">Guardar</button>
+        <button class="btn btn-primary" type="button" id="mobileFinalizeOrder">Finalizar recibido</button>
       </div>
     </section>
 
     <section class="panel" id="panel-historial">
+      <div class="admin-mobile-panel-head">
+        <div>
+          <strong>Historial</strong>
+          <small>Filtra rápido por estado y usa acciones cortas desde cada tarjeta.</small>
+        </div>
+      </div>
       <div class="card">
         <h2>Historial completo de pedidos</h2>
         <p class="subtle">Aquí puedes ver la fecha del pedido, pago, recibido, valor total y abrir los soportes e imágenes.</p>
@@ -534,7 +811,18 @@
     </section>
 
     <section class="panel" id="panel-contable">
-      <div class="kpi-grid contable">
+      <div class="admin-mobile-panel-head">
+        <div>
+          <strong>Contabilidad</strong>
+          <small>Resumen corto arriba y métricas ampliadas solo cuando las necesites.</small>
+        </div>
+        <div class="stack">
+          <button class="btn btn-secondary btn-small" type="button" id="toggleExpenseForm">Nuevo gasto</button>
+          <button class="btn btn-ghost btn-small" type="button" id="toggleAccountingMetrics">Ver métricas</button>
+        </div>
+      </div>
+      <div class="admin-mobile-finance" id="adminMobileFinance"></div>
+      <div class="kpi-grid contable" id="accountingKpis">
         <div class="kpi"><span>Pedidos contabilizados</span><strong id="accOrdersCount">0</strong></div>
         <div class="kpi"><span>Total desde pedidos</span><strong class="money" id="accOrdersTotal">$0</strong></div>
         <div class="kpi"><span>Gastos manuales</span><strong id="accManualCount">0</strong></div>
@@ -544,7 +832,7 @@
       </div>
 
       <div class="accounting-grid">
-        <div class="card">
+        <div class="card admin-collapse-target" id="expenseFormCard">
           <h2 id="expenseFormTitle">Registrar gasto manual</h2>
           <p class="subtle">Aquí van gastos manuales adicionales. Los valores de los pedidos recibidos ya entran automáticamente desde el módulo de pedidos.</p>
           <form id="expenseForm">
@@ -646,6 +934,15 @@
       </div>
     </section>
 
+    <div class="floating-batch-bar" id="floatingBatchBar"></div>
+
+    <div class="admin-bottom-nav" id="adminBottomNav">
+      <button class="admin-bottom-btn active" type="button" data-tab="compras"><span>🛒</span><small>Compras</small></button>
+      <button class="admin-bottom-btn" type="button" data-tab="recepcion"><span>📥</span><small>Recepción</small></button>
+      <button class="admin-bottom-btn" type="button" data-tab="historial"><span>🧾</span><small>Historial</small></button>
+      <button class="admin-bottom-btn" type="button" data-tab="contable"><span>💰</span><small>Contable</small></button>
+    </div>
+
     <p class="footer-note">Tus datos quedan guardados en este navegador mediante almacenamiento local. Si cambias de equipo, exporta primero un respaldo.</p>
   </div>
 
@@ -703,25 +1000,34 @@
     let currentOrderSupportCompra = '';
     let currentOrderSupportRecibido = '';
     let currentExpenseSupport = '';
+    let receptionMobileStep = 1;
+    let pendingFinalizeOrder = false;
+    let orderProductSearchTerm = '';
+    const adminMobileState = {
+      filters: { compras:'all', recepcion:'datos', historial:'all', contable:'all' },
+      forms: { compras:false, recepcion:true, contable:false },
+      metricsExpanded: false,
+      selected: { compras:new Set(), historial:new Set(), contable:new Set() }
+    };
 
     const els = {
       appShell: document.getElementById('appShell'),
       loginShell: document.getElementById('loginShell'),
       loginForm: document.getElementById('loginForm'),
       loginRole: document.getElementById('loginRole'),
+      loginRoleMobile: document.getElementById('loginRoleMobile'),
       loginPassword: document.getElementById('loginPassword'),
       loginError: document.getElementById('loginError'),
       loginRoleCards: document.getElementById('loginRoleCards'),
       loginRoleLabel: document.getElementById('loginRoleLabel'),
       sessionRoleName: document.getElementById('sessionRoleName'),
       roleDescription: document.getElementById('roleDescription'),
+      heroTitle: document.getElementById('heroTitle'),
+      heroText: document.getElementById('heroText'),
+      heroCards: document.getElementById('heroCards'),
       btnLogout: document.getElementById('btnLogout'),
       toolbarActions: document.getElementById('toolbarActions'),
       globalSearch: document.getElementById('globalSearch'),
-      btnExport: document.getElementById('btnExport'),
-      importFile: document.getElementById('importFile'),
-      btnSeed: document.getElementById('btnSeed'),
-      btnReset: document.getElementById('btnReset'),
       heroPending: document.getElementById('heroPending'),
       heroOrders: document.getElementById('heroOrders'),
       heroOrderMoney: document.getElementById('heroOrderMoney'),
@@ -730,6 +1036,8 @@
       purchaseFormCard: document.getElementById('purchaseFormCard'),
       purchaseListTitle: document.getElementById('purchaseListTitle'),
       purchaseRoleNote: document.getElementById('purchaseRoleNote'),
+      orderAccountingNote: document.getElementById('orderAccountingNote'),
+      orderTotalField: document.getElementById('orderTotalField'),
       purchaseFormTitle: document.getElementById('purchaseFormTitle'),
       purchaseFormHint: document.getElementById('purchaseFormHint'),
       purchaseForm: document.getElementById('purchaseForm'),
@@ -745,6 +1053,18 @@
       purchaseCurrentImageBox: document.getElementById('purchaseCurrentImageBox'),
       purchaseCurrentImagePreview: document.getElementById('purchaseCurrentImagePreview'),
       purchaseList: document.getElementById('purchaseList'),
+      adminMobileHub: document.getElementById('adminMobileHub'),
+      adminMobileFilters: document.getElementById('adminMobileFilters'),
+      togglePurchaseForm: document.getElementById('togglePurchaseForm'),
+      toggleReceptionForm: document.getElementById('toggleReceptionForm'),
+      toggleExpenseForm: document.getElementById('toggleExpenseForm'),
+      toggleAccountingMetrics: document.getElementById('toggleAccountingMetrics'),
+      adminMobileFinance: document.getElementById('adminMobileFinance'),
+      accountingKpis: document.getElementById('accountingKpis'),
+      floatingBatchBar: document.getElementById('floatingBatchBar'),
+      adminBottomNav: document.getElementById('adminBottomNav'),
+      receptionFormCard: document.getElementById('receptionFormCard'),
+      expenseFormCard: document.getElementById('expenseFormCard'),
       kpiOrders: document.getElementById('kpiOrders'),
       kpiComplete: document.getElementById('kpiComplete'),
       kpiIssues: document.getElementById('kpiIssues'),
@@ -764,7 +1084,25 @@
       receivedReceipt: document.getElementById('receivedReceipt'),
       addOrderRow: document.getElementById('addOrderRow'),
       orderItemsBody: document.getElementById('orderItemsBody'),
+      orderItemsMobile: document.getElementById('orderItemsMobile'),
+      orderProductSearch: document.getElementById('orderProductSearch'),
       compareSummary: document.getElementById('compareSummary'),
+      mobileReceptionSummary: document.getElementById('mobileReceptionSummary'),
+      mobileReceptionSummaryMain: document.getElementById('mobileReceptionSummaryMain'),
+      mobileReceptionSummaryState: document.getElementById('mobileReceptionSummaryState'),
+      mobileReceptionSummaryExtra: document.getElementById('mobileReceptionSummaryExtra'),
+      receptionSummaryToggle: document.getElementById('receptionSummaryToggle'),
+      receptionStepNav: document.getElementById('receptionStepNav'),
+      receiverProgressFloat: document.getElementById('receiverProgressFloat'),
+      mobileConfirmSummary: document.getElementById('mobileConfirmSummary'),
+      btnCapturePurchase: document.getElementById('btnCapturePurchase'),
+      btnClearPurchaseSupport: document.getElementById('btnClearPurchaseSupport'),
+      btnCaptureReceived: document.getElementById('btnCaptureReceived'),
+      btnClearReceivedSupport: document.getElementById('btnClearReceivedSupport'),
+      mobileReceptionActions: document.getElementById('mobileReceptionActions'),
+      mobileSupportShortcut: document.getElementById('mobileSupportShortcut'),
+      mobileSaveDraft: document.getElementById('mobileSaveDraft'),
+      mobileFinalizeOrder: document.getElementById('mobileFinalizeOrder'),
       orderSubmitBtn: document.getElementById('orderSubmitBtn'),
       orderCancelBtn: document.getElementById('orderCancelBtn'),
       orderSupportPreviewStrip: document.getElementById('orderSupportPreviewStrip'),
@@ -812,6 +1150,7 @@
 
     bindEvents();
     currentOrderItems = [createEmptyOrderItem()];
+    setReceptionMobileStep(1);
     renderAll();
     hydrateSession();
 
@@ -826,8 +1165,23 @@
       els.loginRoleCards.querySelectorAll('[data-role]').forEach(card => {
         card.addEventListener('click', () => setLoginRole(card.dataset.role));
       });
+      if(els.loginRoleMobile){
+        els.loginRoleMobile.addEventListener('change', () => setLoginRole(els.loginRoleMobile.value));
+      }
       els.loginForm.addEventListener('submit', handleLoginSubmit);
       els.btnLogout.addEventListener('click', logoutSession);
+      if(els.togglePurchaseForm) els.togglePurchaseForm.addEventListener('click', () => toggleAdminForm('compras'));
+      if(els.toggleReceptionForm) els.toggleReceptionForm.addEventListener('click', () => toggleAdminForm('recepcion'));
+      if(els.toggleExpenseForm) els.toggleExpenseForm.addEventListener('click', () => toggleAdminForm('contable'));
+      if(els.toggleAccountingMetrics) els.toggleAccountingMetrics.addEventListener('click', toggleAdminMetrics);
+      if(els.adminBottomNav){
+        els.adminBottomNav.querySelectorAll('[data-tab]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if(!canAccessTab(btn.dataset.tab)) return;
+            switchTab(btn.dataset.tab);
+          });
+        });
+      }
 
       els.purchaseForm.addEventListener('submit', handlePurchaseSubmit);
       els.purchaseCancelBtn.addEventListener('click', resetPurchaseForm);
@@ -841,14 +1195,48 @@
 
       els.orderItemsBody.addEventListener('input', handleOrderTableInput);
       els.orderItemsBody.addEventListener('click', handleOrderTableClick);
+      els.orderItemsMobile.addEventListener('input', handleOrderTableInput);
+      els.orderItemsMobile.addEventListener('click', handleOrderTableClick);
+      if(els.orderProductSearch){
+        els.orderProductSearch.addEventListener('input', () => {
+          orderProductSearchTerm = els.orderProductSearch.value.trim().toLowerCase();
+          renderOrderItemRows();
+        });
+      }
+      if(els.receptionStepNav){
+        els.receptionStepNav.querySelectorAll('[data-go-step]').forEach(btn => {
+          btn.addEventListener('click', () => setReceptionMobileStep(btn.dataset.goStep));
+        });
+      }
+      document.querySelectorAll('#panel-recepcion [data-go-step]').forEach(btn => {
+        btn.addEventListener('click', () => setReceptionMobileStep(btn.dataset.goStep));
+      });
+      if(els.receptionSummaryToggle){
+        els.receptionSummaryToggle.addEventListener('click', () => {
+          els.mobileReceptionSummary.classList.toggle('expanded');
+          els.receptionSummaryToggle.textContent = els.mobileReceptionSummary.classList.contains('expanded') ? 'Ver menos' : 'Ver más';
+        });
+      }
+      [els.orderSupplier, els.orderCode, els.orderDate, els.paymentDate, els.receiveDate, els.orderNotes].forEach(input => {
+        if(input){
+          input.addEventListener('input', updateReceptionHeaderSummary);
+          input.addEventListener('change', updateReceptionHeaderSummary);
+        }
+      });
+      if(els.btnCapturePurchase) els.btnCapturePurchase.addEventListener('click', () => { setReceptionMobileStep(3); els.purchaseReceipt.click(); });
+      if(els.btnCaptureReceived) els.btnCaptureReceived.addEventListener('click', () => { setReceptionMobileStep(3); els.receivedReceipt.click(); });
+      if(els.btnClearPurchaseSupport) els.btnClearPurchaseSupport.addEventListener('click', () => clearSupportPreview('compra'));
+      if(els.btnClearReceivedSupport) els.btnClearReceivedSupport.addEventListener('click', () => clearSupportPreview('recibido'));
+      if(els.purchaseReceipt) els.purchaseReceipt.addEventListener('change', async () => { currentOrderSupportCompra = els.purchaseReceipt.files[0] ? await fileToDataUrl(els.purchaseReceipt.files[0]) : ''; refreshOrderSupportPreview(); });
+      if(els.receivedReceipt) els.receivedReceipt.addEventListener('change', async () => { currentOrderSupportRecibido = els.receivedReceipt.files[0] ? await fileToDataUrl(els.receivedReceipt.files[0]) : ''; refreshOrderSupportPreview(); });
+      if(els.mobileSupportShortcut) els.mobileSupportShortcut.addEventListener('click', () => { setReceptionMobileStep(3); els.receivedReceipt.click(); });
+      if(els.mobileSaveDraft) els.mobileSaveDraft.addEventListener('click', () => { pendingFinalizeOrder = false; els.orderForm.requestSubmit(); });
+      if(els.mobileFinalizeOrder) els.mobileFinalizeOrder.addEventListener('click', finalizeReceivedOrder);
+      window.addEventListener('resize', syncReceptionMobileUI);
       els.expenseForm.addEventListener('submit', handleExpenseSubmit);
       els.expenseCancelBtn.addEventListener('click', resetExpenseForm);
 
       els.globalSearch.addEventListener('input', renderAll);
-      els.btnExport.addEventListener('click', exportBackup);
-      els.importFile.addEventListener('change', importBackup);
-      els.btnSeed.addEventListener('click', loadExampleData);
-      els.btnReset.addEventListener('click', resetAllData);
 
       els.closeDetailModal.addEventListener('click', closeDetailModal);
       els.detailModal.addEventListener('click', function(e){ if(e.target === els.detailModal) closeDetailModal(); });
@@ -890,6 +1278,7 @@
     function setLoginRole(role){
       const safe = ROLE_CONFIG[role] ? role : 'admin';
       els.loginRole.value = safe;
+      if(els.loginRoleMobile) els.loginRoleMobile.value = safe;
       els.loginRoleLabel.textContent = 'Perfil seleccionado: ' + ROLE_CONFIG[safe].label;
       els.loginRoleCards.querySelectorAll('[data-role]').forEach(card => {
         card.classList.toggle('active', card.dataset.role === safe);
@@ -936,28 +1325,383 @@
     function canUseAccounting(){ return currentRole === 'admin'; }
     function canUseAdminTools(){ return currentRole === 'admin'; }
     function roleDenied(msg){ alert(msg || 'Este perfil no tiene permiso para realizar esta acción.'); }
+    function isMobileView(){ return window.innerWidth <= 720; }
+    function isAdminMobile(){ return currentRole === 'admin' && isMobileView(); }
+    function getActiveTab(){ const active = document.querySelector('.tab-btn.active'); return active ? active.dataset.tab : getRoleConfig().defaultTab; }
+    function getTodayIso(){ return new Date().toISOString().slice(0,10); }
+    function getAdminFilter(tab){ return adminMobileState.filters[tab] || 'all'; }
+    function setAdminFilter(tab, value){
+      adminMobileState.filters[tab] = value;
+      if(tab === 'recepcion'){
+        const map = { datos:1, productos:2, soportes:3, cierre:4 };
+        if(map[value]) setReceptionMobileStep(map[value]);
+      }
+      renderAll();
+    }
+    function toggleAdminForm(tab){
+      if(!isAdminMobile()) return;
+      adminMobileState.forms[tab] = !adminMobileState.forms[tab];
+      syncAdminCollapseUI();
+      renderAdminMobileUI();
+    }
+    function syncAdminCollapseUI(){
+      const adminMobile = isAdminMobile();
+      if(els.purchaseFormCard) els.purchaseFormCard.classList.toggle('collapsed', adminMobile && !adminMobileState.forms.compras);
+      if(els.receptionFormCard) els.receptionFormCard.classList.toggle('collapsed', adminMobile && !adminMobileState.forms.recepcion);
+      if(els.expenseFormCard) els.expenseFormCard.classList.toggle('collapsed', adminMobile && !adminMobileState.forms.contable);
+      if(els.togglePurchaseForm) els.togglePurchaseForm.textContent = adminMobileState.forms.compras ? 'Ocultar formulario' : 'Nuevo producto';
+      if(els.toggleReceptionForm) els.toggleReceptionForm.textContent = adminMobileState.forms.recepcion ? 'Ocultar captura' : 'Abrir captura';
+      if(els.toggleExpenseForm) els.toggleExpenseForm.textContent = adminMobileState.forms.contable ? 'Ocultar formulario' : 'Nuevo gasto';
+      if(els.accountingKpis) els.accountingKpis.classList.toggle('admin-metrics-collapsed', adminMobile && !adminMobileState.metricsExpanded);
+      if(els.toggleAccountingMetrics) els.toggleAccountingMetrics.textContent = adminMobileState.metricsExpanded ? 'Ocultar métricas' : 'Ver métricas';
+    }
+    function toggleAdminMetrics(){
+      adminMobileState.metricsExpanded = !adminMobileState.metricsExpanded;
+      syncAdminCollapseUI();
+      renderAdminMobileUI();
+    }
+    function matchesAdminFilter(tab, item){
+      const filter = getAdminFilter(tab);
+      if(filter === 'all' || !isAdminMobile()) return true;
+      if(tab === 'compras'){
+        if(filter === 'pendiente') return (item.estado || 'Pendiente') === 'Pendiente';
+        if(filter === 'comprado') return (item.estado || 'Pendiente') !== 'Pendiente';
+      }
+      if(tab === 'historial'){
+        if(filter === 'pendiente') return (item.estado || '') === 'Pendiente';
+        if(filter === 'diferencia') return (item.estado || '') === 'Con diferencia';
+        if(filter === 'completo') return (item.estado || '') === 'Completo';
+      }
+      if(tab === 'contable'){
+        if(filter === 'hoy') return item.fecha === getTodayIso();
+        if(filter === 'pendiente') return String(item.estadoPago || '').toLowerCase() !== 'pagado';
+        if(filter === 'pagado') return String(item.estadoPago || '').toLowerCase() === 'pagado';
+      }
+      return true;
+    }
+    function getSelectionSet(tab){ return adminMobileState.selected[tab] || new Set(); }
+    function toggleSelectRecord(tab,id){
+      const set = getSelectionSet(tab);
+      if(set.has(id)) set.delete(id); else set.add(id);
+      renderAll();
+    }
+    function clearSelectedRecords(tab){
+      if(tab){ getSelectionSet(tab).clear(); }
+      else Object.keys(adminMobileState.selected).forEach(key => adminMobileState.selected[key].clear());
+      renderAdminMobileUI();
+      renderAll();
+    }
+    function runBatchAction(action){
+      if(!isAdminMobile()) return;
+      const tab = getActiveTab();
+      if(tab === 'compras'){
+        const ids = Array.from(getSelectionSet('compras'));
+        if(!ids.length) return;
+        if(action === 'delete') state.purchases = state.purchases.filter(item => !ids.includes(item.id));
+        if(action === 'mark-bought') state.purchases.forEach(item => { if(ids.includes(item.id)) item.estado = 'Comprado'; });
+        if(action === 'mark-pending') state.purchases.forEach(item => { if(ids.includes(item.id)) item.estado = 'Pendiente'; });
+      }
+      if(tab === 'historial'){
+        const ids = Array.from(getSelectionSet('historial'));
+        if(!ids.length) return;
+        if(action === 'delete') state.orders = state.orders.filter(item => !ids.includes(item.id));
+      }
+      if(tab === 'contable'){
+        const ids = Array.from(getSelectionSet('contable'));
+        if(!ids.length) return;
+        if(action === 'delete') state.expenses = state.expenses.filter(item => !ids.includes(item.id));
+        if(action === 'mark-paid') state.expenses.forEach(item => { if(ids.includes(item.id)){ item.estadoPago='Pagado'; if(!item.fechaPago) item.fechaPago = getTodayIso(); } });
+      }
+      clearSelectedRecords(tab);
+      saveState();
+      renderAll();
+    }
+    function adminQuickAction(action){
+      if(!isAdminMobile()) return;
+      if(action === 'new-purchase'){
+        adminMobileState.forms.compras = true;
+        switchTab('compras');
+        syncAdminCollapseUI();
+        setTimeout(() => els.purchaseRef && els.purchaseRef.focus(), 50);
+        return;
+      }
+      if(action === 'go-recepcion'){
+        adminMobileState.forms.recepcion = true;
+        switchTab('recepcion');
+        setReceptionMobileStep(1);
+        syncAdminCollapseUI();
+        setTimeout(() => els.orderSupplier && els.orderSupplier.focus(), 50);
+        return;
+      }
+      if(action === 'history-issues'){
+        switchTab('historial');
+        setAdminFilter('historial','diferencia');
+        return;
+      }
+      if(action === 'new-expense'){
+        adminMobileState.forms.contable = true;
+        switchTab('contable');
+        syncAdminCollapseUI();
+        setTimeout(() => els.expenseDate && els.expenseDate.focus(), 50);
+        return;
+      }
+      if(action === 'pending-purchases'){
+        switchTab('compras');
+        setAdminFilter('compras','pendiente');
+        return;
+      }
+      if(action === 'manual-pending'){
+        switchTab('contable');
+        setAdminFilter('contable','pendiente');
+      }
+    }
+    function renderAdminMobileUI(){
+      if(!els.adminMobileHub || !els.adminMobileFilters || !els.adminBottomNav || !els.floatingBatchBar) return;
+      const adminMobile = isAdminMobile();
+      els.adminMobileHub.style.display = adminMobile ? 'block' : 'none';
+      els.adminMobileFilters.style.display = adminMobile ? 'block' : 'none';
+      els.adminBottomNav.style.display = adminMobile ? 'grid' : 'none';
+      els.floatingBatchBar.style.display = 'none';
+      if(els.adminMobileFinance) els.adminMobileFinance.style.display = adminMobile && getActiveTab() === 'contable' ? 'block' : 'none';
+      if(!adminMobile){
+        syncAdminCollapseUI();
+        return;
+      }
+      const money = computeMoney();
+      const pendingPurchases = state.purchases.filter(item => item.estado === 'Pendiente').length;
+      const pendingOrders = state.orders.filter(order => order.estado === 'Pendiente').length;
+      const issueOrders = state.orders.filter(order => order.estado === 'Con diferencia').length;
+      const quickToday = state.expenses.filter(expense => expense.fecha === getTodayIso()).reduce((sum,item) => sum + Number(item.valor || 0), 0);
+      els.adminMobileHub.innerHTML = `
+        <div class="admin-mobile-summary">
+          <div class="admin-mobile-summary-head">
+            <div>
+              <strong>Vista rápida del administrador</strong>
+              <small>Consulta primero, abre formularios solo cuando hagan falta y muévete por accesos rápidos.</small>
+            </div>
+            <span class="session-tag">📱 móvil</span>
+          </div>
+          <div class="admin-mobile-stat-grid">
+            <div class="admin-mobile-stat"><span>Compras pendientes</span><strong>${pendingPurchases}</strong></div>
+            <div class="admin-mobile-stat"><span>Pedidos pendientes</span><strong>${pendingOrders}</strong></div>
+            <div class="admin-mobile-stat"><span>Con diferencia</span><strong>${issueOrders}</strong></div>
+            <div class="admin-mobile-stat"><span>Gasto general</span><strong>${formatMoney(money.grandTotal)}</strong></div>
+          </div>
+          <div class="quick-actions-row">
+            <button class="btn btn-primary btn-small" type="button" onclick="adminQuickAction('new-purchase')">🛒 Nuevo producto</button>
+            <button class="btn btn-secondary btn-small" type="button" onclick="adminQuickAction('go-recepcion')">📥 Ir a recepción</button>
+            <button class="btn btn-warning btn-small" type="button" onclick="adminQuickAction('history-issues')">⚠️ Ver diferencias</button>
+            <button class="btn btn-ghost btn-small" type="button" onclick="adminQuickAction('new-expense')">💰 Nuevo gasto</button>
+          </div>
+        </div>`;
+      const activeTab = getActiveTab();
+      const filterConfigs = {
+        compras:[['all','Todo'],['pendiente','Pendientes'],['comprado','Comprados']],
+        recepcion:[['datos','Datos'],['productos','Productos'],['soportes','Soportes'],['cierre','Cierre']],
+        historial:[['all','Todo'],['pendiente','Pendientes'],['diferencia','Con diferencia'],['completo','Completos']],
+        contable:[['all','Todo'],['hoy','Hoy'],['pendiente','Pendientes'],['pagado','Pagados']]
+      };
+      const chips = (filterConfigs[activeTab] || []).map(([value,label]) => `<button class="admin-chip ${getAdminFilter(activeTab) === value ? 'active' : ''}" type="button" onclick="setAdminFilter('${activeTab}','${value}')">${label}</button>`).join('');
+      els.adminMobileFilters.innerHTML = `
+        <div class="admin-chip-row">
+          ${chips}
+        </div>`;
+      els.adminBottomNav.querySelectorAll('[data-tab]').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === activeTab));
+      if(els.adminMobileFinance){
+        els.adminMobileFinance.innerHTML = `
+          <div class="admin-finance-card">
+            <strong>Resumen financiero corto</strong>
+            <div class="admin-finance-inline">
+              <div class="admin-finance-pill"><span>Pedidos</span><b>${formatMoney(money.ordersTotal)}</b></div>
+              <div class="admin-finance-pill"><span>Manual</span><b>${formatMoney(money.manualTotal)}</b></div>
+              <div class="admin-finance-pill"><span>Total</span><b>${formatMoney(money.grandTotal)}</b></div>
+            </div>
+          </div>`;
+      }
+      const selected = getSelectionSet(activeTab);
+      if(selected && selected.size){
+        let title = `${selected.size} elemento(s) seleccionado(s)`;
+        let buttons = '';
+        if(activeTab === 'compras'){
+          buttons = `
+            <button class="btn btn-secondary btn-small" type="button" onclick="runBatchAction('mark-bought')">Marcar comprado</button>
+            <button class="btn btn-ghost btn-small" type="button" onclick="runBatchAction('mark-pending')">Volver pendiente</button>
+            <button class="btn btn-danger btn-small" type="button" onclick="runBatchAction('delete')">Eliminar</button>
+            <button class="btn btn-warning btn-small" type="button" onclick="clearSelectedRecords('compras')">Limpiar</button>`;
+        } else if(activeTab === 'historial'){
+          buttons = `
+            <button class="btn btn-danger btn-small" type="button" onclick="runBatchAction('delete')">Eliminar</button>
+            <button class="btn btn-warning btn-small" type="button" onclick="clearSelectedRecords('historial')">Limpiar</button>`;
+        } else if(activeTab === 'contable'){
+          buttons = `
+            <button class="btn btn-secondary btn-small" type="button" onclick="runBatchAction('mark-paid')">Marcar pagado</button>
+            <button class="btn btn-danger btn-small" type="button" onclick="runBatchAction('delete')">Eliminar</button>
+            <button class="btn btn-warning btn-small" type="button" onclick="clearSelectedRecords('contable')">Limpiar</button>`;
+        }
+        if(buttons){
+          els.floatingBatchBar.innerHTML = `<strong>${title}</strong><div class="stack">${buttons}</div>`;
+          els.floatingBatchBar.style.display = 'block';
+        }
+      }
+      syncAdminCollapseUI();
+    }
+    function getUsedOrderItems(items){
+      return (items || []).filter(item => item.referencia || item.nombre || Number(item.pedida || 0) || Number(item.recibida || 0));
+    }
+    function getOrderItemState(item){
+      const hasData = !!(item.referencia || item.nombre || Number(item.pedida || 0) || Number(item.recibida || 0));
+      const diff = Number(item.recibida || 0) - Number(item.pedida || 0);
+      if(!hasData) return { diff, label:'Pendiente', tone:'neutral', alert:'Aún no se ha completado este producto.' };
+      if(diff === 0) return { diff, label:'Completo', tone:'ok', alert:'Todo llegó completo.' };
+      if(diff < 0) return { diff, label:'Faltante', tone:'danger', alert:'Faltan ' + Math.abs(diff) + ' unidad(es).' };
+      return { diff, label:'Sobrante', tone:'warn', alert:'Sobran ' + diff + ' unidad(es).' };
+    }
+    function setReceptionMobileStep(step){
+      const numeric = Math.min(4, Math.max(1, Number(step || 1)));
+      receptionMobileStep = numeric;
+      const panel = document.getElementById('panel-recepcion');
+      if(panel) panel.dataset.mobileStep = String(numeric);
+      if(els.receptionStepNav){
+        els.receptionStepNav.querySelectorAll('[data-go-step]').forEach(btn => {
+          btn.classList.toggle('active', Number(btn.dataset.goStep) === numeric);
+        });
+      }
+      syncReceptionMobileUI();
+    }
+    function syncReceptionMobileUI(){
+      const panel = document.getElementById('panel-recepcion');
+      if(panel) panel.dataset.mobileStep = String(receptionMobileStep);
+      if(els.mobileReceptionActions){
+        const visible = isMobileView() && canUseReceptionModule() && panel && panel.classList.contains('active');
+        els.mobileReceptionActions.style.display = visible ? 'grid' : 'none';
+      }
+      updateReceptionHeaderSummary();
+      updateCompareSummary();
+    }
+    function updateReceptionHeaderSummary(){
+      if(!els.mobileReceptionSummaryMain) return;
+      const supplier = (els.orderSupplier.value || '').trim();
+      const code = (els.orderCode.value || '').trim();
+      const orderDate = els.orderDate.value ? formatDate(els.orderDate.value) : 'Sin fecha';
+      const payDate = els.paymentDate.value ? formatDate(els.paymentDate.value) : 'Sin fecha';
+      const receiveDate = els.receiveDate.value ? formatDate(els.receiveDate.value) : 'Pendiente';
+      const preview = buildComparison(currentOrderItems);
+      els.mobileReceptionSummaryMain.textContent = supplier || code ? [code || 'Pedido sin código', supplier || 'Proveedor sin definir'].join(' · ') : 'Pedido sin identificar';
+      els.mobileReceptionSummaryState.textContent = preview.status === 'Con diferencia' ? 'Hay productos con diferencias por revisar.' : (preview.status === 'Completo' ? 'Todo va completo hasta ahora.' : 'Completa los datos y productos del pedido.');
+      els.mobileReceptionSummaryExtra.innerHTML = `
+        <div><b>Fecha pedido:</b> ${orderDate}</div>
+        <div><b>Fecha de pago:</b> ${payDate}</div>
+        <div><b>Fecha de recibido:</b> ${receiveDate}</div>
+        <div><b>Productos cargados:</b> ${getUsedOrderItems(currentOrderItems).length}</div>
+        <div><b>Observaciones:</b> ${escapeHtml(els.orderNotes.value.trim() || 'Sin observaciones')}</div>
+      `;
+      if(els.mobileConfirmSummary){
+        const used = getUsedOrderItems(currentOrderItems);
+        const diffs = used.filter(item => getOrderItemState(item).diff !== 0).length;
+        els.mobileConfirmSummary.innerHTML = `
+          <div class="confirm-line"><span>Proveedor</span><strong>${escapeHtml(supplier || 'Sin proveedor')}</strong></div>
+          <div class="confirm-line"><span>Pedido</span><strong>${escapeHtml(code || 'Sin código')}</strong></div>
+          <div class="confirm-line"><span>Estado actual</span><strong>${escapeHtml(preview.status)}</strong></div>
+          <div class="confirm-line"><span>Productos cargados</span><strong>${used.length}</strong></div>
+          <div class="confirm-line"><span>Productos con diferencia</span><strong>${diffs}</strong></div>
+          <div class="confirm-line"><span>Soportes</span><strong>${currentOrderSupportCompra ? 'Compra lista' : 'Compra pendiente'} · ${currentOrderSupportRecibido ? 'Recibido listo' : 'Recibido pendiente'}</strong></div>
+        `;
+      }
+    }
+    function refreshOrderSupportPreview(){
+      if(!els.orderSupportPreviewStrip) return;
+      const hasAnySupport = currentOrderSupportCompra || currentOrderSupportRecibido;
+      els.orderSupportPreviewStrip.style.display = hasAnySupport ? 'grid' : 'none';
+      els.orderCurrentPurchaseSupport.innerHTML = currentOrderSupportCompra ? `<img src="${currentOrderSupportCompra}" alt="Soporte de compra" data-view-image="${currentOrderSupportCompra}" data-view-title="Soporte de compra">` : '<div class="placeholder">Sin soporte de compra.</div>';
+      els.orderCurrentReceivedSupport.innerHTML = currentOrderSupportRecibido ? `<img src="${currentOrderSupportRecibido}" alt="Soporte recibido" data-view-image="${currentOrderSupportRecibido}" data-view-title="Soporte recibido">` : '<div class="placeholder">Sin soporte recibido.</div>';
+      attachInlineImageViewers(els.orderSupportPreviewStrip);
+      updateReceptionHeaderSummary();
+    }
+    function clearSupportPreview(kind){
+      if(kind === 'compra'){
+        currentOrderSupportCompra = '';
+        if(els.purchaseReceipt) els.purchaseReceipt.value = '';
+      } else {
+        currentOrderSupportRecibido = '';
+        if(els.receivedReceipt) els.receivedReceipt.value = '';
+      }
+      refreshOrderSupportPreview();
+    }
+    function quickAdjustReceived(id, action){
+      const item = currentOrderItems.find(line => line.id === id);
+      if(!item) return;
+      if(action === 'minus') item.recibida = Math.max(0, Number(item.recibida || 0) - 1);
+      if(action === 'plus') item.recibida = Number(item.recibida || 0) + 1;
+      if(action === 'equal') item.recibida = Number(item.pedida || 0);
+      renderOrderItemRows();
+    }
+    function finalizeReceivedOrder(){
+      const validItems = getUsedOrderItems(currentOrderItems);
+      if(!validItems.length){
+        alert('Debes agregar al menos un producto antes de finalizar el recibido.');
+        setReceptionMobileStep(2);
+        return;
+      }
+      const comparison = buildComparison(validItems);
+      if(comparison.status === 'Con diferencia'){
+        const ok = confirm('Hay productos con diferencia. ¿Deseas finalizar el recibido así?');
+        if(!ok){
+          setReceptionMobileStep(2);
+          return;
+        }
+      }
+      if(!els.receiveDate.value) els.receiveDate.value = new Date().toISOString().slice(0,10);
+      pendingFinalizeOrder = true;
+      els.orderForm.requestSubmit();
+    }
 
     function applyRoleView(){
       const cfg = getRoleConfig();
+      const isAdmin = currentRole === 'admin';
       document.body.dataset.role = currentRole;
       els.sessionRoleName.textContent = cfg.label;
       els.roleDescription.textContent = cfg.description;
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.style.display = cfg.tabs.includes(btn.dataset.tab) ? 'inline-flex' : 'none';
       });
-      els.toolbarActions.style.display = canUseAdminTools() ? 'flex' : 'none';
+      els.toolbarActions.style.display = 'none';
       els.purchaseFormCard.style.display = canManagePurchases() ? 'block' : 'none';
       els.purchaseLayout.classList.toggle('single-column', !canManagePurchases());
-      els.purchaseListTitle.textContent = currentRole === 'buyer' ? 'Pedidos por hacer' : 'Lista de compras pendientes';
+      els.purchaseListTitle.textContent = currentRole === 'buyer' ? 'Pedidos nuevos por hacer' : 'Lista de compras pendientes';
       els.purchaseRoleNote.style.display = currentRole === 'buyer' ? 'block' : 'none';
       if(currentRole === 'buyer'){
-        els.purchaseRoleNote.textContent = 'Este perfil solo puede consultar la lista de compras por hacer. El formulario y las acciones de edición quedan bloqueados.';
+        els.purchaseRoleNote.textContent = 'Este perfil solo puede consultar los pedidos nuevos o pendientes de compra. Los ya comprados no se muestran aquí.';
+      }
+      if(els.heroCards) els.heroCards.style.display = isAdmin ? '' : 'none';
+      if(els.orderAccountingNote) els.orderAccountingNote.style.display = isAdmin ? '' : 'none';
+      if(els.orderTotalField) els.orderTotalField.style.display = isAdmin ? '' : 'none';
+      if(els.heroTitle){
+        els.heroTitle.textContent = isAdmin
+          ? 'Control de compras, pedidos, recepción y gastos'
+          : (currentRole === 'receiver' ? 'Recepción y verificación de pedidos' : 'Compras por hacer');
+      }
+      if(els.heroText){
+        els.heroText.textContent = isAdmin
+          ? 'Lleva el registro de lo que falta comprar, compara lo pedido contra lo recibido, guarda el historial con soportes y organiza los gastos desde pedidos y manuales en un solo lugar.'
+          : (currentRole === 'receiver'
+              ? 'Revisa cada pedido recibido, compara cantidades y registra novedades del producto que llegó.'
+              : 'Consulta la lista de productos pendientes por comprar con su referencia, cantidad e imagen de apoyo.');
       }
       const active = document.querySelector('.tab-btn.active');
       const activeTab = active ? active.dataset.tab : '';
       const target = canAccessTab(activeTab) ? activeTab : cfg.defaultTab;
+      if(currentRole !== 'admin'){
+        adminMobileState.forms.compras = false;
+        adminMobileState.forms.contable = false;
+        adminMobileState.metricsExpanded = false;
+        clearSelectedRecords();
+      }
+      setReceptionMobileStep(1);
       switchTab(target);
       renderAll();
+      syncReceptionMobileUI();
+      syncAdminCollapseUI();
+      renderAdminMobileUI();
     }
 
     function switchTab(tabName){
@@ -965,6 +1709,8 @@
       document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
       const panel = document.getElementById('panel-' + tabName);
       if(panel) panel.classList.add('active');
+      syncReceptionMobileUI();
+      renderAdminMobileUI();
     }
 
     function loadState(){
@@ -1086,6 +1832,8 @@
       renderAccounting();
       renderMetrics();
       fillExpenseOrderOptions();
+      syncAdminCollapseUI();
+      renderAdminMobileUI();
       saveState();
     }
 
@@ -1149,16 +1897,30 @@
 
     function renderPurchases(){
       const q = getSearchTerm();
+      const onlyPendingForBuyer = currentRole === 'buyer';
       const filtered = state.purchases.filter(item => {
+        if(onlyPendingForBuyer && (item.estado || 'Pendiente') !== 'Pendiente') return false;
+        if(currentRole === 'admin' && !matchesAdminFilter('compras', item)) return false;
         const text = (item.referencia + ' ' + item.nombre + ' ' + item.estado + ' ' + item.observaciones).toLowerCase();
         return !q || text.includes(q);
       });
       if(!filtered.length){
-        els.purchaseList.innerHTML = '<div class="empty-state">No hay productos con ese filtro.</div>';
+        els.purchaseList.innerHTML = onlyPendingForBuyer
+          ? '<div class="empty-state">No hay pedidos nuevos o pendientes por comprar en este momento.</div>'
+          : '<div class="empty-state">No hay productos con ese filtro.</div>';
         return;
       }
-      els.purchaseList.innerHTML = filtered.map(item => `
+      const selection = getSelectionSet('compras');
+      els.purchaseList.innerHTML = filtered.map(item => {
+        const tone = item.estado === 'Pendiente' ? 'warn' : 'ok';
+        return `
         <article class="purchase-card">
+          <div class="compact-title">
+            <div>
+              <span class="status-banner ${tone}">${item.estado === 'Pendiente' ? '⏳ Pendiente' : '✅ Comprado'}</span>
+            </div>
+            ${isAdminMobile() ? `<label class="record-select"><input type="checkbox" ${selection.has(item.id) ? 'checked' : ''} onchange="toggleSelectRecord('compras','${item.id}')"> Selección</label>` : ''}
+          </div>
           <div class="purchase-image">
             ${item.imagen ? `<img src="${item.imagen}" alt="${escapeHtml(item.nombre)}" data-view-image="${item.imagen}" data-view-title="${escapeAttribute(item.nombre || 'Producto')}" />` : '<div class="no-image">Sin imagen del producto</div>'}
           </div>
@@ -1166,16 +1928,16 @@
             <strong>${escapeHtml(item.nombre)}</strong>
             <small><b>Referencia:</b> ${escapeHtml(item.referencia)}</small>
             <small><b>Cantidad:</b> ${Number(item.cantidad || 0)} ${escapeHtml(item.unidad || '')}</small>
-            <small><b>Estado:</b> ${badge(item.estado)}</small>
             <small><b>Observaciones:</b> ${escapeHtml(item.observaciones || 'Sin observaciones')}</small>
           </div>
           <div class="stack">
-            ${canManagePurchases() ? `<button class="btn btn-secondary btn-small action-only-admin" type="button" onclick="togglePurchaseState('${item.id}')">${item.estado === 'Pendiente' ? 'Marcar comprado' : 'Volver a pendiente'}</button>
-            <button class="btn btn-warning btn-small action-only-admin" type="button" onclick="editPurchase('${item.id}')">Editar</button>
-            <button class="btn btn-danger btn-small action-only-admin" type="button" onclick="deletePurchase('${item.id}')">Eliminar</button>` : '<span class="badge neutral">Solo lectura</span>'}
+            ${canManagePurchases() ? `<button class="btn btn-secondary btn-small action-only-admin" type="button" onclick="togglePurchaseState('${item.id}')">${item.estado === 'Pendiente' ? '✓ Comprado' : '↺ Pendiente'}</button>
+            <button class="btn btn-warning btn-small action-only-admin" type="button" onclick="editPurchase('${item.id}')">✏️ Editar</button>
+            <button class="btn btn-danger btn-small action-only-admin" type="button" onclick="deletePurchase('${item.id}')">🗑 Eliminar</button>` : '<span class="badge neutral">Solo lectura</span>'}
           </div>
         </article>
-      `).join('');
+      `;
+      }).join('');
       attachInlineImageViewers(els.purchaseList);
     }
 
@@ -1187,41 +1949,150 @@
       if(!item) return;
       const field = target.dataset.field;
       item[field] = field === 'pedida' || field === 'recibida' ? Number(target.value || 0) : target.value;
-      const row = target.closest('tr');
-      if(row){
-        const diffCell = row.querySelector('[data-diff-cell]');
-        if(diffCell){
-          diffCell.textContent = Number(item.recibida || 0) - Number(item.pedida || 0);
+      document.querySelectorAll(`input[data-id="${item.id}"][data-field="${field}"]`).forEach(input => {
+        if(input !== target) input.value = target.value;
+      });
+      const state = getOrderItemState(item);
+      document.querySelectorAll(`tr input[data-id="${item.id}"]`).forEach(input => {
+        const row = input.closest('tr');
+        if(row){
+          const diffCell = row.querySelector('[data-diff-cell]');
+          if(diffCell) diffCell.textContent = state.diff;
         }
-      }
+      });
+      document.querySelectorAll(`.order-mobile-card input[data-id="${item.id}"]`).forEach(input => {
+        const card = input.closest('.order-mobile-card');
+        if(card){
+          const badge = card.querySelector('[data-diff-badge]');
+          if(badge){
+            badge.className = 'order-mobile-diff ' + state.tone;
+            badge.textContent = state.diff === 0 ? 'Diferencia: 0' : (state.diff < 0 ? 'Faltan ' + Math.abs(state.diff) : 'Sobran ' + state.diff);
+          }
+          const alertBox = card.querySelector('[data-alert-box]');
+          if(alertBox){
+            alertBox.className = 'order-mobile-alert ' + state.tone;
+            alertBox.textContent = state.alert;
+          }
+          const statusChip = card.querySelector('[data-status-chip]');
+          if(statusChip){
+            statusChip.className = 'order-mobile-status ' + state.tone;
+            statusChip.textContent = state.label;
+          }
+          const caption = card.querySelector('[data-product-caption]');
+          if(caption){
+            caption.textContent = (item.referencia || 'Sin referencia') + ' · ' + (item.nombre || 'Sin nombre');
+          }
+        }
+      });
       updateCompareSummary();
     }
 
     function handleOrderTableClick(e){
-      const btn = e.target.closest('button[data-remove-order-row]');
-      if(!btn) return;
-      if(!canUseReceptionModule()) return roleDenied('Este perfil no puede modificar pedidos recibidos.');
-      removeOrderItem(btn.dataset.removeOrderRow);
+      const removeBtn = e.target.closest('button[data-remove-order-row]');
+      if(removeBtn){
+        if(!canUseReceptionModule()) return roleDenied('Este perfil no puede modificar pedidos recibidos.');
+        removeOrderItem(removeBtn.dataset.removeOrderRow);
+        return;
+      }
+      const quickBtn = e.target.closest('button[data-quick-received]');
+      if(quickBtn){
+        if(!canUseReceptionModule()) return roleDenied('Este perfil no puede modificar pedidos recibidos.');
+        quickAdjustReceived(quickBtn.dataset.quickReceived, quickBtn.dataset.action);
+      }
     }
 
     function renderOrderItemRows(){
       if(!currentOrderItems.length) currentOrderItems = [createEmptyOrderItem()];
-      els.orderItemsBody.innerHTML = currentOrderItems.map(item => `
+      const filteredItems = currentOrderItems.filter(item => {
+        if(!orderProductSearchTerm) return true;
+        const text = [item.referencia, item.nombre].join(' ').toLowerCase();
+        return text.includes(orderProductSearchTerm);
+      });
+      els.orderItemsBody.innerHTML = filteredItems.map(item => {
+        const state = getOrderItemState(item);
+        return `
         <tr>
           <td><input data-id="${item.id}" data-field="referencia" value="${escapeAttribute(item.referencia)}" placeholder="Referencia"></td>
           <td><input data-id="${item.id}" data-field="nombre" value="${escapeAttribute(item.nombre)}" placeholder="Producto"></td>
-          <td><input data-id="${item.id}" data-field="pedida" type="number" min="0" value="${Number(item.pedida || 0)}"></td>
-          <td><input data-id="${item.id}" data-field="recibida" type="number" min="0" value="${Number(item.recibida || 0)}"></td>
-          <td data-diff-cell>${Number(item.recibida || 0) - Number(item.pedida || 0)}</td>
+          <td><input data-id="${item.id}" data-field="pedida" type="number" min="0" inputmode="numeric" value="${Number(item.pedida || 0)}"></td>
+          <td><input data-id="${item.id}" data-field="recibida" type="number" min="0" inputmode="numeric" value="${Number(item.recibida || 0)}"></td>
+          <td data-diff-cell>${state.diff}</td>
           <td><button class="btn btn-danger btn-small" type="button" data-remove-order-row="${item.id}" ${currentOrderItems.length === 1 ? 'disabled' : ''}>Quitar</button></td>
-        </tr>
-      `).join('');
+        </tr>`;
+      }).join('') || '<tr><td colspan="6"><div class="empty-state">No hay productos con ese filtro.</div></td></tr>';
+      els.orderItemsMobile.innerHTML = filteredItems.map((item, index) => {
+        const state = getOrderItemState(item);
+        return `
+        <article class="order-mobile-card">
+          <div class="order-mobile-card-header">
+            <div>
+              <div class="order-mobile-topline">
+                <div class="order-mobile-card-title">Producto ${index + 1}</div>
+                <span class="order-mobile-status ${state.tone}" data-status-chip>${state.label}</span>
+              </div>
+              <div class="subtle" data-product-caption>${escapeHtml(item.referencia || 'Sin referencia')} · ${escapeHtml(item.nombre || 'Sin nombre')}</div>
+            </div>
+            <span class="order-mobile-diff ${state.tone}" data-diff-badge>${state.diff === 0 ? 'Diferencia: 0' : (state.diff < 0 ? 'Faltan ' + Math.abs(state.diff) : 'Sobran ' + state.diff)}</span>
+          </div>
+          <div class="order-mobile-fields">
+            <div class="field" style="margin-bottom:0">
+              <label>Referencia</label>
+              <input data-id="${item.id}" data-field="referencia" value="${escapeAttribute(item.referencia)}" placeholder="Referencia">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label>Producto</label>
+              <input data-id="${item.id}" data-field="nombre" value="${escapeAttribute(item.nombre)}" placeholder="Producto">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label>Cantidad pedida</label>
+              <input data-id="${item.id}" data-field="pedida" type="number" min="0" inputmode="numeric" value="${Number(item.pedida || 0)}">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label>Cantidad recibida</label>
+              <input data-id="${item.id}" data-field="recibida" type="number" min="0" inputmode="numeric" value="${Number(item.recibida || 0)}">
+              <div class="qty-quick-row">
+                <button class="btn btn-ghost btn-small" type="button" data-quick-received="${item.id}" data-action="minus">-1</button>
+                <button class="btn btn-secondary btn-small" type="button" data-quick-received="${item.id}" data-action="equal">Igual pedido</button>
+                <button class="btn btn-ghost btn-small" type="button" data-quick-received="${item.id}" data-action="plus">+1</button>
+              </div>
+            </div>
+          </div>
+          <div class="order-mobile-alert ${state.tone}" data-alert-box>${state.alert}</div>
+          <div class="order-mobile-actions">
+            <button class="btn btn-danger btn-small" type="button" data-remove-order-row="${item.id}" ${currentOrderItems.length === 1 ? 'disabled' : ''}>Quitar producto</button>
+          </div>
+        </article>`;
+      }).join('') || '<div class="empty-state">No hay productos con ese filtro.</div>';
       updateCompareSummary();
+      updateReceptionHeaderSummary();
     }
 
     function updateCompareSummary(){
       const preview = buildComparison(currentOrderItems);
-      els.compareSummary.textContent = preview.message;
+      const used = getUsedOrderItems(currentOrderItems);
+      const completos = used.filter(item => getOrderItemState(item).label === 'Completo').length;
+      const faltantes = used.filter(item => getOrderItemState(item).label === 'Faltante').length;
+      const sobrantes = used.filter(item => getOrderItemState(item).label === 'Sobrante').length;
+      const diferencias = used.filter(item => getOrderItemState(item).diff !== 0);
+      els.compareSummary.innerHTML = `
+        <div><b>${escapeHtml(preview.status)}</b> · ${escapeHtml(preview.message)}</div>
+        <div style="margin-top:8px">Productos: <b>${used.length}</b> · Completos: <b>${completos}</b> · Faltantes: <b>${faltantes}</b> · Sobrantes: <b>${sobrantes}</b></div>
+        ${diferencias.length ? `<div style="margin-top:8px">${diferencias.map(item => {
+          const st = getOrderItemState(item);
+          return `<span class="badge ${st.tone === 'ok' ? 'ok' : (st.tone === 'danger' ? 'danger' : 'warn')}">${escapeHtml(item.nombre || item.referencia || 'Producto')} · ${escapeHtml(st.alert)}</span>`;
+        }).join(' ')}</div>` : ''}
+      `;
+      if(els.receiverProgressFloat){
+        els.receiverProgressFloat.innerHTML = `
+          <div class="receiver-progress-grid">
+            <div class="receiver-progress-pill"><b>${used.length}</b><span>Productos</span></div>
+            <div class="receiver-progress-pill"><b>${completos}</b><span>Completos</span></div>
+            <div class="receiver-progress-pill"><b>${faltantes}</b><span>Faltantes</span></div>
+            <div class="receiver-progress-pill"><b>${sobrantes}</b><span>Sobrantes</span></div>
+          </div>
+        `;
+      }
+      updateReceptionHeaderSummary();
     }
 
     function removeOrderItem(id){
@@ -1233,6 +2104,24 @@
     async function handleOrderSubmit(e){
       e.preventDefault();
       if(!canUseReceptionModule()) return roleDenied('Este perfil no tiene acceso para registrar pedidos recibidos.');
+      if(!els.orderSupplier.value.trim()){
+        alert('Debes escribir el proveedor o empresa del pedido.');
+        setReceptionMobileStep(1);
+        els.orderSupplier.focus();
+        return;
+      }
+      if(!els.orderCode.value.trim()){
+        alert('Debes escribir el código o número del pedido.');
+        setReceptionMobileStep(1);
+        els.orderCode.focus();
+        return;
+      }
+      if(!els.orderDate.value){
+        alert('Debes seleccionar la fecha del pedido.');
+        setReceptionMobileStep(1);
+        els.orderDate.focus();
+        return;
+      }
       const validItems = currentOrderItems.map(item => ({
         id: item.id || createId('line'),
         referencia: String(item.referencia || '').trim(),
@@ -1242,6 +2131,7 @@
       })).filter(item => item.referencia || item.nombre || item.pedida || item.recibida);
       if(!validItems.length){
         alert('Debes agregar al menos un producto al pedido.');
+        setReceptionMobileStep(2);
         return;
       }
       const compraImg = await fileToDataUrl(els.purchaseReceipt.files[0]);
@@ -1275,10 +2165,12 @@
       } else {
         state.orders.unshift({ id:createId('order'), ...payload });
       }
+      pendingFinalizeOrder = false;
       saveState();
       resetOrderForm();
       renderAll();
       switchTab(currentRole === 'admin' ? 'historial' : 'recepcion');
+      if(currentRole !== 'admin') setReceptionMobileStep(1);
     }
 
     function resetOrderForm(){
@@ -1291,15 +2183,18 @@
       currentOrderItems = [createEmptyOrderItem()];
       currentOrderSupportCompra = '';
       currentOrderSupportRecibido = '';
-      els.orderSupportPreviewStrip.style.display = 'none';
-      els.orderCurrentPurchaseSupport.innerHTML = '';
-      els.orderCurrentReceivedSupport.innerHTML = '';
+      orderProductSearchTerm = '';
+      if(els.orderProductSearch) els.orderProductSearch.value = '';
+      pendingFinalizeOrder = false;
+      setReceptionMobileStep(1);
+      refreshOrderSupportPreview();
       renderOrderItemRows();
     }
 
     function renderHistory(){
       const q = getSearchTerm();
       const filtered = state.orders.filter(order => {
+        if(currentRole === 'admin' && !matchesAdminFilter('historial', order)) return false;
         const text = [order.proveedor, order.codigo, order.estado, order.resumen, order.observaciones, order.valorTotal, ...(order.items || []).map(i => i.nombre + ' ' + i.referencia)].join(' ').toLowerCase();
         return !q || text.includes(q);
       });
@@ -1307,8 +2202,9 @@
         els.historyContent.innerHTML = '<div class="empty-state">No hay pedidos registrados todavía.</div>';
         return;
       }
+      const selection = getSelectionSet('historial');
       els.historyContent.innerHTML = `
-        <div class="table-wrap">
+        <div class="table-wrap desktop-data-table">
           <table>
             <thead>
               <tr>
@@ -1352,20 +2248,56 @@
             </tbody>
           </table>
         </div>
+        <div class="mobile-history-list">
+          ${filtered.map(order => {
+            const tone = order.estado === 'Completo' ? 'ok' : (order.estado === 'Con diferencia' ? 'danger' : 'warn');
+            return `
+            <div class="mobile-record-card">
+              <div class="compact-title">
+                <div>
+                  <span class="status-banner ${tone}">${order.estado === 'Completo' ? '✅ Completo' : (order.estado === 'Con diferencia' ? '⚠️ Con diferencia' : '⏳ Pendiente')}</span>
+                </div>
+                ${isAdminMobile() ? `<label class="record-select"><input type="checkbox" ${selection.has(order.id) ? 'checked' : ''} onchange="toggleSelectRecord('historial','${order.id}')"> Selección</label>` : ''}
+              </div>
+              <div class="mobile-record-head">
+                <div>
+                  <strong>${escapeHtml(order.codigo || 'Pedido sin código')}</strong>
+                  <div class="mobile-record-sub">${escapeHtml(order.proveedor || 'Proveedor sin registrar')} · ${(order.items || []).length} producto(s)</div>
+                </div>
+                ${badge(order.estado)}
+              </div>
+              <div class="mobile-record-grid">
+                <div class="mobile-record-item"><span>Fecha pedido</span><strong>${formatDate(order.fechaPedido)}</strong></div>
+                <div class="mobile-record-item"><span>Fecha pago</span><strong>${formatDate(order.fechaPago)}</strong></div>
+                <div class="mobile-record-item"><span>Fecha recibido</span><strong>${formatDate(order.fechaRecibido)}</strong></div>
+                <div class="mobile-record-item"><span>Valor total</span><strong>${formatMoney(order.valorTotal || 0)}</strong></div>
+                <div class="mobile-record-item full"><span>Comparativa</span><strong>${escapeHtml(order.resumen || 'Sin resumen')}</strong></div>
+                <div class="mobile-record-item full"><span>Soportes</span><div class="mobile-support-tags">${order.soporteCompra ? '<span class="badge ok">Recibo compra</span>' : '<span class="badge neutral">Sin recibo compra</span>'}${order.soporteRecibido ? '<span class="badge ok">Recibido empresa</span>' : '<span class="badge neutral">Sin recibido</span>'}</div></div>
+              </div>
+              <div class="mobile-record-actions three">
+                <button class="btn btn-secondary btn-small" type="button" onclick="openOrderDetail('${order.id}')">👁 Ver</button>
+                ${canViewHistory() && order.estado === 'Pendiente' ? `<button class="btn btn-warning btn-small" type="button" onclick="editPendingOrder('${order.id}')">✏️ Editar</button>` : '<span class="badge neutral">Bloqueado</span>'}
+                ${canViewHistory() ? `<button class="btn btn-danger btn-small" type="button" onclick="deleteOrder('${order.id}')">🗑 Eliminar</button>` : ''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
       `;
     }
 
     function renderAccounting(){
       const q = getSearchTerm();
       const filteredExpenses = state.expenses.filter(expense => {
+        if(currentRole === 'admin' && !matchesAdminFilter('contable', expense)) return false;
         const text = [expense.fecha, expense.categoria, expense.concepto, expense.proveedor, expense.pedidoCodigo, expense.valor, expense.estadoPago, expense.observaciones].join(' ').toLowerCase();
         return !q || text.includes(q);
       });
+      const selection = getSelectionSet('contable');
       if(!filteredExpenses.length){
         els.expenseTableWrap.innerHTML = '<div class="empty-state">No hay gastos manuales registrados todavía.</div>';
       } else {
         els.expenseTableWrap.innerHTML = `
-          <div class="table-wrap">
+          <div class="table-wrap desktop-data-table">
             <table>
               <thead>
                 <tr>
@@ -1402,6 +2334,41 @@
               </tbody>
             </table>
           </div>
+          <div class="mobile-expense-list">
+            ${filteredExpenses.map(expense => {
+              const paid = String(expense.estadoPago || '').toLowerCase() === 'pagado';
+              const tone = paid ? 'ok' : 'warn';
+              return `
+              <div class="mobile-record-card">
+                <div class="compact-title">
+                  <div>
+                    <span class="status-banner ${tone}">${paid ? '💳 Pagado' : '⏳ Pendiente'}</span>
+                  </div>
+                  ${isAdminMobile() ? `<label class="record-select"><input type="checkbox" ${selection.has(expense.id) ? 'checked' : ''} onchange="toggleSelectRecord('contable','${expense.id}')"> Selección</label>` : ''}
+                </div>
+                <div class="mobile-record-head">
+                  <div>
+                    <strong>${escapeHtml(expense.concepto || 'Gasto manual')}</strong>
+                    <div class="mobile-record-sub">${escapeHtml(expense.categoria || 'Sin categoría')} · ${escapeHtml(expense.proveedor || 'Sin proveedor')}</div>
+                  </div>
+                  ${badge(expense.estadoPago || 'Sin estado')}
+                </div>
+                <div class="mobile-record-grid">
+                  <div class="mobile-record-item"><span>Fecha</span><strong>${formatDate(expense.fecha)}</strong></div>
+                  <div class="mobile-record-item"><span>Valor</span><strong>${formatMoney(expense.valor || 0)}</strong></div>
+                  <div class="mobile-record-item"><span>Pedido relacionado</span><strong>${escapeHtml(expense.pedidoCodigo || 'Sin pedido')}</strong></div>
+                  <div class="mobile-record-item"><span>Método</span><strong>${escapeHtml(expense.metodoPago || 'Sin método')}</strong></div>
+                  <div class="mobile-record-item full"><span>Observaciones</span><strong>${escapeHtml(expense.observaciones || 'Sin observaciones')}</strong></div>
+                </div>
+                <div class="mobile-card-note">${expense.soporte ? 'Soporte cargado.' : 'Sin soporte cargado.'}</div>
+                <div class="mobile-record-actions three">
+                  ${expense.soporte ? `<button class="btn btn-secondary btn-small" type="button" onclick="openExpenseSupport('${expense.id}')">👁 Soporte</button>` : '<span class="badge neutral">Sin soporte</span>'}
+                  <button class="btn btn-warning btn-small" type="button" onclick="editExpense('${expense.id}')">✏️ Editar</button>
+                  <button class="btn btn-danger btn-small" type="button" onclick="deleteExpense('${expense.id}')">🗑 Eliminar</button>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
         `;
       }
 
@@ -1412,14 +2379,15 @@
           proveedor: order.proveedor,
           pedido: Number(order.valorTotal || 0),
           manual: relatedManual,
-          total: Number(order.valorTotal || 0) + relatedManual
+          total: Number(order.valorTotal || 0) + relatedManual,
+          estado: order.estado || 'Pendiente'
         };
       });
       if(!orderControlRows.length){
         els.orderMoneyControl.innerHTML = '<div class="empty-state">Aún no hay pedidos para relacionar con control de dinero.</div>';
       } else {
         els.orderMoneyControl.innerHTML = `
-          <div class="table-wrap">
+          <div class="table-wrap desktop-data-table">
             <table>
               <thead>
                 <tr>
@@ -1442,6 +2410,27 @@
                 `).join('')}
               </tbody>
             </table>
+          </div>
+          <div class="mobile-money-list">
+            ${orderControlRows.map(row => {
+              const tone = row.estado === 'Con diferencia' ? 'danger' : (row.estado === 'Completo' ? 'ok' : 'warn');
+              return `
+              <div class="mobile-record-card">
+                <div class="compact-title"><span class="status-banner ${tone}">${row.estado === 'Con diferencia' ? '⚠️ Pedido con diferencia' : (row.estado === 'Completo' ? '✅ Pedido completo' : '⏳ Pedido pendiente')}</span></div>
+                <div class="mobile-record-head">
+                  <div>
+                    <strong>${escapeHtml(row.codigo || 'Pedido sin código')}</strong>
+                    <div class="mobile-record-sub">${escapeHtml(row.proveedor || 'Proveedor sin registrar')}</div>
+                  </div>
+                  <span class="badge ok">${formatMoney(row.total)}</span>
+                </div>
+                <div class="mobile-record-grid">
+                  <div class="mobile-record-item"><span>Valor pedido</span><strong>${formatMoney(row.pedido)}</strong></div>
+                  <div class="mobile-record-item"><span>Manual relacionado</span><strong>${formatMoney(row.manual)}</strong></div>
+                  <div class="mobile-record-item full"><span>Total acumulado</span><strong>${formatMoney(row.total)}</strong></div>
+                </div>
+              </div>`;
+            }).join('')}
           </div>
         `;
       }
@@ -1823,12 +2812,11 @@
       els.orderFormHint.textContent = 'Solo los pedidos pendientes se pueden corregir si hubo un error en el registro.';
       els.orderSubmitBtn.textContent = 'Actualizar pedido pendiente';
       els.orderCancelBtn.style.display = 'inline-flex';
-      const hasAnySupport = currentOrderSupportCompra || currentOrderSupportRecibido;
-      els.orderSupportPreviewStrip.style.display = hasAnySupport ? 'grid' : 'none';
-      els.orderCurrentPurchaseSupport.innerHTML = currentOrderSupportCompra ? `<img src="${currentOrderSupportCompra}" alt="Soporte actual de compra" data-view-image="${currentOrderSupportCompra}" data-view-title="Soporte actual de compra · ${escapeAttribute(order.codigo)}">` : '<div class="placeholder">Sin soporte actual.</div>';
-      els.orderCurrentReceivedSupport.innerHTML = currentOrderSupportRecibido ? `<img src="${currentOrderSupportRecibido}" alt="Soporte actual recibido" data-view-image="${currentOrderSupportRecibido}" data-view-title="Soporte actual recibido · ${escapeAttribute(order.codigo)}">` : '<div class="placeholder">Sin soporte actual.</div>';
-      attachInlineImageViewers(els.orderSupportPreviewStrip);
+      refreshOrderSupportPreview();
+      if(els.orderProductSearch) els.orderProductSearch.value = '';
+      orderProductSearchTerm = '';
       renderOrderItemRows();
+      setReceptionMobileStep(1);
       switchTab('recepcion');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
