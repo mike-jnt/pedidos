@@ -1253,6 +1253,8 @@
     let suppressCloudSync = false;
     let lastSavedStateSignature = '';
     let lastSyncedStateSignature = '';
+    let lastBlockedSyncSignature = '';
+    let lastBlockedSyncReason = '';
     const cloudCollectionIndex = { purchases:new Set(), orders:new Set(), expenses:new Set() };
 
     function getCloudCollectionsForRole(role = currentRole){
@@ -2412,32 +2414,101 @@
       }
     }
 
-    function keepAssetInFirestore(value){
+    function estimateDataUrlBytes(dataUrl=''){
+      const value = String(dataUrl || '');
+      const commaIndex = value.indexOf(',');
+      if(commaIndex === -1) return value.length;
+      const base64 = value.slice(commaIndex + 1);
+      const padding = (base64.match(/=*$/) || [''])[0].length;
+      return Math.max(0, Math.floor((base64.length * 3) / 4) - padding);
+    }
+
+    function loadImageElementFromSource(src){
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('No fue posible procesar la imagen seleccionada.'));
+        image.src = src;
+      });
+    }
+
+    async function compressImageDataUrlForFirestore(dataUrl, options = {}){
+      const value = String(dataUrl || '');
+      if(!value.startsWith('data:image/')) return value;
+      const targetBytes = Number(options.targetBytes || 220000);
+      if(estimateDataUrlBytes(value) <= targetBytes) return value;
+
+      const image = await loadImageElementFromSource(value);
+      let width = image.naturalWidth || image.width || 0;
+      let height = image.naturalHeight || image.height || 0;
+      if(!width || !height) return value;
+
+      const maxEdge = Number(options.maxEdge || 1600);
+      const largestEdge = Math.max(width, height);
+      if(largestEdge > maxEdge){
+        const scale = maxEdge / largestEdge;
+        width = Math.max(1, Math.round(width * scale));
+        height = Math.max(1, Math.round(height * scale));
+      }
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d', { alpha: false });
+      if(!context) return value;
+
+      let attemptWidth = width;
+      let attemptHeight = height;
+      let best = value;
+      const mimeType = 'image/jpeg';
+
+      for(let resizeStep = 0; resizeStep < 5; resizeStep += 1){
+        canvas.width = attemptWidth;
+        canvas.height = attemptHeight;
+        context.fillStyle = '#ffffff';
+        context.fillRect(0, 0, attemptWidth, attemptHeight);
+        context.drawImage(image, 0, 0, attemptWidth, attemptHeight);
+
+        for(let quality = 0.82; quality >= 0.42; quality -= 0.08){
+          const candidate = canvas.toDataURL(mimeType, Number(quality.toFixed(2)));
+          if(estimateDataUrlBytes(candidate) < estimateDataUrlBytes(best)) best = candidate;
+          if(estimateDataUrlBytes(candidate) <= targetBytes) return candidate;
+        }
+
+        attemptWidth = Math.max(720, Math.round(attemptWidth * 0.82));
+        attemptHeight = Math.max(720, Math.round(attemptHeight * 0.82));
+      }
+
+      return best;
+    }
+
+    async function keepAssetInFirestore(value){
       if(!value) return '';
       const stringValue = String(value);
-      return stringValue;
+      if(!stringValue.startsWith('data:image/')) return stringValue;
+      return compressImageDataUrlForFirestore(stringValue);
     }
 
     async function prepareStateForCloud(){
-      const purchases = state.purchases.map(item => {
+      const purchases = await Promise.all(state.purchases.map(async item => {
         const purchase = normalizePurchase(item);
-        purchase.imagen = keepAssetInFirestore(purchase.imagen);
-        purchase.facturaCompra = keepAssetInFirestore(purchase.facturaCompra);
+        purchase.imagen = await keepAssetInFirestore(purchase.imagen);
+        purchase.facturaCompra = await keepAssetInFirestore(purchase.facturaCompra);
         return purchase;
-      });
+      }));
 
-      const orders = state.orders.map(item => {
+      const orders = await Promise.all(state.orders.map(async item => {
         const order = normalizeOrder(item);
-        order.soporteCompra = keepAssetInFirestore(order.soporteCompra);
-        order.soporteRecibido = keepAssetInFirestore(order.soporteRecibido);
+        order.soporteCompra = await keepAssetInFirestore(order.soporteCompra);
+        order.soporteRecibido = await keepAssetInFirestore(order.soporteRecibido);
+        order.linkedPurchaseImage = await keepAssetInFirestore(order.linkedPurchaseImage);
+        order.linkedPurchaseInvoice = await keepAssetInFirestore(order.linkedPurchaseInvoice);
         return order;
-      });
+      }));
 
-      const expenses = state.expenses.map(item => {
+      const expenses = await Promise.all(state.expenses.map(async item => {
         const expense = normalizeExpense(item);
-        expense.soporte = keepAssetInFirestore(expense.soporte);
+        expense.soporte = await keepAssetInFirestore(expense.soporte);
         return expense;
-      });
+      }));
 
       return { purchases, orders, expenses };
     }
@@ -2476,6 +2547,7 @@
       if(!firebaseReady || !currentFirebaseUser || suppressCloudSync || cloudSyncInFlight || !navigator.onLine) return;
       const pendingSignature = getStateSignature(state);
       if(pendingSignature === lastSyncedStateSignature) return;
+      if(pendingSignature === lastBlockedSyncSignature) return;
       cloudSyncInFlight = true;
       updateCloudStatus('Sincronizando Firebase', 'syncing', 'Guardando compras, pedidos, historial y contabilidad en la nube...');
       try {
@@ -2492,20 +2564,33 @@
 
         lastSavedStateSignature = getStateSignature(state);
         lastSyncedStateSignature = lastSavedStateSignature;
+        lastBlockedSyncSignature = '';
+        lastBlockedSyncReason = '';
         renderAll();
         updateCloudStatus('Firebase conectado', 'ready', 'Cambios guardados en la nube.');
       } catch(error){
         console.error('Firebase sync error:', error);
-        updateCloudStatus('Error en Firebase', 'error', getFirebaseFriendlyError(error));
+        const friendly = getFirebaseFriendlyError(error);
+        const message = String(error?.message || '');
+        if(message.includes('demasiado grande para Firestore')){
+          lastBlockedSyncSignature = getStateSignature(state);
+          lastBlockedSyncReason = friendly;
+        } else {
+          lastBlockedSyncSignature = '';
+          lastBlockedSyncReason = '';
+        }
+        updateCloudStatus('Error en Firebase', 'error', friendly);
       } finally {
         suppressCloudSync = false;
         cloudSyncInFlight = false;
       }
-      if(getStateSignature(state) !== lastSyncedStateSignature) scheduleCloudSync('post-sync');
+      if(getStateSignature(state) !== lastSyncedStateSignature && getStateSignature(state) !== lastBlockedSyncSignature) scheduleCloudSync('post-sync');
     }
 
     function scheduleCloudSync(reason='queued'){
       if(!firebaseReady || !currentFirebaseUser || suppressCloudSync || !navigator.onLine) return;
+      const pendingSignature = getStateSignature(state);
+      if(pendingSignature === lastBlockedSyncSignature) return;
       clearTimeout(cloudSyncTimer);
       cloudSyncTimer = setTimeout(() => {
         syncStateToCloud(reason);
@@ -2551,21 +2636,50 @@
       return result;
     }
 
+    function mergeRecordLists(localList = [], remoteList = []){
+      const merged = new Map();
+      (Array.isArray(remoteList) ? remoteList : []).forEach(item => {
+        if(item && item.id) merged.set(item.id, item);
+      });
+      (Array.isArray(localList) ? localList : []).forEach(item => {
+        if(item && item.id && !merged.has(item.id)) merged.set(item.id, item);
+      });
+      return [...merged.values()];
+    }
+
     async function hydrateCloudState(){
       if(!firebaseReady || !currentFirebaseUser) return;
       suppressCloudSync = true;
       try {
         updateCloudStatus('Firebase conectado', 'syncing', 'Cargando datos guardados...');
         const remoteState = await fetchCloudState();
+        const scopedLocalState = getRoleScopedState(state);
+        const mergedState = {
+          purchases: sortPurchasesForUi(mergeRecordLists(scopedLocalState.purchases, remoteState.purchases)),
+          orders: sortOrdersForUi(mergeRecordLists(scopedLocalState.orders, remoteState.orders)),
+          expenses: sortExpensesForUi(mergeRecordLists(scopedLocalState.expenses, remoteState.expenses))
+        };
         if(hasAnyStoredData(remoteState)){
-          state.purchases = remoteState.purchases;
-          state.orders = remoteState.orders;
-          state.expenses = remoteState.expenses;
+          const hasLocalMissing = getStateSignature(mergedState) !== getStateSignature(remoteState);
+          state.purchases = mergedState.purchases;
+          state.orders = mergedState.orders;
+          state.expenses = mergedState.expenses;
           localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           lastSavedStateSignature = getStateSignature(state);
-          lastSyncedStateSignature = lastSavedStateSignature;
+          lastSyncedStateSignature = getStateSignature(remoteState);
           renderAll();
-          updateCloudStatus('Firebase conectado', 'ready', 'Datos cargados desde la nube.');
+          updateCloudStatus(
+            'Firebase conectado',
+            'ready',
+            hasLocalMissing
+              ? 'Se cargó la nube y se conservaron registros locales pendientes por sincronizar.'
+              : 'Datos cargados desde la nube.'
+          );
+          if(hasLocalMissing){
+            suppressCloudSync = false;
+            scheduleCloudSync('merge-local-remote');
+            return;
+          }
         } else if(hasAnyStoredData(state)){
           lastSavedStateSignature = '';
           suppressCloudSync = false;
@@ -2638,6 +2752,10 @@
       const signature = getStateSignature(state);
       if(signature !== lastSavedStateSignature){
         lastSavedStateSignature = signature;
+        if(signature !== lastBlockedSyncSignature){
+          lastBlockedSyncSignature = '';
+          lastBlockedSyncReason = '';
+        }
         if(!suppressCloudSync) scheduleCloudSync('local-change');
       }
     }
@@ -2949,12 +3067,16 @@
 
     async function fileToDataUrl(file){
       if(!file) return '';
-      return new Promise((resolve,reject) => {
+      const dataUrl = await new Promise((resolve,reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result || '');
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
+      if(String(dataUrl || '').startsWith('data:image/')){
+        return compressImageDataUrlForFirestore(dataUrl, { targetBytes: 220000, maxEdge: 1600 });
+      }
+      return dataUrl;
     }
 
     async function handlePurchaseSubmit(e){
