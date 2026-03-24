@@ -1255,6 +1255,8 @@
     let lastSyncedStateSignature = '';
     let lastBlockedSyncSignature = '';
     let lastBlockedSyncReason = '';
+    let pendingRealtimeStart = false;
+    const cloudRealtimeUnsubs = { purchases:null, orders:null, expenses:null };
     const cloudCollectionIndex = { purchases:new Set(), orders:new Set(), expenses:new Set() };
 
     function getCloudCollectionsForRole(role = currentRole){
@@ -1755,6 +1757,8 @@
     function loadSession(){ return null; }
 
     async function logoutSession(){
+      stopCloudRealtimeListeners();
+      pendingRealtimeStart = false;
       if(firebaseAuth){
         try {
           await firebaseModules.signOut(firebaseAuth);
@@ -1820,6 +1824,8 @@
     }
 
     async function applyAuthenticatedUser(user){
+      stopCloudRealtimeListeners();
+      pendingRealtimeStart = true;
       const role = await resolveRoleForUser(user);
       if(!role){
         await firebaseModules.signOut(firebaseAuth);
@@ -1850,6 +1856,8 @@
             showLogin(getFirebaseFriendlyError(error));
           }
         } else {
+          stopCloudRealtimeListeners();
+          pendingRealtimeStart = false;
           currentFirebaseUser = null;
           currentRole = 'admin';
           if(els.sessionStatus) els.sessionStatus.textContent = 'Ingresa con Firebase Authentication';
@@ -2400,6 +2408,61 @@
       return msg || 'Confirma que Firestore Database y Firebase Authentication estén activos en tu proyecto.';
     }
 
+
+    function normalizeCloudCollectionItems(collectionName, docs){
+      if(collectionName === 'purchases') return sortPurchasesForUi(docs.map(item => normalizePurchase(item)));
+      if(collectionName === 'orders') return sortOrdersForUi(docs.map(item => normalizeOrder(item)));
+      if(collectionName === 'expenses') return sortExpensesForUi(docs.map(item => normalizeExpense(item)));
+      return Array.isArray(docs) ? docs.slice() : [];
+    }
+
+    function stopCloudRealtimeListeners(){
+      Object.keys(cloudRealtimeUnsubs).forEach(name => {
+        const unsub = cloudRealtimeUnsubs[name];
+        if(typeof unsub === 'function'){
+          try { unsub(); } catch(error){ console.warn('No fue posible cerrar el listener de ' + name + ':', error); }
+        }
+        cloudRealtimeUnsubs[name] = null;
+      });
+    }
+
+    function applyRealtimeCollectionSnapshot(collectionName, snapshot){
+      if(!snapshot) return;
+      const items = normalizeCloudCollectionItems(
+        collectionName,
+        snapshot.docs.map(docSnap => ({ id: docSnap.id, ...docSnap.data() }))
+      );
+      cloudCollectionIndex[collectionName] = new Set(items.map(item => item.id));
+      const currentSignature = JSON.stringify((state[collectionName] || []).map(item => JSON.parse(JSON.stringify(item))));
+      const incomingSignature = JSON.stringify(items.map(item => JSON.parse(JSON.stringify(item))));
+      if(currentSignature === incomingSignature) return;
+      suppressCloudSync = true;
+      state[collectionName] = items;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      lastSavedStateSignature = getStateSignature(state);
+      lastSyncedStateSignature = lastSavedStateSignature;
+      renderAll();
+      suppressCloudSync = false;
+      updateCloudStatus('Firebase conectado', 'ready', 'Datos actualizados en tiempo real.');
+    }
+
+    function startCloudRealtimeListeners(){
+      if(!firebaseReady || !currentFirebaseUser || !firestoreDb) return;
+      stopCloudRealtimeListeners();
+      pendingRealtimeStart = false;
+      getCloudCollectionsForRole().forEach(collectionName => {
+        const collectionRef = firebaseModules.collection(firestoreDb, collectionName);
+        cloudRealtimeUnsubs[collectionName] = firebaseModules.onSnapshot(
+          collectionRef,
+          (snapshot) => applyRealtimeCollectionSnapshot(collectionName, snapshot),
+          (error) => {
+            console.error('Firebase realtime listener error (' + collectionName + '):', error);
+            updateCloudStatus('Error en Firebase', 'error', getFirebaseFriendlyError(error));
+          }
+        );
+      });
+    }
+
     function handleConnectivityChange(){
       if(!navigator.onLine){
         updateCloudStatus('Sin conexión', 'offline', 'Los cambios siguen guardándose en este navegador hasta recuperar internet.');
@@ -2567,6 +2630,7 @@
         lastBlockedSyncSignature = '';
         lastBlockedSyncReason = '';
         renderAll();
+        if(pendingRealtimeStart) startCloudRealtimeListeners();
         updateCloudStatus('Firebase conectado', 'ready', 'Cambios guardados en la nube.');
       } catch(error){
         console.error('Firebase sync error:', error);
@@ -2691,6 +2755,7 @@
           lastSyncedStateSignature = lastSavedStateSignature;
           updateCloudStatus('Firebase conectado', 'ready', 'Base de datos lista para empezar.');
         }
+        if(pendingRealtimeStart) startCloudRealtimeListeners();
       } catch(error){
         console.error('Firebase hydrate error:', error);
         updateCloudStatus('Error en Firebase', 'error', getFirebaseFriendlyError(error));
@@ -4143,13 +4208,45 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.deletePurchase = function(id){
+    async function deleteCloudDocs(collectionName, ids=[]){
+      const uniqueIds = [...new Set((ids || []).filter(Boolean))];
+      if(!uniqueIds.length || !firebaseReady || !currentFirebaseUser || !navigator.onLine || !firebaseModules?.deleteDoc || !firestoreDb) return;
+      await Promise.all(uniqueIds.map(async itemId => {
+        await firebaseModules.deleteDoc(firebaseModules.doc(firestoreDb, collectionName, itemId));
+      }));
+      if(cloudCollectionIndex[collectionName]){
+        uniqueIds.forEach(itemId => cloudCollectionIndex[collectionName].delete(itemId));
+      }
+    }
+
+    window.deletePurchase = async function(id){
       if(!canManagePurchases()) return roleDenied('Solo el administrador general puede eliminar productos en compras por hacer.');
       const ok = confirm('¿Eliminar este producto de la lista de compras?');
       if(!ok) return;
+
+      const linkedOrderIds = state.orders.filter(order => order.linkedPurchaseId === id).map(order => order.id);
       state.purchases = state.purchases.filter(item => item.id !== id);
+      if(linkedOrderIds.length){
+        state.orders = state.orders.filter(order => order.linkedPurchaseId !== id);
+        state.expenses = state.expenses.map(expense => linkedOrderIds.includes(expense.pedidoId)
+          ? { ...expense, pedidoId:'', pedidoCodigo:'' }
+          : expense);
+      }
       saveState();
       renderAll();
+
+      try {
+        await deleteCloudDocs('purchases', [id]);
+        if(linkedOrderIds.length){
+          await deleteCloudDocs('orders', linkedOrderIds);
+        }
+        updateCloudStatus('Firebase conectado', 'ready', 'El registro eliminado también se quitó de la nube.');
+        lastSyncedStateSignature = getStateSignature(state);
+      } catch(error){
+        console.error('Firebase delete error:', error);
+        updateCloudStatus('Firebase con error', 'error', getFirebaseFriendlyError(error));
+        scheduleCloudSync('delete-purchase-retry');
+      }
     };
 
     window.openOrderDetail = function(id){
