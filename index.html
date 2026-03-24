@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Control de Compras, Recepción y Contabilidad</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23124d2f%22/%3E%3Cpath d=%22M32 14c-2.8 0-5 2.2-5 5v8h-8c-2.8 0-5 2.2-5 5s2.2 5 5 5h8v8c0 2.8 2.2 5 5 5s5-2.2 5-5v-8h8c2.8 0 5-2.2 5-5s-2.2-5-5-5h-8v-8c0-2.8-2.2-5-5-5Z%22 fill=%22%23ffffff%22/%3E%3C/svg%3E" />
   <style>
     :root{
       --green-950:#0f3f27;
@@ -1210,6 +1211,15 @@
       measurementId: "G-5M2KEFCCMC"
     };
     const USER_ROLE_COLLECTIONS = ['users', 'usuarios'];
+    const EMAIL_ROLE_MAP = {
+      'admin@gmail.com': 'admin',
+      'recepcion@gmail.com': 'receiver',
+      'compras@gmail.com': 'buyer'
+    };
+
+    function getRoleFromKnownEmail(email=''){
+      return EMAIL_ROLE_MAP[String(email).trim().toLowerCase()] || '';
+    }
 
     const state = loadState();
     let currentRole = 'admin';
@@ -1778,6 +1788,8 @@
     }
 
     async function resolveRoleForUser(user){
+      const emailRole = getRoleFromKnownEmail(user?.email || '');
+      if(emailRole) return emailRole;
       try {
         const tokenResult = await user.getIdTokenResult(true);
         const claimRole = normalizeRoleFromClaims(tokenResult?.claims || {});
@@ -1809,8 +1821,8 @@
       const role = await resolveRoleForUser(user);
       if(!role){
         await firebaseModules.signOut(firebaseAuth);
-        showLogin('El usuario existe en Authentication, pero todavía no tiene rol asignado. Crea users/' + user.uid + ' con { role: "admin" | "receiver" | "buyer" }.');
-        updateCloudStatus('Rol pendiente', 'error', 'Falta asignar el rol del usuario en Firestore o en custom claims.');
+        showLogin('El usuario existe en Authentication, pero no tiene un rol reconocido. Usa uno de los correos autorizados o asigna el rol por Firestore/custom claims.');
+        updateCloudStatus('Rol pendiente', 'error', 'No fue posible determinar el rol del usuario.');
         return;
       }
       currentFirebaseUser = user;
