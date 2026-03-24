@@ -76,6 +76,14 @@
       flex-wrap:wrap;
     }
     .session-box{min-width:280px;justify-content:space-between}
+    .cloud-status-box{min-width:250px}
+    .cloud-status-label{display:block;color:#124d2f;font-weight:800}
+    .cloud-status-value{display:block;margin-top:4px;font-weight:700}
+    .cloud-status-value.ready{color:#17643c}
+    .cloud-status-value.syncing{color:#8a5a00}
+    .cloud-status-value.error{color:#9f1c1c}
+    .cloud-status-value.offline{color:#5c6f63}
+    .cloud-status-detail{display:block;margin-top:4px;font-size:12px;color:#5c6f63;line-height:1.45}
     .session-meta strong{display:block;color:var(--green-900);margin-bottom:4px}
     .session-meta span{color:var(--muted);font-size:14px}
     .session-tag{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#f7fcf9;border:1px solid var(--border);color:var(--green-900);font-size:13px;font-weight:700}
@@ -178,6 +186,9 @@
     .badge.neutral{background:#edf4ef;color:var(--muted)}
 
     .purchase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+    .purchase-group{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
+    .purchase-group-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+    .purchase-group-head h3{margin:0;font-size:18px;color:var(--green-900)}
     .purchase-card{border:1px solid var(--border);border-radius:18px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:12px;box-shadow:0 6px 16px rgba(18,77,47,.04)}
     .purchase-image{width:100%;height:220px;border-radius:14px;overflow:hidden;background:#f4f8f5;display:flex;align-items:center;justify-content:center;border:1px solid #eef4ef}
     .purchase-image img{width:100%;height:100%;object-fit:contain;background:#fff;cursor:pointer}
@@ -274,6 +285,52 @@
     .modal-card{width:min(1160px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:24px;border:1px solid var(--border);box-shadow:0 28px 60px rgba(15,63,39,.26)}
     .modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;position:sticky;top:0;z-index:2}
     .modal-body{padding:20px;background:#f9fcfa}
+    #receptionCaptureModal{z-index:990}
+    #receptionCaptureModal .modal-card{width:min(1380px,100%)}
+    #receptionCaptureModalHost{display:grid;gap:16px}
+    .desktop-reception-summary-strip{display:none}
+    .desktop-reception-summary-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px 16px;min-width:0;box-shadow:0 8px 20px rgba(18,77,47,.05)}
+    .desktop-reception-summary-card span{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+    .desktop-reception-summary-card strong{display:block;color:var(--green-900);font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+    .desktop-reception-summary-card small{display:block;color:var(--muted);font-size:12px;line-height:1.45;margin-top:6px}
+    .desktop-support-toggle{display:none}
+    .desktop-support-toggle-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+    .desktop-support-toggle-copy strong{display:block;color:var(--green-900);font-size:16px}
+    .desktop-support-toggle-copy small{display:block;color:var(--muted);line-height:1.45;margin-top:4px}
+    .desktop-support-toggle .btn{white-space:nowrap}
+    body.desktop-reception-clean-open #receptionCaptureModal .modal-card{width:min(1480px,98vw);max-height:92vh;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+    body.desktop-reception-clean-open #receptionCaptureModal .modal-head{padding:16px 20px}
+    body.desktop-reception-clean-open #receptionCaptureModal .modal-body{padding:18px;background:#f6faf7;overflow:auto;display:grid;gap:16px}
+    body.desktop-reception-clean-open #receptionCaptureModalHost{align-content:start}
+    body.desktop-reception-clean-open #receptionCaptureModalHost .desktop-reception-summary-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+    body.desktop-reception-clean-open #receptionWorkspace{display:grid;gap:14px}
+    body.desktop-reception-clean-open #receptionWorkspace .kpi-grid,
+    body.desktop-reception-clean-open #receptionWorkspace #mobileReceptionSummary,
+    body.desktop-reception-clean-open #receptionWorkspace #receptionStepNav,
+    body.desktop-reception-clean-open #receptionWorkspace #receiverProgressFloat,
+    body.desktop-reception-clean-open #receptionWorkspace #receptionLinkedPurchaseCard,
+    body.desktop-reception-clean-open #receptionWorkspace #orderAccountingNote,
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-reception-actions,
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="4"]{display:none!important}
+    body.desktop-reception-clean-open #receptionWorkspace .order-grid{grid-template-columns:minmax(340px,.92fr) minmax(560px,1.38fr);gap:16px;align-items:start}
+    body.desktop-reception-clean-open #receptionWorkspace #receptionFormCard,
+    body.desktop-reception-clean-open #receptionWorkspace .order-grid > .card{padding:18px;border-radius:22px;box-shadow:0 10px 24px rgba(18,77,47,.05)}
+    body.desktop-reception-clean-open #receptionWorkspace #receptionFormTitle,
+    body.desktop-reception-clean-open #receptionWorkspace #orderFormHint{display:none}
+    body.desktop-reception-clean-open #receptionWorkspace #orderForm{display:grid;gap:14px}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="1"]{display:grid!important;gap:14px}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="1"] > .stack{display:none!important}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"]{display:grid!important;gap:12px;padding:16px;border:1px solid var(--border);border-radius:18px;background:#fbfefc}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"] > .desktop-support-toggle{display:block}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"] > *:not(.desktop-support-toggle){display:none}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"].desktop-open > *:not(.desktop-support-toggle){display:block}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"].desktop-open > .inline-upload,
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"].desktop-open > .preview-strip{display:grid}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="3"] .stack{display:none!important}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="2"] h2{margin-bottom:6px}
+    body.desktop-reception-clean-open #receptionWorkspace .mobile-step-section[data-mobile-step="2"] p.subtle{margin-bottom:12px}
+    body.desktop-reception-clean-open #receptionWorkspace #compareSummary{margin-top:12px}
+    body.desktop-reception-clean-open #receptionCaptureModal .desktop-reception-actions{position:sticky;bottom:-18px;z-index:3;display:flex!important;justify-content:flex-end;gap:10px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--border);background:rgba(255,255,255,.96);backdrop-filter:blur(10px);margin:-4px -18px -18px}
     .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .support-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     .support-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px;min-width:0}
@@ -308,6 +365,8 @@
     .login-selected{padding:14px 16px;border-radius:16px;background:#f7fcf9;border:1px solid #d9e8dd;color:#124d2f;font-weight:700}
     .login-error{min-height:20px;color:#c0392b;font-size:14px;font-weight:700}
     .login-helper{padding:14px 16px;border-radius:16px;border:1px dashed #d9e8dd;background:#fbfefc;color:#66756d;line-height:1.55;font-size:14px}
+    #heroText,.login-features,.login-role-card small,#purchaseFormHint,#purchaseRoleNote,#panel-compras .admin-mobile-panel-head small,#panel-recepcion .admin-mobile-panel-head small,#receptionPendingCard .subtle,#receptionSelectionNote,#mobileReceptionSummaryState,#receptionSummaryToggle,#mobileReceptionSummaryExtra,#receptionLinkedPurchaseCard .subtle,#orderFormHint,#desktopReviewSection .subtle,#desktopReviewSection .note-box,#panel-recepcion [data-mobile-step="2"] > .subtle,#panel-contable .note-box,#panel-contable > .layout > .card:last-child > .subtle,#receptionCaptureModalHint,.desktop-support-toggle-copy small,#roleDescription{display:none!important}
+    .finance-hero-card{display:none !important}
     .login-role-select{display:none}
     body[data-role="receiver"] #panel-recepcion .kpi-grid,
     body[data-role="buyer"] .hero-cards,
@@ -361,6 +420,35 @@
     .compact-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
     .compact-subtle{font-size:13px;line-height:1.45}
     .quick-actions-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .reception-pending-card{display:grid;gap:14px;margin-bottom:16px}
+    .reception-pending-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+    .purchase-list-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+    .purchase-list-head h2{margin:0}
+    .purchase-tabs-bar{display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;margin-left:auto}
+    .purchase-tabs-bar:empty{display:none}
+    .reception-pending-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+    .reception-pending-item{border:1px solid var(--border);border-radius:18px;padding:14px;background:#fff;box-shadow:var(--shadow-soft);display:grid;gap:10px}
+    .reception-pending-item small{display:block;color:var(--muted);line-height:1.5}
+    .reception-workspace.is-hidden{display:none!important}
+    .linked-reception-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px}
+    .linked-reception-pill{padding:12px;border-radius:14px;background:var(--green-050);border:1px solid var(--border)}
+    .linked-reception-pill span{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    .linked-reception-pill strong{display:block;color:var(--green-900);line-height:1.45}
+
+    @media (min-width:721px){
+      #panel-recepcion button[data-go-step],
+      #panel-recepcion #receptionSummaryToggle,
+      #panel-recepcion #mobileSupportShortcut,
+      #panel-recepcion #mobileSaveDraft,
+      #panel-recepcion #mobileFinalizeOrder{display:none!important}
+      #panel-recepcion .desktop-reception-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px}
+      #panel-recepcion .mobile-step-section[data-mobile-step="4"]{display:none!important}
+      #panel-recepcion #orderCancelBtn{display:none!important}
+    }
+
+    @media (max-width:720px){
+      #panel-recepcion .desktop-reception-actions{display:none!important}
+    }
 
     @media (max-width:1200px){
       .layout,.order-grid,.accounting-grid,.hero{grid-template-columns:1fr}
@@ -369,6 +457,8 @@
       .login-card{grid-template-columns:1fr}
       .login-features,.detail-grid,.support-grid,.inline-upload,.preview-strip,.field-grid-3{grid-template-columns:1fr}
       .kpi-grid,.kpi-grid.contable,.hero-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+      body.desktop-reception-clean-open #receptionCaptureModalHost .desktop-reception-summary-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+      body.desktop-reception-clean-open #receptionWorkspace .order-grid{grid-template-columns:1fr}
     }
     @media (max-width:720px){
       .app{padding:12px}
@@ -440,6 +530,86 @@
       body[data-role="admin"] #accountingKpis.admin-metrics-collapsed{display:none}
       body[data-role="admin"] #receptionFormCard.collapsed,body[data-role="admin"] #purchaseFormCard.collapsed,body[data-role="admin"] #expenseFormCard.collapsed{display:none!important}
     }
+
+    /* === Ajustes extra para versión móvil optimizada === */
+    .password-inline{position:relative}
+    .password-inline .password-toggle{
+      position:absolute;right:10px;top:50%;transform:translateY(-50%);
+      border:none;background:#eef7f0;color:var(--green-900);font-weight:700;
+      border-radius:10px;padding:8px 10px;cursor:pointer;font-size:12px
+    }
+    .password-inline input{padding-right:74px}
+    @media (max-width:720px){
+      html{scroll-padding-top:74px}
+      body{background:#f4f8f5}
+      .app{padding:10px 10px 96px}
+      .hero{padding:16px;border-radius:18px;gap:12px}
+      .hero h1{font-size:24px;line-height:1.1}
+      .hero p{font-size:14px;line-height:1.5}
+      .role-bar{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0 6px}
+      .role-box,.session-box{border-radius:16px;padding:12px 14px}
+      .session-tag{display:none}
+      .toolbar{gap:10px;margin:12px 0 14px}
+      .toolbar-search{position:sticky;top:64px;z-index:46;background:linear-gradient(180deg,#eef7f0 0%,rgba(238,247,240,.97) 100%);padding-bottom:8px}
+      .toolbar-search input{height:48px;border-radius:14px}
+      .tabs{display:flex;flex-wrap:nowrap;overflow:auto;gap:8px;padding:2px 0 8px;margin:0 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .tabs::-webkit-scrollbar{display:none}
+      .tab-btn{flex:0 0 auto;min-width:max-content;width:auto;border-radius:14px;padding:11px 14px}
+      body[data-role="receiver"] .tabs,
+      body[data-role="buyer"] .tabs{position:sticky;top:8px;z-index:47;background:linear-gradient(180deg,#eef7f0 0%,rgba(238,247,240,.97) 100%)}
+      .card,.kpi,.mini-card,.purchase-card,.mobile-record-card,.order-mobile-card,.reception-pending-item,.admin-mobile-summary,.admin-finance-card{border-radius:16px}
+      .card{padding:14px}
+      .purchase-card,.mobile-record-card,.order-mobile-card,.reception-pending-item{padding:12px}
+      .purchase-image{height:168px}
+      .purchase-meta strong{font-size:16px}
+      .btn{min-height:46px}
+      .btn-small{min-height:42px;padding:9px 12px}
+      input,select,textarea{font-size:16px!important}
+      .admin-mobile-panel-head{padding:12px 14px;border-radius:16px}
+      .admin-mobile-panel-head .stack{width:100%}
+      .admin-mobile-panel-head .stack .btn{width:100%}
+      .admin-mobile-summary-head{align-items:flex-start}
+      .admin-mobile-summary-head .session-tag{display:inline-flex}
+      .admin-mobile-actions,.quick-actions-row{grid-template-columns:1fr 1fr}
+      .admin-mobile-stat-grid,.admin-finance-inline,.receiver-progress-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .reception-pending-list{grid-template-columns:1fr;gap:10px}
+      .linked-reception-summary{grid-template-columns:1fr 1fr}
+      .mobile-step-nav{position:sticky;top:64px;z-index:44;padding:6px 0 10px;background:linear-gradient(180deg,#eef7f0 0%,rgba(238,247,240,.97) 100%)}
+      .receiver-progress-float{top:116px;padding:10px 12px}
+      .mobile-reception-summary{padding:12px}
+      .mobile-summary-head strong{font-size:17px}
+      .mobile-product-search{margin-top:4px}
+      .support-action-row{grid-template-columns:1fr 1fr}
+      .preview-card{min-height:128px}
+      .image-preview-box{min-height:160px}
+      .image-preview-box.small{min-height:104px}
+      .modal-backdrop{padding:0;align-items:flex-end}
+      .modal-card{width:100%;height:100dvh;max-height:100dvh;border-radius:22px 22px 0 0;border-bottom:none}
+      .modal-head{padding:14px 16px}
+      .modal-head > div{min-width:0}
+      .modal-head strong{display:block;line-height:1.35}
+      .modal-body{padding:14px 14px 20px}
+      .lightbox-card{width:100%;height:100dvh;max-height:100dvh;border-radius:0}
+      .lightbox-head{padding:14px 16px}
+      .lightbox-stage{padding:12px;min-height:auto}
+      .lightbox-stage img{max-height:78dvh}
+      .detail-grid,.support-grid{grid-template-columns:1fr;gap:12px}
+      .floating-batch-bar{left:10px;right:10px;bottom:78px;padding:10px 12px;border-radius:16px}
+      .admin-bottom-nav{padding:8px 8px calc(8px + env(safe-area-inset-bottom));gap:6px}
+      .admin-bottom-btn{padding:8px 6px;border-radius:12px}
+      .admin-bottom-btn small{font-size:10px}
+      .footer-note{padding-bottom:10px}
+    }
+    @media (max-width:420px){
+      .admin-mobile-actions,.quick-actions-row,.support-action-row,.linked-reception-summary{grid-template-columns:1fr}
+      .admin-mobile-stat-grid,.admin-finance-inline,.receiver-progress-grid{grid-template-columns:1fr 1fr}
+      .mobile-record-actions,.mobile-record-actions.three,.qty-quick-row{grid-template-columns:1fr}
+      .order-mobile-fields,.mobile-record-grid{grid-template-columns:1fr}
+      .mobile-reception-actions{grid-template-columns:1fr}
+      .hero h1{font-size:22px}
+      .role-box,.session-box,.card{padding:12px}
+    }
+
   </style>
 </head>
 <body>
@@ -449,29 +619,28 @@
         <div>
           <div class="login-kicker">Acceso seguro por perfil</div>
           <h1>Centro de compras, recepción y contabilidad</h1>
-          <p>Ingresa con tu perfil para ver solo los módulos que te corresponden. Así cada persona trabaja su parte sin perder el control del proceso.</p>
+          <p>Ingresa con tu correo y contraseña de Firebase Authentication. El sistema identifica el rol del usuario y muestra solo los módulos permitidos.</p>
         </div>
-        <div class="login-features">
-          <div class="login-feature"><span>Administrador general</span><strong>Control total de compras, pedidos recibidos, historial y contabilidad.</strong></div>
-          <div class="login-feature"><span>Recepción y verificación</span><strong>Registra y compara lo recibido contra el pedido y sus soportes.</strong></div>
-          <div class="login-feature"><span>Compras y abastecimiento</span><strong>Consulta rápidamente lo que hace falta pedir o comprar.</strong></div>
-          <div class="login-feature"><span>Sesión local</span><strong>La sesión se conserva en este navegador hasta que cierres sesión.</strong></div>
-        </div>
+        
       </div>
       <div class="login-panel">
         <div>
           <h2>Iniciar sesión</h2>
-          <p>Selecciona el perfil que vas a usar y escribe la contraseña correspondiente.</p>
+          <p>Ingresa con el usuario que creaste en Firebase Authentication.</p>
         </div>
-        <div class="login-role-grid" id="loginRoleCards">
-          <button class="login-role-card active" type="button" data-role="admin"><strong>Administrador general</strong><small>Ve todos los módulos y administra la información completa del sistema.</small></button>
-          <button class="login-role-card" type="button" data-role="receiver"><strong>Recepción y verificación</strong><small>Solo entra a pedidos recibidos y comparativa para validar lo que llegó.</small></button>
-          <button class="login-role-card" type="button" data-role="buyer"><strong>Compras y abastecimiento</strong><small>Consulta únicamente la lista de compras por hacer.</small></button>
+        <div class="login-role-grid" id="loginRoleCards" style="display:none">
+          <button class="login-role-card active" type="button" data-role="admin"><strong>Administrador general</strong></button>
+          <button class="login-role-card" type="button" data-role="receiver"><strong>Recepción y verificación</strong></button>
+          <button class="login-role-card" type="button" data-role="buyer"><strong>Compras y abastecimiento</strong></button>
         </div>
-        <div class="login-selected" id="loginRoleLabel">Perfil seleccionado: Administrador general</div>
-        <form id="loginForm">
+        <div class="login-selected" id="loginRoleLabel" style="display:none">Perfil seleccionado: Administrador general</div>
+        <form id="loginForm" action="javascript:void(0)">
+          <div class="field">
+            <label for="loginEmail">Correo</label>
+            <input id="loginEmail" type="email" placeholder="correo@dominio.com" required autocomplete="username" />
+          </div>
           <input type="hidden" id="loginRole" value="admin">
-          <div class="field login-role-select">
+          <div class="field login-role-select" style="display:none">
             <label for="loginRoleMobile">Perfil</label>
             <select id="loginRoleMobile">
               <option value="admin">Administrador general</option>
@@ -481,12 +650,12 @@
           </div>
           <div class="field">
             <label for="loginPassword">Contraseña</label>
-            <input id="loginPassword" type="password" placeholder="Escribe la contraseña" required autocomplete="current-password" />
+            <input id="loginPassword" type="password" placeholder="Escribe tu contraseña de Firebase" required autocomplete="current-password" />
           </div>
           <div class="login-error" id="loginError"></div>
           <div class="stack"><button class="btn btn-primary" type="submit">Entrar al sistema</button></div>
         </form>
-        <div class="login-helper">Contraseñas predeterminadas: Administrador general = <b>Admin123!</b>, Recepción y verificación = <b>Recibe123!</b>, Compras y abastecimiento = <b>Compras123!</b>.</div>
+        <div class="login-helper">Después de crear el usuario en Authentication, asígnale el rol desde Firebase para que el sistema sepa qué módulos mostrar.</div>
       </div>
     </div>
   </section>
@@ -494,16 +663,14 @@
   <div class="app" id="appShell" style="display:none">
     <section class="hero">
       <div>
-        <h1 id="heroTitle">Control de compras, pedidos, recepción y gastos</h1>
-        <p id="heroText">
-          Lleva el registro de lo que falta comprar, compara lo pedido contra lo recibido, guarda el historial con soportes y organiza los gastos desde pedidos y manuales en un solo lugar.
-        </p>
+        <h1 id="heroTitle">Control de compras, pedidos, recepción y contabilidad</h1>
+        
       </div>
       <div class="hero-cards" id="heroCards">
         <div class="mini-card"><span>Compras pendientes</span><strong id="heroPending">0</strong></div>
         <div class="mini-card"><span>Pedidos registrados</span><strong id="heroOrders">0</strong></div>
-        <div class="mini-card"><span>Total desde pedidos</span><strong class="money" id="heroOrderMoney">$0</strong></div>
-        <div class="mini-card"><span>Gasto general</span><strong class="money" id="heroGeneralMoney">$0</strong></div>
+        <div class="mini-card finance-hero-card"><span>Total desde pedidos</span><strong class="money" id="heroOrderMoney">$0</strong></div>
+        <div class="mini-card finance-hero-card"><span>Gasto general</span><strong class="money" id="heroGeneralMoney">$0</strong></div>
       </div>
     </section>
 
@@ -519,6 +686,13 @@
         <div>
           <strong style="display:block;color:#124d2f;margin-bottom:4px">Permisos del perfil</strong>
           <div class="role-hint" id="roleDescription"></div>
+        </div>
+      </div>
+      <div class="role-box cloud-status-box">
+        <div>
+          <span class="cloud-status-label">Firebase</span>
+          <span class="cloud-status-value offline" id="cloudStatus">Pendiente de conexión</span>
+          <span class="cloud-status-detail" id="cloudStatusDetail">Trabajando con respaldo local mientras conecta.</span>
         </div>
       </div>
       <div class="role-box"><button class="btn btn-secondary" id="btnLogout" type="button">Cerrar sesión</button></div>
@@ -546,7 +720,7 @@
       <div class="admin-mobile-panel-head">
         <div>
           <strong>Compras</strong>
-          <small>Consulta primero la lista y abre el formulario solo cuando lo necesites.</small>
+          
         </div>
         <div class="stack">
           <button class="btn btn-secondary btn-small" type="button" id="togglePurchaseForm">Nuevo producto</button>
@@ -556,7 +730,7 @@
         <div class="card admin-collapse-target" id="purchaseFormCard">
           <h2 id="purchaseFormTitle">Agregar producto por comprar</h2>
           <p class="subtle" id="purchaseFormHint">Guarda referencia, nombre, cantidad y foto para identificar bien el producto.</p>
-          <form id="purchaseForm">
+          <form id="purchaseForm" action="javascript:void(0)">
             <input type="hidden" id="editingPurchaseId" value="">
             <div class="field">
               <label for="purchaseRef">Referencia</label>
@@ -607,7 +781,10 @@
         </div>
 
         <div class="card" id="purchaseListCard">
-          <h2 id="purchaseListTitle">Lista de compras pendientes</h2>
+          <div class="purchase-list-head">
+            <h2 id="purchaseListTitle">Lista de compras pendientes</h2>
+            <div class="purchase-tabs-bar" id="purchaseTabsBar"></div>
+          </div>
           <div class="role-lock" id="purchaseRoleNote" style="display:none"></div>
           <div id="purchaseList" class="purchase-grid"></div>
         </div>
@@ -618,12 +795,25 @@
       <div class="admin-mobile-panel-head">
         <div>
           <strong>Recepción</strong>
-          <small>Captura el pedido por pasos y usa accesos rápidos para guardar o finalizar.</small>
+          
         </div>
         <div class="stack">
           <button class="btn btn-secondary btn-small" type="button" id="toggleReceptionForm">Abrir captura</button>
         </div>
       </div>
+      <div class="card reception-pending-card" id="receptionPendingCard">
+        <div class="reception-pending-head">
+          <div>
+            <h2>Pendientes por recibir</h2>
+            <p class="subtle">Aquí aparecen las compras ya confirmadas en Compras por hacer y que todavía siguen pendientes por entrega.</p>
+          </div>
+          <div class="role-lock" id="receptionSelectionNote">Selecciona un pendiente para cargar la recepción con el recibo de compra, la forma de pago y el origen del dinero ya registrados.</div>
+        </div>
+        <div class="compare-note" id="receptionPendingSummary">No hay compras pendientes por recibir.</div>
+        <div id="receptionPendingList" class="reception-pending-list"></div>
+      </div>
+
+      <div class="reception-workspace is-hidden" id="receptionWorkspace">
       <div class="kpi-grid">
         <div class="kpi"><span>Pedidos registrados</span><strong id="kpiOrders">0</strong></div>
         <div class="kpi"><span>Completos</span><strong id="kpiComplete">0</strong></div>
@@ -652,13 +842,19 @@
 
       <div class="receiver-progress-float" id="receiverProgressFloat"></div>
 
+      <div class="card" id="receptionLinkedPurchaseCard" style="display:none">
+        <h2>Pendiente seleccionado</h2>
+        <p class="subtle">Estos datos vienen desde Compras por hacer y acompañan la recepción del pedido.</p>
+        <div id="receptionLinkedPurchaseBody"></div>
+      </div>
+
       <div class="order-grid">
         <div class="card admin-collapse-target" id="receptionFormCard">
           <h2 id="orderFormTitle">Registrar pedido recibido</h2>
           <p class="subtle" id="orderFormHint">Aquí comparas lo que pediste contra lo que realmente llegó.</p>
-          <div class="note-box" id="orderAccountingNote">El valor total de la compra registrado aquí entra automáticamente al módulo contable como gasto desde pedidos.</div>
-          <form id="orderForm">
+          <form id="orderForm" action="javascript:void(0)">
             <input type="hidden" id="editingOrderId" value="">
+            <input type="hidden" id="linkedPurchaseId" value="">
 
             <div class="mobile-step-section" data-mobile-step="1">
               <div class="field-grid">
@@ -740,7 +936,7 @@
               </div>
             </div>
 
-            <div class="mobile-step-section" data-mobile-step="4">
+            <div class="mobile-step-section" data-mobile-step="4" id="desktopReviewSection">
               <div class="mobile-confirm-box">
                 <h3>Revisión final</h3>
                 <p class="subtle">Revisa el estado del pedido antes de guardarlo o finalizarlo.</p>
@@ -789,10 +985,17 @@
         </div>
       </div>
 
+      <div class="desktop-reception-actions">
+        <button class="btn btn-primary" type="button" id="desktopOpenReviewBtn">Guardar pedido</button>
+        <button class="btn btn-secondary" type="button" id="desktopCloseReviewBtn" style="display:none">Cerrar revisión</button>
+        <button class="btn btn-ghost" type="button" id="desktopOrderCancelBtn" style="display:none">Cancelar edición</button>
+      </div>
+
       <div class="mobile-reception-actions" id="mobileReceptionActions">
         <button class="btn btn-secondary" type="button" id="mobileSupportShortcut">Tomar foto / soporte</button>
         <button class="btn btn-ghost" type="button" id="mobileSaveDraft">Guardar</button>
         <button class="btn btn-primary" type="button" id="mobileFinalizeOrder">Finalizar recibido</button>
+      </div>
       </div>
     </section>
 
@@ -800,13 +1003,11 @@
       <div class="admin-mobile-panel-head">
         <div>
           <strong>Historial</strong>
-          <small>Filtra rápido por estado y usa acciones cortas desde cada tarjeta.</small>
         </div>
       </div>
       <div class="card">
         <h2>Historial completo de pedidos</h2>
-        <p class="subtle">Aquí puedes ver la fecha del pedido, pago, recibido, valor total y abrir los soportes e imágenes.</p>
-        <div id="historyContent"></div>
+                <div id="historyContent"></div>
       </div>
     </section>
 
@@ -814,11 +1015,6 @@
       <div class="admin-mobile-panel-head">
         <div>
           <strong>Contabilidad</strong>
-          <small>Resumen corto arriba y métricas ampliadas solo cuando las necesites.</small>
-        </div>
-        <div class="stack">
-          <button class="btn btn-secondary btn-small" type="button" id="toggleExpenseForm">Nuevo gasto</button>
-          <button class="btn btn-ghost btn-small" type="button" id="toggleAccountingMetrics">Ver métricas</button>
         </div>
       </div>
       <div class="admin-mobile-finance" id="adminMobileFinance"></div>
@@ -834,8 +1030,7 @@
       <div class="accounting-grid">
         <div class="card admin-collapse-target" id="expenseFormCard">
           <h2 id="expenseFormTitle">Registrar gasto manual</h2>
-          <p class="subtle">Aquí van gastos manuales adicionales. Los valores de los pedidos recibidos ya entran automáticamente desde el módulo de pedidos.</p>
-          <form id="expenseForm">
+          <form id="expenseForm" action="javascript:void(0)">
             <input type="hidden" id="editingExpenseId" value="">
             <div class="field-grid">
               <div class="field">
@@ -919,7 +1114,7 @@
 
         <div class="card">
           <h2>Resumen contable</h2>
-          <div class="note-box">Lógica del sistema: el valor total de cada pedido recibido entra como gasto desde pedidos. Los gastos creados aquí se suman aparte como gastos manuales. El total general muestra ambos juntos.</div>
+          
           <div class="totals-inline">
             <span class="pill">Pedidos: <span id="summaryOrdersMoney" style="margin-left:6px">$0</span></span>
             <span class="pill">Manual: <span id="summaryManualMoney" style="margin-left:6px">$0</span></span>
@@ -928,7 +1123,7 @@
           <div id="expenseTableWrap"></div>
           <div style="height:18px"></div>
           <h3>Control de dinero por pedido</h3>
-          <p class="subtle">Aquí ves cuánto aporta el pedido y cuánto gasto manual adicional quedó relacionado con ese mismo pedido.</p>
+          
           <div id="orderMoneyControl"></div>
         </div>
       </div>
@@ -956,6 +1151,19 @@
     </div>
   </div>
 
+  <div class="modal-backdrop" id="receptionCaptureModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <strong id="receptionCaptureModalTitle">Recepción pendiente</strong>
+          
+        </div>
+        <button class="btn btn-danger btn-small" id="closeReceptionCaptureModal" type="button">Cerrar</button>
+      </div>
+      <div class="modal-body" id="receptionCaptureModalHost"></div>
+    </div>
+  </div>
+
   <div class="image-lightbox" id="imageViewer">
     <div class="lightbox-card">
       <div class="lightbox-head">
@@ -971,7 +1179,6 @@
     const LEGACY_STORAGE_KEYS = ['controlComprasRecepcion_v1','controlComprasRecepcion_v2','controlComprasRecepcionContable_v1','controlComprasRecepcionContable_v2'];
     const SESSION_KEY = 'controlComprasRecepcion_session_v3';
     const LEGACY_SESSION_KEYS = ['controlComprasRecepcion_session_v2'];
-    const PASSWORDS = { admin:'Admin123!', receiver:'Recibe123!', buyer:'Compras123!' };
     const ROLE_CONFIG = {
       admin: {
         label: 'Administrador general',
@@ -987,11 +1194,22 @@
       },
       buyer: {
         label: 'Compras y abastecimiento',
-        description: 'Solo ve la sección de compras por hacer en modo consulta, sin formulario ni edición.',
+        description: 'Ve la sección de compras por hacer, confirma compras realizadas y adjunta soporte de pago.',
         tabs: ['compras'],
         defaultTab: 'compras'
       }
     };
+
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyCYkV2n7N7kSuaVBNowARLppbQJqUUq_84",
+      authDomain: "iglesiaiva.firebaseapp.com",
+      projectId: "iglesiaiva",
+      storageBucket: "iglesiaiva.firebasestorage.app",
+      messagingSenderId: "774081097528",
+      appId: "1:774081097528:web:0b63a39cbdc9508371dbcd",
+      measurementId: "G-5M2KEFCCMC"
+    };
+    const USER_ROLE_COLLECTIONS = ['users', 'usuarios'];
 
     const state = loadState();
     let currentRole = 'admin';
@@ -999,21 +1217,53 @@
     let currentPurchaseImage = '';
     let currentOrderSupportCompra = '';
     let currentOrderSupportRecibido = '';
+    let selectedReceptionPurchaseId = '';
     let currentExpenseSupport = '';
     let receptionMobileStep = 1;
     let pendingFinalizeOrder = false;
+    let desktopReceptionReviewOpen = false;
     let orderProductSearchTerm = '';
+    let desktopBuyerPurchaseTab = 'pendiente';
     const adminMobileState = {
       filters: { compras:'all', recepcion:'datos', historial:'all', contable:'all' },
-      forms: { compras:false, recepcion:true, contable:false },
-      metricsExpanded: false,
+      forms: { compras:false, recepcion:true, contable:true },
+      metricsExpanded: true,
       selected: { compras:new Set(), historial:new Set(), contable:new Set() }
     };
+
+    let firebaseModules = null;
+    let firebaseAppInstance = null;
+    let firebaseAuth = null;
+    let currentFirebaseUser = null;
+    let firestoreDb = null;
+    let firebaseReady = false;
+    let authObserverReady = false;
+    let cloudSyncTimer = null;
+    let cloudSyncInFlight = false;
+    let suppressCloudSync = false;
+    let lastSavedStateSignature = '';
+    let lastSyncedStateSignature = '';
+    const cloudCollectionIndex = { purchases:new Set(), orders:new Set(), expenses:new Set() };
+
+    function getCloudCollectionsForRole(role = currentRole){
+      if(role === 'buyer') return ['purchases'];
+      if(role === 'receiver') return ['orders'];
+      return ['purchases', 'orders', 'expenses'];
+    }
+
+    function getRoleScopedState(source = state, role = currentRole){
+      const scoped = { purchases: [], orders: [], expenses: [] };
+      getCloudCollectionsForRole(role).forEach(name => {
+        scoped[name] = Array.isArray(source[name]) ? source[name] : [];
+      });
+      return scoped;
+    }
 
     const els = {
       appShell: document.getElementById('appShell'),
       loginShell: document.getElementById('loginShell'),
       loginForm: document.getElementById('loginForm'),
+      loginEmail: document.getElementById('loginEmail'),
       loginRole: document.getElementById('loginRole'),
       loginRoleMobile: document.getElementById('loginRoleMobile'),
       loginPassword: document.getElementById('loginPassword'),
@@ -1021,11 +1271,14 @@
       loginRoleCards: document.getElementById('loginRoleCards'),
       loginRoleLabel: document.getElementById('loginRoleLabel'),
       sessionRoleName: document.getElementById('sessionRoleName'),
+      sessionStatus: document.getElementById('sessionStatus'),
       roleDescription: document.getElementById('roleDescription'),
       heroTitle: document.getElementById('heroTitle'),
       heroText: document.getElementById('heroText'),
       heroCards: document.getElementById('heroCards'),
       btnLogout: document.getElementById('btnLogout'),
+      cloudStatus: document.getElementById('cloudStatus'),
+      cloudStatusDetail: document.getElementById('cloudStatusDetail'),
       toolbarActions: document.getElementById('toolbarActions'),
       globalSearch: document.getElementById('globalSearch'),
       heroPending: document.getElementById('heroPending'),
@@ -1035,6 +1288,7 @@
       purchaseLayout: document.getElementById('purchaseLayout'),
       purchaseFormCard: document.getElementById('purchaseFormCard'),
       purchaseListTitle: document.getElementById('purchaseListTitle'),
+      purchaseTabsBar: document.getElementById('purchaseTabsBar'),
       purchaseRoleNote: document.getElementById('purchaseRoleNote'),
       orderAccountingNote: document.getElementById('orderAccountingNote'),
       orderTotalField: document.getElementById('orderTotalField'),
@@ -1064,6 +1318,13 @@
       floatingBatchBar: document.getElementById('floatingBatchBar'),
       adminBottomNav: document.getElementById('adminBottomNav'),
       receptionFormCard: document.getElementById('receptionFormCard'),
+      receptionWorkspace: document.getElementById('receptionWorkspace'),
+      receptionPendingCard: document.getElementById('receptionPendingCard'),
+      receptionPendingSummary: document.getElementById('receptionPendingSummary'),
+      receptionPendingList: document.getElementById('receptionPendingList'),
+      receptionSelectionNote: document.getElementById('receptionSelectionNote'),
+      receptionLinkedPurchaseCard: document.getElementById('receptionLinkedPurchaseCard'),
+      receptionLinkedPurchaseBody: document.getElementById('receptionLinkedPurchaseBody'),
       expenseFormCard: document.getElementById('expenseFormCard'),
       kpiOrders: document.getElementById('kpiOrders'),
       kpiComplete: document.getElementById('kpiComplete'),
@@ -1073,6 +1334,7 @@
       orderFormHint: document.getElementById('orderFormHint'),
       orderForm: document.getElementById('orderForm'),
       editingOrderId: document.getElementById('editingOrderId'),
+      linkedPurchaseId: document.getElementById('linkedPurchaseId'),
       orderSupplier: document.getElementById('orderSupplier'),
       orderCode: document.getElementById('orderCode'),
       orderDate: document.getElementById('orderDate'),
@@ -1103,6 +1365,10 @@
       mobileSupportShortcut: document.getElementById('mobileSupportShortcut'),
       mobileSaveDraft: document.getElementById('mobileSaveDraft'),
       mobileFinalizeOrder: document.getElementById('mobileFinalizeOrder'),
+      desktopOpenReviewBtn: document.getElementById('desktopOpenReviewBtn'),
+      desktopCloseReviewBtn: document.getElementById('desktopCloseReviewBtn'),
+      desktopOrderCancelBtn: document.getElementById('desktopOrderCancelBtn'),
+      desktopReviewSection: document.getElementById('desktopReviewSection'),
       orderSubmitBtn: document.getElementById('orderSubmitBtn'),
       orderCancelBtn: document.getElementById('orderCancelBtn'),
       orderSupportPreviewStrip: document.getElementById('orderSupportPreviewStrip'),
@@ -1142,17 +1408,27 @@
       modalTitle: document.getElementById('modalTitle'),
       modalBody: document.getElementById('modalBody'),
       closeDetailModal: document.getElementById('closeDetailModal'),
+      receptionCaptureModal: document.getElementById('receptionCaptureModal'),
+      receptionCaptureModalTitle: document.getElementById('receptionCaptureModalTitle'),
+      receptionCaptureModalHint: document.getElementById('receptionCaptureModalHint'),
+      receptionCaptureModalHost: document.getElementById('receptionCaptureModalHost'),
+      closeReceptionCaptureModal: document.getElementById('closeReceptionCaptureModal'),
+      desktopReceptionActions: document.querySelector('#panel-recepcion .desktop-reception-actions'),
       imageViewer: document.getElementById('imageViewer'),
       imageViewerTitle: document.getElementById('imageViewerTitle'),
       imageViewerImg: document.getElementById('imageViewerImg'),
       closeImageViewer: document.getElementById('closeImageViewer')
     };
 
+    let desktopReceptionCaptureModalOpen = false;
+    const receptionWorkspaceHome = {};
+
     bindEvents();
     currentOrderItems = [createEmptyOrderItem()];
     setReceptionMobileStep(1);
     renderAll();
-    hydrateSession();
+    showLogin();
+    initFirebase();
 
     function bindEvents(){
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1232,6 +1508,12 @@
       if(els.mobileSupportShortcut) els.mobileSupportShortcut.addEventListener('click', () => { setReceptionMobileStep(3); els.receivedReceipt.click(); });
       if(els.mobileSaveDraft) els.mobileSaveDraft.addEventListener('click', () => { pendingFinalizeOrder = false; els.orderForm.requestSubmit(); });
       if(els.mobileFinalizeOrder) els.mobileFinalizeOrder.addEventListener('click', finalizeReceivedOrder);
+      if(els.desktopOpenReviewBtn) els.desktopOpenReviewBtn.addEventListener('click', () => {
+        pendingFinalizeOrder = false;
+        els.orderForm.requestSubmit();
+      });
+      if(els.desktopCloseReviewBtn) els.desktopCloseReviewBtn.addEventListener('click', closeReceptionDesktopReviewModal);
+      if(els.desktopOrderCancelBtn) els.desktopOrderCancelBtn.addEventListener('click', resetOrderForm);
       window.addEventListener('resize', syncReceptionMobileUI);
       els.expenseForm.addEventListener('submit', handleExpenseSubmit);
       els.expenseCancelBtn.addEventListener('click', resetExpenseForm);
@@ -1240,56 +1522,215 @@
 
       els.closeDetailModal.addEventListener('click', closeDetailModal);
       els.detailModal.addEventListener('click', function(e){ if(e.target === els.detailModal) closeDetailModal(); });
+      if(els.closeReceptionCaptureModal) els.closeReceptionCaptureModal.addEventListener('click', closeReceptionCaptureModal);
+      if(els.receptionCaptureModal) els.receptionCaptureModal.addEventListener('click', function(e){ if(e.target === els.receptionCaptureModal) closeReceptionCaptureModal(); });
       els.closeImageViewer.addEventListener('click', closeImageViewer);
       els.imageViewer.addEventListener('click', function(e){ if(e.target === els.imageViewer) closeImageViewer(); });
       document.addEventListener('keydown', function(e){
         if(e.key === 'Escape'){
           closeDetailModal();
+          closeReceptionCaptureModal();
           closeImageViewer();
         }
       });
     }
 
-    function handleLoginSubmit(e){
-      e.preventDefault();
-      const role = ROLE_CONFIG[els.loginRole.value] ? els.loginRole.value : 'admin';
-      if(els.loginPassword.value !== PASSWORDS[role]){
-        els.loginError.textContent = 'La contraseña no corresponde al perfil seleccionado.';
-        return;
-      }
-      currentRole = role;
-      saveSession();
-      applyRoleView();
-      showApp();
+    function syncBodyModalState(){
+      const hasActiveModal = !!document.querySelector('.modal-backdrop.active, .image-lightbox.active');
+      document.body.classList.toggle('modal-open', hasActiveModal);
     }
 
-    function hydrateSession(){
-      const saved = loadSession();
-      if(saved){
-        currentRole = saved.role;
-        applyRoleView();
-        showApp();
-      } else {
-        setLoginRole('admin');
-        showLogin();
+    function getLinkedReceptionPurchase(){
+      const linkedId = (els.linkedPurchaseId && els.linkedPurchaseId.value) || selectedReceptionPurchaseId || '';
+      const linkedPurchase = linkedId ? state.purchases.find(item => item.id === linkedId) || null : null;
+      if(linkedPurchase) return linkedPurchase;
+      const editingId = (els.editingOrderId && els.editingOrderId.value) || '';
+      const linkedOrder = (editingId ? state.orders.find(order => order.id === editingId) : null) || (linkedId ? state.orders.find(order => order.linkedPurchaseId === linkedId && !order.fechaRecibido) : null) || null;
+      return linkedOrder ? getLinkedPurchaseSnapshot(linkedOrder) : null;
+    }
+
+    function getLinkedPurchaseSnapshot(order){
+      if(!order) return null;
+      const linkedPurchase = order.linkedPurchaseId ? state.purchases.find(item => item.id === order.linkedPurchaseId) || null : null;
+      return {
+        id: linkedPurchase?.id || order.linkedPurchaseId || '',
+        nombre: linkedPurchase?.nombre || order.linkedPurchaseName || '',
+        referencia: linkedPurchase?.referencia || order.linkedPurchaseRef || '',
+        cantidad: Number(linkedPurchase?.cantidad ?? order.linkedPurchaseQty ?? 0),
+        unidad: linkedPurchase?.unidad || order.linkedPurchaseUnit || '',
+        observaciones: linkedPurchase?.observaciones || order.linkedPurchaseNotes || '',
+        imagen: linkedPurchase?.imagen || order.linkedPurchaseImage || '',
+        tipoPagoCompra: linkedPurchase?.tipoPagoCompra || order.linkedPurchasePaymentMethod || '',
+        origenPagoCompra: linkedPurchase?.origenPagoCompra || order.linkedPurchasePaymentSource || '',
+        facturaCompra: linkedPurchase?.facturaCompra || order.linkedPurchaseInvoice || '',
+        fechaCompraConfirmada: linkedPurchase?.fechaCompraConfirmada || order.linkedPurchasePurchaseDate || '',
+        fechaRegistro: linkedPurchase?.fechaRegistro || order.createdAt || ''
+      };
+    }
+
+    function ensureReceptionDesktopSupportToggle(){
+      if(!els.receptionWorkspace) return;
+      const section = els.receptionWorkspace.querySelector('.mobile-step-section[data-mobile-step="3"]');
+      if(!section || section.querySelector('.desktop-support-toggle')) return;
+      const toggle = document.createElement('div');
+      toggle.className = 'desktop-support-toggle';
+      toggle.innerHTML = `
+        <div class="desktop-support-toggle-head">
+          <div class="desktop-support-toggle-copy">
+            <strong>Soportes del pedido</strong>
+            <small>Déjalos plegados mientras comparas productos y ábrelos solo para revisar o reemplazar imágenes.</small>
+          </div>
+          <button class="btn btn-secondary btn-small" type="button" id="desktopSupportToggleBtn">Ver soportes</button>
+        </div>`;
+      section.prepend(toggle);
+      const btn = toggle.querySelector('#desktopSupportToggleBtn');
+      if(btn) btn.addEventListener('click', () => toggleDesktopReceptionSupports());
+    }
+
+    function toggleDesktopReceptionSupports(forceOpen){
+      if(!els.receptionWorkspace) return;
+      const section = els.receptionWorkspace.querySelector('.mobile-step-section[data-mobile-step="3"]');
+      if(!section) return;
+      const open = typeof forceOpen === 'boolean' ? forceOpen : !section.classList.contains('desktop-open');
+      section.classList.toggle('desktop-open', open);
+      const btn = section.querySelector('#desktopSupportToggleBtn');
+      if(btn) btn.textContent = open ? 'Ocultar soportes' : 'Ver soportes';
+    }
+
+    function renderDesktopReceptionModalSummary(){
+      if(!desktopReceptionCaptureModalOpen || isMobileView() || !els.receptionCaptureModalHost) return;
+      let strip = els.receptionCaptureModalHost.querySelector('#desktopReceptionSummaryStrip');
+      if(!strip){
+        strip = document.createElement('div');
+        strip.id = 'desktopReceptionSummaryStrip';
+        strip.className = 'desktop-reception-summary-strip';
+        els.receptionCaptureModalHost.insertBefore(strip, els.receptionWorkspace || null);
+      }
+      const linkedPurchase = getLinkedReceptionPurchase();
+      const validItems = getUsedOrderItems(currentOrderItems);
+      const preview = buildComparison(validItems);
+      const supplier = ((els.orderSupplier && els.orderSupplier.value) || '').trim() || linkedPurchase?.nombre || 'Sin proveedor';
+      const code = ((els.orderCode && els.orderCode.value) || '').trim() || linkedPurchase?.referencia || 'Sin código';
+      const orderDate = (els.orderDate && els.orderDate.value) || linkedPurchase?.fechaCompraConfirmada || '';
+      const method = linkedPurchase?.tipoPagoCompra || 'Sin registrar';
+      const fund = linkedPurchase?.origenPagoCompra || 'Sin registrar';
+      const compraSoporte = currentOrderSupportCompra || linkedPurchase?.facturaCompra || '';
+      const recibidoSoporte = currentOrderSupportRecibido || '';
+      const diffs = validItems.filter(item => Number(item.pedida || 0) !== Number(item.recibida || 0)).length;
+      strip.innerHTML = `
+        <div class="desktop-reception-summary-card"><span>Proveedor</span><strong>${escapeHtml(supplier)}</strong><small>${escapeHtml(code)}</small></div>
+        <div class="desktop-reception-summary-card"><span>Fecha del pedido</span><strong>${escapeHtml(formatDate(orderDate) || 'Sin fecha')}</strong><small>${validItems.length ? validItems.length + ' producto(s)' : 'Aún sin productos'}</small></div>
+        <div class="desktop-reception-summary-card"><span>Tipo de pago</span><strong>${escapeHtml(method)}</strong><small>Dato heredado desde compras</small></div>
+        <div class="desktop-reception-summary-card"><span>Origen del dinero</span><strong>${escapeHtml(fund)}</strong><small>Dato heredado desde compras</small></div>
+        <div class="desktop-reception-summary-card"><span>Estado actual</span><strong>${escapeHtml(preview.status)}</strong><small>${diffs ? diffs + ' con diferencia' : 'Sin diferencias hasta ahora'}</small></div>
+        <div class="desktop-reception-summary-card"><span>Soportes</span><strong>${compraSoporte ? 'Compra lista' : 'Compra pendiente'} · ${recibidoSoporte ? 'Recibido listo' : 'Recibido pendiente'}</strong><small>${linkedPurchase?.facturaCompra ? 'La factura de compra ya viene cargada' : 'Puedes completar los soportes desde el acordeón'}</small></div>`;
+    }
+
+    function syncReceptionDesktopModalLayout(){
+      if(isMobileView() || !desktopReceptionCaptureModalOpen) return;
+      document.body.classList.add('desktop-reception-clean-open');
+      ensureReceptionDesktopSupportToggle();
+      toggleDesktopReceptionSupports(false);
+      renderDesktopReceptionModalSummary();
+    }
+
+    function storeReceptionWorkspaceHome(){
+      if(!els.receptionWorkspace || !els.desktopReceptionActions) return;
+      if(!receptionWorkspaceHome.workspaceParent){
+        receptionWorkspaceHome.workspaceParent = els.receptionWorkspace.parentNode;
+        receptionWorkspaceHome.workspaceNext = els.receptionWorkspace.nextSibling;
+      }
+      if(!receptionWorkspaceHome.actionsParent){
+        receptionWorkspaceHome.actionsParent = els.desktopReceptionActions.parentNode;
+        receptionWorkspaceHome.actionsNext = els.desktopReceptionActions.nextSibling;
       }
     }
+
+    function mountReceptionWorkspaceInModal(){
+      if(!els.receptionCaptureModalHost || !els.receptionWorkspace || !els.desktopReceptionActions) return;
+      storeReceptionWorkspaceHome();
+      els.receptionCaptureModalHost.innerHTML = '';
+      els.receptionCaptureModalHost.appendChild(els.receptionWorkspace);
+      els.receptionCaptureModalHost.appendChild(els.desktopReceptionActions);
+    }
+
+    function restoreReceptionWorkspaceFromModal(){
+      if(!receptionWorkspaceHome.workspaceParent || !receptionWorkspaceHome.actionsParent || !els.receptionWorkspace || !els.desktopReceptionActions) return;
+      const wp = receptionWorkspaceHome.workspaceParent;
+      if(els.receptionWorkspace.parentNode !== wp){
+        wp.insertBefore(els.receptionWorkspace, receptionWorkspaceHome.workspaceNext);
+      }
+      const ap = receptionWorkspaceHome.actionsParent;
+      if(els.desktopReceptionActions.parentNode !== ap){
+        ap.insertBefore(els.desktopReceptionActions, receptionWorkspaceHome.actionsNext);
+      }
+      if(els.receptionCaptureModalHost) els.receptionCaptureModalHost.innerHTML = '';
+    }
+
+    function openReceptionCaptureModal(title, hint){
+      if(isMobileView() || !els.receptionCaptureModal) return;
+      mountReceptionWorkspaceInModal();
+      if(els.receptionCaptureModalTitle) els.receptionCaptureModalTitle.textContent = title || 'Recepción pendiente';
+      if(els.receptionCaptureModalHint) els.receptionCaptureModalHint.textContent = hint || 'Completa o continúa la recepción desde esta ventana.';
+      els.receptionCaptureModal.classList.add('active');
+      desktopReceptionCaptureModalOpen = true;
+      syncReceptionDesktopModalLayout();
+      syncBodyModalState();
+    }
+
+    function closeReceptionCaptureModal(resetSelection = true){
+      if(!desktopReceptionCaptureModalOpen && !(els.receptionCaptureModal && els.receptionCaptureModal.classList.contains('active'))) return;
+      const strip = els.receptionCaptureModalHost ? els.receptionCaptureModalHost.querySelector('#desktopReceptionSummaryStrip') : null;
+      if(strip) strip.remove();
+      document.body.classList.remove('desktop-reception-clean-open');
+      restoreReceptionWorkspaceFromModal();
+      if(els.receptionCaptureModal) els.receptionCaptureModal.classList.remove('active');
+      desktopReceptionCaptureModalOpen = false;
+      if(resetSelection && !isMobileView()) resetOrderForm();
+      syncBodyModalState();
+    }
+
+    async function handleLoginSubmit(e){
+      e.preventDefault();
+      if(!firebaseAuth){
+        els.loginError.textContent = 'Firebase Authentication todavía no está listo.';
+        return;
+      }
+      const email = String(els.loginEmail?.value || '').trim().toLowerCase();
+      const password = String(els.loginPassword?.value || '');
+      if(!email || !password){
+        els.loginError.textContent = 'Ingresa tu correo y contraseña.';
+        return;
+      }
+      els.loginError.textContent = '';
+      try {
+        await firebaseModules.signInWithEmailAndPassword(firebaseAuth, email, password);
+      } catch(error){
+        console.error('Firebase auth login error:', error);
+        els.loginError.textContent = getFirebaseFriendlyError(error);
+      }
+    }
+
+    function hydrateSession(){ showLogin(); }
 
     function setLoginRole(role){
       const safe = ROLE_CONFIG[role] ? role : 'admin';
-      els.loginRole.value = safe;
+      if(els.loginRole) els.loginRole.value = safe;
       if(els.loginRoleMobile) els.loginRoleMobile.value = safe;
-      els.loginRoleLabel.textContent = 'Perfil seleccionado: ' + ROLE_CONFIG[safe].label;
-      els.loginRoleCards.querySelectorAll('[data-role]').forEach(card => {
-        card.classList.toggle('active', card.dataset.role === safe);
-      });
+      if(els.loginRoleLabel) els.loginRoleLabel.textContent = 'Perfil seleccionado: ' + ROLE_CONFIG[safe].label;
+      if(els.loginRoleCards){
+        els.loginRoleCards.querySelectorAll('[data-role]').forEach(card => {
+          card.classList.toggle('active', card.dataset.role === safe);
+        });
+      }
       els.loginError.textContent = '';
     }
 
-    function showLogin(){
+    function showLogin(message=''){
       els.loginShell.style.display = 'flex';
       els.appShell.style.display = 'none';
-      els.loginPassword.value = '';
+      if(els.loginPassword) els.loginPassword.value = '';
+      if(message) els.loginError.textContent = message;
       document.body.removeAttribute('data-role');
     }
 
@@ -1298,28 +1739,116 @@
       els.appShell.style.display = 'block';
     }
 
-    function saveSession(){ localStorage.setItem(SESSION_KEY, JSON.stringify({ role: currentRole, loginAt: new Date().toISOString() })); }
-    function loadSession(){
-      try {
-        let raw = localStorage.getItem(SESSION_KEY);
-        if(!raw){
-          const legacyKey = LEGACY_SESSION_KEYS.find(key => localStorage.getItem(key));
-          if(legacyKey) raw = localStorage.getItem(legacyKey);
+    function saveSession(){}
+    function loadSession(){ return null; }
+
+    async function logoutSession(){
+      if(firebaseAuth){
+        try {
+          await firebaseModules.signOut(firebaseAuth);
+        } catch(error){
+          console.error('Firebase auth logout error:', error);
         }
-        const data = JSON.parse(raw || 'null');
-        return data && ROLE_CONFIG[data.role] ? data : null;
-      } catch { return null; }
-    }
-    function logoutSession(){
-      localStorage.removeItem(SESSION_KEY);
-      LEGACY_SESSION_KEYS.forEach(key => localStorage.removeItem(key));
+      }
+      currentFirebaseUser = null;
       currentRole = 'admin';
+      if(els.sessionStatus) els.sessionStatus.textContent = 'Sesión cerrada';
       showLogin();
+    }
+
+    function extractRoleFromSource(data){
+      if(!data || typeof data !== 'object') return '';
+      const raw = data.role || data.rol || data.perfil || data.profile || '';
+      const value = String(raw).trim().toLowerCase();
+      return ROLE_CONFIG[value] ? value : '';
+    }
+
+    function normalizeRoleFromClaims(claims){
+      if(!claims || typeof claims !== 'object') return '';
+      const direct = extractRoleFromSource(claims);
+      if(direct) return direct;
+      if(claims.admin === true) return 'admin';
+      if(claims.receiver === true) return 'receiver';
+      if(claims.buyer === true) return 'buyer';
+      return '';
+    }
+
+    function encodeEmailKey(email=''){
+      return encodeURIComponent(String(email).trim().toLowerCase());
+    }
+
+    async function resolveRoleForUser(user){
+      try {
+        const tokenResult = await user.getIdTokenResult(true);
+        const claimRole = normalizeRoleFromClaims(tokenResult?.claims || {});
+        if(claimRole) return claimRole;
+      } catch(error){
+        console.warn('No fue posible leer claims del usuario:', error);
+      }
+      if(!firestoreDb) return '';
+      const refs = [];
+      USER_ROLE_COLLECTIONS.forEach(collectionName => {
+        refs.push(firebaseModules.doc(firestoreDb, collectionName, user.uid));
+        if(user.email) refs.push(firebaseModules.doc(firestoreDb, collectionName, encodeEmailKey(user.email)));
+      });
+      for(const ref of refs){
+        try {
+          const snapshot = await firebaseModules.getDoc(ref);
+          if(snapshot.exists()){
+            const role = extractRoleFromSource(snapshot.data());
+            if(role) return role;
+          }
+        } catch(error){
+          console.warn('No fue posible leer el rol del usuario:', error);
+        }
+      }
+      return '';
+    }
+
+    async function applyAuthenticatedUser(user){
+      const role = await resolveRoleForUser(user);
+      if(!role){
+        await firebaseModules.signOut(firebaseAuth);
+        showLogin('El usuario existe en Authentication, pero todavía no tiene rol asignado. Crea users/' + user.uid + ' con { role: "admin" | "receiver" | "buyer" }.');
+        updateCloudStatus('Rol pendiente', 'error', 'Falta asignar el rol del usuario en Firestore o en custom claims.');
+        return;
+      }
+      currentFirebaseUser = user;
+      currentRole = role;
+      if(els.sessionStatus) els.sessionStatus.textContent = (user.email || 'Sesión activa') + ' · autenticado con Firebase';
+      els.loginError.textContent = '';
+      applyRoleView();
+      showApp();
+      await hydrateCloudState();
+    }
+
+    function initAuthObserver(){
+      if(authObserverReady || !firebaseAuth) return;
+      authObserverReady = true;
+      firebaseModules.onAuthStateChanged(firebaseAuth, async (user) => {
+        if(user){
+          try {
+            updateCloudStatus('Sesión iniciada', 'syncing', 'Verificando acceso y cargando datos...');
+            await applyAuthenticatedUser(user);
+            handleConnectivityChange();
+          } catch(error){
+            console.error('Firebase auth state error:', error);
+            showLogin(getFirebaseFriendlyError(error));
+          }
+        } else {
+          currentFirebaseUser = null;
+          currentRole = 'admin';
+          if(els.sessionStatus) els.sessionStatus.textContent = 'Ingresa con Firebase Authentication';
+          showLogin();
+          updateCloudStatus('Sin sesión', 'offline', 'Ingresa con un usuario de Firebase Authentication para cargar la base de datos.');
+        }
+      });
     }
 
     function getRoleConfig(){ return ROLE_CONFIG[currentRole] || ROLE_CONFIG.admin; }
     function canAccessTab(tab){ return getRoleConfig().tabs.includes(tab); }
     function canManagePurchases(){ return currentRole === 'admin'; }
+    function canConfirmPurchases(){ return currentRole === 'admin' || currentRole === 'buyer'; }
     function canUseReceptionModule(){ return currentRole === 'admin' || currentRole === 'receiver'; }
     function canViewHistory(){ return currentRole === 'admin'; }
     function canUseAccounting(){ return currentRole === 'admin'; }
@@ -1340,6 +1869,10 @@
     }
     function toggleAdminForm(tab){
       if(!isAdminMobile()) return;
+      if(tab === 'recepcion' && els.receptionWorkspace && els.receptionWorkspace.classList.contains('is-hidden')){
+        els.receptionPendingCard?.scrollIntoView({ behavior:'smooth', block:'start' });
+        return;
+      }
       adminMobileState.forms[tab] = !adminMobileState.forms[tab];
       syncAdminCollapseUI();
       renderAdminMobileUI();
@@ -1350,7 +1883,7 @@
       if(els.receptionFormCard) els.receptionFormCard.classList.toggle('collapsed', adminMobile && !adminMobileState.forms.recepcion);
       if(els.expenseFormCard) els.expenseFormCard.classList.toggle('collapsed', adminMobile && !adminMobileState.forms.contable);
       if(els.togglePurchaseForm) els.togglePurchaseForm.textContent = adminMobileState.forms.compras ? 'Ocultar formulario' : 'Nuevo producto';
-      if(els.toggleReceptionForm) els.toggleReceptionForm.textContent = adminMobileState.forms.recepcion ? 'Ocultar captura' : 'Abrir captura';
+      if(els.toggleReceptionForm) els.toggleReceptionForm.textContent = (els.receptionWorkspace && els.receptionWorkspace.classList.contains('is-hidden')) ? 'Ver pendientes' : (adminMobileState.forms.recepcion ? 'Ocultar captura' : 'Abrir captura');
       if(els.toggleExpenseForm) els.toggleExpenseForm.textContent = adminMobileState.forms.contable ? 'Ocultar formulario' : 'Nuevo gasto';
       if(els.accountingKpis) els.accountingKpis.classList.toggle('admin-metrics-collapsed', adminMobile && !adminMobileState.metricsExpanded);
       if(els.toggleAccountingMetrics) els.toggleAccountingMetrics.textContent = adminMobileState.metricsExpanded ? 'Ocultar métricas' : 'Ver métricas';
@@ -1458,7 +1991,8 @@
     function renderAdminMobileUI(){
       if(!els.adminMobileHub || !els.adminMobileFilters || !els.adminBottomNav || !els.floatingBatchBar) return;
       const adminMobile = isAdminMobile();
-      els.adminMobileHub.style.display = adminMobile ? 'block' : 'none';
+      const activeTab = getActiveTab();
+      els.adminMobileHub.style.display = adminMobile && activeTab === 'compras' ? 'block' : 'none';
       els.adminMobileFilters.style.display = adminMobile ? 'block' : 'none';
       els.adminBottomNav.style.display = adminMobile ? 'grid' : 'none';
       els.floatingBatchBar.style.display = 'none';
@@ -1471,13 +2005,11 @@
       const pendingPurchases = state.purchases.filter(item => item.estado === 'Pendiente').length;
       const pendingOrders = state.orders.filter(order => order.estado === 'Pendiente').length;
       const issueOrders = state.orders.filter(order => order.estado === 'Con diferencia').length;
-      const quickToday = state.expenses.filter(expense => expense.fecha === getTodayIso()).reduce((sum,item) => sum + Number(item.valor || 0), 0);
       els.adminMobileHub.innerHTML = `
         <div class="admin-mobile-summary">
           <div class="admin-mobile-summary-head">
             <div>
               <strong>Vista rápida del administrador</strong>
-              <small>Consulta primero, abre formularios solo cuando hagan falta y muévete por accesos rápidos.</small>
             </div>
             <span class="session-tag">📱 móvil</span>
           </div>
@@ -1485,16 +2017,8 @@
             <div class="admin-mobile-stat"><span>Compras pendientes</span><strong>${pendingPurchases}</strong></div>
             <div class="admin-mobile-stat"><span>Pedidos pendientes</span><strong>${pendingOrders}</strong></div>
             <div class="admin-mobile-stat"><span>Con diferencia</span><strong>${issueOrders}</strong></div>
-            <div class="admin-mobile-stat"><span>Gasto general</span><strong>${formatMoney(money.grandTotal)}</strong></div>
-          </div>
-          <div class="quick-actions-row">
-            <button class="btn btn-primary btn-small" type="button" onclick="adminQuickAction('new-purchase')">🛒 Nuevo producto</button>
-            <button class="btn btn-secondary btn-small" type="button" onclick="adminQuickAction('go-recepcion')">📥 Ir a recepción</button>
-            <button class="btn btn-warning btn-small" type="button" onclick="adminQuickAction('history-issues')">⚠️ Ver diferencias</button>
-            <button class="btn btn-ghost btn-small" type="button" onclick="adminQuickAction('new-expense')">💰 Nuevo gasto</button>
           </div>
         </div>`;
-      const activeTab = getActiveTab();
       const filterConfigs = {
         compras:[['all','Todo'],['pendiente','Pendientes'],['comprado','Comprados']],
         recepcion:[['datos','Datos'],['productos','Productos'],['soportes','Soportes'],['cierre','Cierre']],
@@ -1568,13 +2092,97 @@
       }
       syncReceptionMobileUI();
     }
+    function setReceptionDesktopReview(open){
+      desktopReceptionReviewOpen = !!open;
+      if(els.desktopOpenReviewBtn) els.desktopOpenReviewBtn.style.display = !isMobileView() && (!els.receptionWorkspace || !els.receptionWorkspace.classList.contains('is-hidden')) ? 'inline-flex' : 'none';
+      if(els.desktopCloseReviewBtn) els.desktopCloseReviewBtn.style.display = 'none';
+      if(els.orderSubmitBtn) els.orderSubmitBtn.textContent = 'Guardar pedido';
+    }
+    function validateOrderDraft(){
+      if(!canUseReceptionModule()){
+        roleDenied('Este perfil no tiene acceso para registrar pedidos recibidos.');
+        return null;
+      }
+      if(!els.orderSupplier.value.trim()){
+        alert('Debes escribir el proveedor o empresa del pedido.');
+        setReceptionMobileStep(1);
+        els.orderSupplier.focus();
+        return null;
+      }
+      if(!els.orderCode.value.trim()){
+        alert('Debes escribir el código o número del pedido.');
+        setReceptionMobileStep(1);
+        els.orderCode.focus();
+        return null;
+      }
+      if(!els.orderDate.value){
+        alert('Debes seleccionar la fecha del pedido.');
+        setReceptionMobileStep(1);
+        els.orderDate.focus();
+        return null;
+      }
+      const validItems = currentOrderItems.map(item => ({
+        id: item.id || createId('line'),
+        referencia: String(item.referencia || '').trim(),
+        nombre: String(item.nombre || '').trim(),
+        pedida: Number(item.pedida || 0),
+        recibida: Number(item.recibida || 0)
+      })).filter(item => item.referencia || item.nombre || item.pedida || item.recibida);
+      if(!validItems.length){
+        alert('Debes agregar al menos un producto al pedido.');
+        setReceptionMobileStep(2);
+        return null;
+      }
+      return validItems;
+    }
+    function openReceptionDesktopReview(){
+      if(isMobileView()) return;
+      const validItems = validateOrderDraft();
+      if(!validItems) return;
+      updateReceptionHeaderSummary();
+      const supplier = (els.orderSupplier.value || '').trim();
+      const code = (els.orderCode.value || '').trim();
+      const preview = buildComparison(validItems);
+      const diffs = validItems.filter(item => Number(item.pedida || 0) !== Number(item.recibida || 0)).length;
+      const soportes = `${currentOrderSupportCompra ? 'Compra lista' : 'Compra pendiente'} · ${currentOrderSupportRecibido ? 'Recibido listo' : 'Recibido pendiente'}`;
+      els.modalTitle.textContent = 'Revisión final del pedido';
+      els.modalBody.innerHTML = `
+        <div class="mobile-confirm-box" style="margin-bottom:0">
+          <h3>Confirma antes de guardar</h3>
+          <p class="subtle">Revisa el estado del pedido antes de confirmarlo.</p>
+          <div class="confirm-summary-box">
+            <div class="confirm-line"><span>Proveedor</span><strong>${escapeHtml(supplier || 'Sin proveedor')}</strong></div>
+            <div class="confirm-line"><span>Pedido</span><strong>${escapeHtml(code || 'Sin código')}</strong></div>
+            <div class="confirm-line"><span>Estado actual</span><strong>${escapeHtml(preview.status)}</strong></div>
+            <div class="confirm-line"><span>Productos cargados</span><strong>${validItems.length}</strong></div>
+            <div class="confirm-line"><span>Productos con diferencia</span><strong>${diffs}</strong></div>
+            <div class="confirm-line"><span>Soportes</span><strong>${soportes}</strong></div>
+          </div>
+          <div class="note-box" style="margin:12px 0 0">Si confirmas con diferencias, el sistema conservará esa novedad en el historial.</div>
+          <div class="stack" style="margin-top:14px">
+            <button class="btn btn-primary" type="button" onclick="confirmReceptionDesktopReview()">Confirmar pedido</button>
+            <button class="btn btn-ghost" type="button" onclick="closeReceptionDesktopReviewModal()">Cancelar</button>
+          </div>
+        </div>`;
+      els.detailModal.classList.add('active');
+      syncBodyModalState();
+    }
+
+    function closeReceptionDesktopReviewModal(){
+      setReceptionDesktopReview(false);
+      closeDetailModal();
+    }
     function syncReceptionMobileUI(){
+      if(isMobileView() && desktopReceptionCaptureModalOpen) closeReceptionCaptureModal(false);
       const panel = document.getElementById('panel-recepcion');
       if(panel) panel.dataset.mobileStep = String(receptionMobileStep);
       if(els.mobileReceptionActions){
-        const visible = isMobileView() && canUseReceptionModule() && panel && panel.classList.contains('active');
+        const workspaceVisible = !els.receptionWorkspace || !els.receptionWorkspace.classList.contains('is-hidden');
+        const visible = isMobileView() && canUseReceptionModule() && panel && panel.classList.contains('active') && workspaceVisible;
         els.mobileReceptionActions.style.display = visible ? 'grid' : 'none';
       }
+      setReceptionDesktopReview(!isMobileView() && desktopReceptionReviewOpen);
+      if(els.desktopOrderCancelBtn) els.desktopOrderCancelBtn.style.display = !isMobileView() && els.orderCancelBtn && els.orderCancelBtn.style.display !== 'none' && (!els.receptionWorkspace || !els.receptionWorkspace.classList.contains('is-hidden')) ? 'inline-flex' : 'none';
       updateReceptionHeaderSummary();
       updateCompareSummary();
     }
@@ -1585,16 +2193,26 @@
       const orderDate = els.orderDate.value ? formatDate(els.orderDate.value) : 'Sin fecha';
       const payDate = els.paymentDate.value ? formatDate(els.paymentDate.value) : 'Sin fecha';
       const receiveDate = els.receiveDate.value ? formatDate(els.receiveDate.value) : 'Pendiente';
+      const linkedId = (els.linkedPurchaseId && els.linkedPurchaseId.value) || selectedReceptionPurchaseId || '';
+      const linkedPurchase = getLinkedReceptionPurchase();
       const preview = buildComparison(currentOrderItems);
-      els.mobileReceptionSummaryMain.textContent = supplier || code ? [code || 'Pedido sin código', supplier || 'Proveedor sin definir'].join(' · ') : 'Pedido sin identificar';
-      els.mobileReceptionSummaryState.textContent = preview.status === 'Con diferencia' ? 'Hay productos con diferencias por revisar.' : (preview.status === 'Completo' ? 'Todo va completo hasta ahora.' : 'Completa los datos y productos del pedido.');
-      els.mobileReceptionSummaryExtra.innerHTML = `
-        <div><b>Fecha pedido:</b> ${orderDate}</div>
-        <div><b>Fecha de pago:</b> ${payDate}</div>
-        <div><b>Fecha de recibido:</b> ${receiveDate}</div>
-        <div><b>Productos cargados:</b> ${getUsedOrderItems(currentOrderItems).length}</div>
-        <div><b>Observaciones:</b> ${escapeHtml(els.orderNotes.value.trim() || 'Sin observaciones')}</div>
-      `;
+      if(!linkedId && !(els.editingOrderId && els.editingOrderId.value)){
+        els.mobileReceptionSummaryMain.textContent = 'Selecciona un pendiente por recibir';
+        els.mobileReceptionSummaryState.textContent = 'La captura se habilita cuando eliges una compra ya confirmada desde la lista de pendientes.';
+        els.mobileReceptionSummaryExtra.innerHTML = '<div><b>Fuente:</b> Compras por hacer</div><div><b>Soportes:</b> Se traerá el recibo de compra ya cargado</div><div><b>Pago:</b> También se conservan la forma de pago y el origen del dinero</div>';
+      } else {
+        els.mobileReceptionSummaryMain.textContent = supplier || code ? [code || 'Pedido sin código', supplier || 'Proveedor sin definir'].join(' · ') : (linkedPurchase ? [linkedPurchase.referencia || 'Pendiente', linkedPurchase.nombre || 'Compra seleccionada'].join(' · ') : 'Pedido sin identificar');
+        els.mobileReceptionSummaryState.textContent = preview.status === 'Con diferencia' ? 'Hay productos con diferencias por revisar.' : (preview.status === 'Completo' ? 'Todo va completo hasta ahora.' : 'Completa los datos y productos del pedido.');
+        els.mobileReceptionSummaryExtra.innerHTML = `
+          <div><b>Fecha pedido:</b> ${orderDate}</div>
+          <div><b>Fecha de pago:</b> ${payDate}</div>
+          <div><b>Fecha de recibido:</b> ${receiveDate}</div>
+          <div><b>Productos cargados:</b> ${getUsedOrderItems(currentOrderItems).length}</div>
+          <div><b>Tipo de pago:</b> ${escapeHtml(linkedPurchase?.tipoPagoCompra || 'Sin registrar')}</div>
+          <div><b>Origen del dinero:</b> ${escapeHtml(linkedPurchase?.origenPagoCompra || 'Sin registrar')}</div>
+          <div><b>Observaciones:</b> ${escapeHtml(els.orderNotes.value.trim() || 'Sin observaciones')}</div>
+        `;
+      }
       if(els.mobileConfirmSummary){
         const used = getUsedOrderItems(currentOrderItems);
         const diffs = used.filter(item => getOrderItemState(item).diff !== 0).length;
@@ -1615,6 +2233,7 @@
       els.orderCurrentPurchaseSupport.innerHTML = currentOrderSupportCompra ? `<img src="${currentOrderSupportCompra}" alt="Soporte de compra" data-view-image="${currentOrderSupportCompra}" data-view-title="Soporte de compra">` : '<div class="placeholder">Sin soporte de compra.</div>';
       els.orderCurrentReceivedSupport.innerHTML = currentOrderSupportRecibido ? `<img src="${currentOrderSupportRecibido}" alt="Soporte recibido" data-view-image="${currentOrderSupportRecibido}" data-view-title="Soporte recibido">` : '<div class="placeholder">Sin soporte recibido.</div>';
       attachInlineImageViewers(els.orderSupportPreviewStrip);
+      if(desktopReceptionCaptureModalOpen && !isMobileView()) renderDesktopReceptionModalSummary();
       updateReceptionHeaderSummary();
     }
     function clearSupportPreview(kind){
@@ -1667,17 +2286,20 @@
       els.toolbarActions.style.display = 'none';
       els.purchaseFormCard.style.display = canManagePurchases() ? 'block' : 'none';
       els.purchaseLayout.classList.toggle('single-column', !canManagePurchases());
-      els.purchaseListTitle.textContent = currentRole === 'buyer' ? 'Pedidos nuevos por hacer' : 'Lista de compras pendientes';
+      els.purchaseListTitle.textContent = currentRole === 'buyer' && isMobileView() ? 'Pedidos nuevos por hacer' : 'Lista de compras pendientes';
       els.purchaseRoleNote.style.display = currentRole === 'buyer' ? 'block' : 'none';
       if(currentRole === 'buyer'){
-        els.purchaseRoleNote.textContent = 'Este perfil solo puede consultar los pedidos nuevos o pendientes de compra. Los ya comprados no se muestran aquí.';
+        els.purchaseRoleNote.textContent = 'Este perfil ve solo los pedidos nuevos o pendientes de compra. Desde aquí puede confirmar la compra, registrar el tipo de pago, subir la factura y escoger si salió de ofrenda o de pago iglesia.';
       }
-      if(els.heroCards) els.heroCards.style.display = isAdmin ? '' : 'none';
+      const active = document.querySelector('.tab-btn.active');
+      const activeTab = active ? active.dataset.tab : '';
+      const target = canAccessTab(activeTab) ? activeTab : cfg.defaultTab;
+      if(els.heroCards) els.heroCards.style.display = isAdmin && target === 'compras' ? '' : 'none';
       if(els.orderAccountingNote) els.orderAccountingNote.style.display = isAdmin ? '' : 'none';
       if(els.orderTotalField) els.orderTotalField.style.display = isAdmin ? '' : 'none';
       if(els.heroTitle){
         els.heroTitle.textContent = isAdmin
-          ? 'Control de compras, pedidos, recepción y gastos'
+          ? 'Control de compras, pedidos, recepción y contabilidad'
           : (currentRole === 'receiver' ? 'Recepción y verificación de pedidos' : 'Compras por hacer');
       }
       if(els.heroText){
@@ -1685,11 +2307,8 @@
           ? 'Lleva el registro de lo que falta comprar, compara lo pedido contra lo recibido, guarda el historial con soportes y organiza los gastos desde pedidos y manuales en un solo lugar.'
           : (currentRole === 'receiver'
               ? 'Revisa cada pedido recibido, compara cantidades y registra novedades del producto que llegó.'
-              : 'Consulta la lista de productos pendientes por comprar con su referencia, cantidad e imagen de apoyo.');
+              : 'Consulta la lista de productos pendientes por comprar y confirma cada compra con tipo de pago, factura y origen del dinero.');
       }
-      const active = document.querySelector('.tab-btn.active');
-      const activeTab = active ? active.dataset.tab : '';
-      const target = canAccessTab(activeTab) ? activeTab : cfg.defaultTab;
       if(currentRole !== 'admin'){
         adminMobileState.forms.compras = false;
         adminMobileState.forms.contable = false;
@@ -1705,12 +2324,283 @@
     }
 
     function switchTab(tabName){
+      const previousTab = getActiveTab();
+      if(previousTab && previousTab !== tabName){
+        adminMobileState.metricsExpanded = false;
+      }
+      if(tabName === 'compras' && !isMobileView()){
+        desktopBuyerPurchaseTab = 'pendiente';
+      }
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName));
       document.querySelectorAll('.panel').forEach(panel => panel.classList.remove('active'));
       const panel = document.getElementById('panel-' + tabName);
       if(panel) panel.classList.add('active');
+      if(els.heroCards){
+        els.heroCards.style.display = currentRole === 'admin' && tabName === 'compras' ? '' : 'none';
+      }
+      if(tabName === 'recepcion'){
+        renderReceptionPendingList();
+        syncReceptionSelectionUI();
+      }
       syncReceptionMobileUI();
       renderAdminMobileUI();
+    }
+
+    function updateCloudStatus(message, tone='offline', detail=''){
+      if(els.cloudStatus){
+        els.cloudStatus.textContent = message;
+        els.cloudStatus.className = 'cloud-status-value ' + tone;
+      }
+      if(els.cloudStatusDetail){
+        els.cloudStatusDetail.textContent = detail || '';
+      }
+    }
+
+    function sanitizeStateForSignature(source){
+      const sortById = (a,b) => String(a.id || '').localeCompare(String(b.id || ''));
+      const cleanList = list => (Array.isArray(list) ? list.slice().sort(sortById).map(item => JSON.parse(JSON.stringify(item))) : []);
+      return {
+        purchases: cleanList(source.purchases),
+        orders: cleanList(source.orders),
+        expenses: cleanList(source.expenses)
+      };
+    }
+
+    function getStateSignature(source = state){
+      return JSON.stringify(sanitizeStateForSignature(source));
+    }
+
+    function hasAnyStoredData(source = state){
+      return !!((source.purchases && source.purchases.length) || (source.orders && source.orders.length) || (source.expenses && source.expenses.length));
+    }
+
+    function getFirebaseFriendlyError(error){
+      const code = String(error?.code || '');
+      if(code.includes('auth/invalid-credential') || code.includes('auth/wrong-password') || code.includes('auth/invalid-login-credentials')) return 'Correo o contraseña incorrectos.';
+      if(code.includes('auth/user-not-found')) return 'Ese usuario no existe en Firebase Authentication.';
+      if(code.includes('auth/too-many-requests')) return 'Demasiados intentos. Espera un momento y vuelve a intentar.';
+      if(code.includes('auth/network-request-failed')) return 'No fue posible conectar con Firebase. Revisa tu internet.';
+      if(code.includes('permission-denied')) return 'Revisa las reglas de Firestore para permitir guardar y leer datos.';
+      if(code.includes('resource-exhausted') || code.includes('invalid-argument')) return 'Uno de los registros es demasiado grande para Firestore. Reduce el tamaño de las imágenes.';
+      const msg = String(error?.message || '').trim();
+      return msg || 'Confirma que Firestore Database y Firebase Authentication estén activos en tu proyecto.';
+    }
+
+    function handleConnectivityChange(){
+      if(!navigator.onLine){
+        updateCloudStatus('Sin conexión', 'offline', 'Los cambios siguen guardándose en este navegador hasta recuperar internet.');
+        return;
+      }
+      if(firebaseReady && currentFirebaseUser && !cloudSyncInFlight){
+        const detail = lastSyncedStateSignature
+          ? 'Conectado. Los cambios se sincronizan automáticamente.'
+          : 'Conectado. Listo para guardar en la nube.';
+        updateCloudStatus('Firebase conectado', 'ready', detail);
+        scheduleCloudSync('online');
+      }
+    }
+
+    function keepAssetInFirestore(value){
+      if(!value) return '';
+      const stringValue = String(value);
+      return stringValue;
+    }
+
+    async function prepareStateForCloud(){
+      const purchases = state.purchases.map(item => {
+        const purchase = normalizePurchase(item);
+        purchase.imagen = keepAssetInFirestore(purchase.imagen);
+        purchase.facturaCompra = keepAssetInFirestore(purchase.facturaCompra);
+        return purchase;
+      });
+
+      const orders = state.orders.map(item => {
+        const order = normalizeOrder(item);
+        order.soporteCompra = keepAssetInFirestore(order.soporteCompra);
+        order.soporteRecibido = keepAssetInFirestore(order.soporteRecibido);
+        return order;
+      });
+
+      const expenses = state.expenses.map(item => {
+        const expense = normalizeExpense(item);
+        expense.soporte = keepAssetInFirestore(expense.soporte);
+        return expense;
+      });
+
+      return { purchases, orders, expenses };
+    }
+
+    function estimateFirestorePayloadSize(record){
+      try {
+        return new TextEncoder().encode(JSON.stringify(record)).length;
+      } catch {
+        return 0;
+      }
+    }
+
+    function serializeForCloud(record, collectionName='registro'){
+      const payload = JSON.parse(JSON.stringify({ ...record, updatedAt: new Date().toISOString() }));
+      const approxBytes = estimateFirestorePayloadSize(payload);
+      if(approxBytes > 950000){
+        throw new Error('El ' + collectionName + ' "' + (record.codigo || record.nombre || record.concepto || record.id || '') + '" es demasiado grande para Firestore. Reduce el tamaño de la imagen antes de guardar.');
+      }
+      return payload;
+    }
+
+    async function syncCollectionToCloud(collectionName, records){
+      const currentIds = new Set(records.map(record => record.id));
+      await Promise.all(records.map(record => firebaseModules.setDoc(
+        firebaseModules.doc(firestoreDb, collectionName, record.id),
+        serializeForCloud(record, collectionName)
+      )));
+      const staleIds = [...(cloudCollectionIndex[collectionName] || new Set())].filter(id => !currentIds.has(id));
+      if(staleIds.length){
+        await Promise.all(staleIds.map(id => firebaseModules.deleteDoc(firebaseModules.doc(firestoreDb, collectionName, id))));
+      }
+      cloudCollectionIndex[collectionName] = currentIds;
+    }
+
+    async function syncStateToCloud(reason='manual'){
+      if(!firebaseReady || !currentFirebaseUser || suppressCloudSync || cloudSyncInFlight || !navigator.onLine) return;
+      const pendingSignature = getStateSignature(state);
+      if(pendingSignature === lastSyncedStateSignature) return;
+      cloudSyncInFlight = true;
+      updateCloudStatus('Sincronizando Firebase', 'syncing', 'Guardando compras, pedidos, historial y contabilidad en la nube...');
+      try {
+        const prepared = await prepareStateForCloud();
+        const scopedPrepared = getRoleScopedState(prepared);
+        suppressCloudSync = true;
+        state.purchases = scopedPrepared.purchases;
+        state.orders = scopedPrepared.orders;
+        state.expenses = scopedPrepared.expenses;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        suppressCloudSync = false;
+
+        await Promise.all(getCloudCollectionsForRole().map(name => syncCollectionToCloud(name, state[name])));
+
+        lastSavedStateSignature = getStateSignature(state);
+        lastSyncedStateSignature = lastSavedStateSignature;
+        renderAll();
+        updateCloudStatus('Firebase conectado', 'ready', 'Cambios guardados en la nube.');
+      } catch(error){
+        console.error('Firebase sync error:', error);
+        updateCloudStatus('Error en Firebase', 'error', getFirebaseFriendlyError(error));
+      } finally {
+        suppressCloudSync = false;
+        cloudSyncInFlight = false;
+      }
+      if(getStateSignature(state) !== lastSyncedStateSignature) scheduleCloudSync('post-sync');
+    }
+
+    function scheduleCloudSync(reason='queued'){
+      if(!firebaseReady || !currentFirebaseUser || suppressCloudSync || !navigator.onLine) return;
+      clearTimeout(cloudSyncTimer);
+      cloudSyncTimer = setTimeout(() => {
+        syncStateToCloud(reason);
+      }, 700);
+    }
+
+    function sortPurchasesForUi(items){
+      return items.slice().sort((a,b) => String(b.fechaRegistro || '').localeCompare(String(a.fechaRegistro || '')));
+    }
+
+    function sortOrdersForUi(items){
+      return items.slice().sort((a,b) => String(b.createdAt || b.fechaPedido || '').localeCompare(String(a.createdAt || a.fechaPedido || '')));
+    }
+
+    function sortExpensesForUi(items){
+      return items.slice().sort((a,b) => String(b.createdAt || b.fecha || '').localeCompare(String(a.createdAt || a.fecha || '')));
+    }
+
+    async function fetchCloudState(){
+      const result = { purchases: [], orders: [], expenses: [] };
+      const collections = getCloudCollectionsForRole();
+      if(collections.includes('purchases')){
+        const purchaseSnap = await firebaseModules.getDocs(firebaseModules.collection(firestoreDb, 'purchases'));
+        result.purchases = sortPurchasesForUi(purchaseSnap.docs.map(snapshot => normalizePurchase({ id:snapshot.id, ...snapshot.data() })));
+        cloudCollectionIndex.purchases = new Set(result.purchases.map(item => item.id));
+      } else {
+        cloudCollectionIndex.purchases = new Set();
+      }
+      if(collections.includes('orders')){
+        const orderSnap = await firebaseModules.getDocs(firebaseModules.collection(firestoreDb, 'orders'));
+        result.orders = sortOrdersForUi(orderSnap.docs.map(snapshot => normalizeOrder({ id:snapshot.id, ...snapshot.data() })));
+        cloudCollectionIndex.orders = new Set(result.orders.map(item => item.id));
+      } else {
+        cloudCollectionIndex.orders = new Set();
+      }
+      if(collections.includes('expenses')){
+        const expenseSnap = await firebaseModules.getDocs(firebaseModules.collection(firestoreDb, 'expenses'));
+        result.expenses = sortExpensesForUi(expenseSnap.docs.map(snapshot => normalizeExpense({ id:snapshot.id, ...snapshot.data() })));
+        cloudCollectionIndex.expenses = new Set(result.expenses.map(item => item.id));
+      } else {
+        cloudCollectionIndex.expenses = new Set();
+      }
+      return result;
+    }
+
+    async function hydrateCloudState(){
+      if(!firebaseReady || !currentFirebaseUser) return;
+      suppressCloudSync = true;
+      try {
+        updateCloudStatus('Firebase conectado', 'syncing', 'Cargando datos guardados...');
+        const remoteState = await fetchCloudState();
+        if(hasAnyStoredData(remoteState)){
+          state.purchases = remoteState.purchases;
+          state.orders = remoteState.orders;
+          state.expenses = remoteState.expenses;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          lastSavedStateSignature = getStateSignature(state);
+          lastSyncedStateSignature = lastSavedStateSignature;
+          renderAll();
+          updateCloudStatus('Firebase conectado', 'ready', 'Datos cargados desde la nube.');
+        } else if(hasAnyStoredData(state)){
+          lastSavedStateSignature = '';
+          suppressCloudSync = false;
+          updateCloudStatus('Firebase conectado', 'syncing', 'Base de datos vacía. Subiendo datos locales por primera vez...');
+          scheduleCloudSync('bootstrap');
+          return;
+        } else {
+          lastSavedStateSignature = getStateSignature(state);
+          lastSyncedStateSignature = lastSavedStateSignature;
+          updateCloudStatus('Firebase conectado', 'ready', 'Base de datos lista para empezar.');
+        }
+      } catch(error){
+        console.error('Firebase hydrate error:', error);
+        updateCloudStatus('Error en Firebase', 'error', getFirebaseFriendlyError(error));
+      } finally {
+        suppressCloudSync = false;
+      }
+    }
+
+    async function initFirebase(){
+      updateCloudStatus(
+        navigator.onLine ? 'Conectando Firebase' : 'Sin conexión',
+        navigator.onLine ? 'syncing' : 'offline',
+        navigator.onLine
+          ? 'Preparando la base de datos en la nube...'
+          : 'Trabajando con respaldo local hasta recuperar internet.'
+      );
+      window.addEventListener('online', handleConnectivityChange);
+      window.addEventListener('offline', handleConnectivityChange);
+      try {
+        const [appModule, firestoreModule, authModule] = await Promise.all([
+          import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js'),
+          import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js'),
+          import('https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js')
+        ]);
+        firebaseModules = { ...appModule, ...firestoreModule, ...authModule };
+        firebaseAppInstance = firebaseModules.initializeApp(FIREBASE_CONFIG);
+        firestoreDb = firebaseModules.getFirestore(firebaseAppInstance);
+        firebaseAuth = firebaseModules.getAuth(firebaseAppInstance);
+        await firebaseModules.setPersistence(firebaseAuth, firebaseModules.browserLocalPersistence);
+        firebaseReady = true;
+        initAuthObserver();
+        handleConnectivityChange();
+      } catch(error){
+        console.error('Firebase init error:', error);
+        updateCloudStatus('Firebase no disponible', 'error', getFirebaseFriendlyError(error));
+      }
     }
 
     function loadState(){
@@ -1733,6 +2623,11 @@
 
     function saveState(){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const signature = getStateSignature(state);
+      if(signature !== lastSavedStateSignature){
+        lastSavedStateSignature = signature;
+        if(!suppressCloudSync) scheduleCloudSync('local-change');
+      }
     }
 
     function normalizePurchase(item){
@@ -1745,7 +2640,11 @@
         observaciones: item.observaciones || '',
         imagen: item.imagen || '',
         fechaRegistro: item.fechaRegistro || new Date().toISOString(),
-        estado: item.estado || 'Pendiente'
+        estado: item.estado || 'Pendiente',
+        tipoPagoCompra: item.tipoPagoCompra || '',
+        origenPagoCompra: item.origenPagoCompra || '',
+        facturaCompra: item.facturaCompra || '',
+        fechaCompraConfirmada: item.fechaCompraConfirmada || ''
       };
     }
 
@@ -1772,6 +2671,17 @@
         items,
         soporteCompra: order.soporteCompra || '',
         soporteRecibido: order.soporteRecibido || '',
+        linkedPurchaseId: order.linkedPurchaseId || '',
+        linkedPurchaseName: order.linkedPurchaseName || '',
+        linkedPurchaseRef: order.linkedPurchaseRef || '',
+        linkedPurchaseQty: Number(order.linkedPurchaseQty || 0),
+        linkedPurchaseUnit: order.linkedPurchaseUnit || '',
+        linkedPurchaseNotes: order.linkedPurchaseNotes || '',
+        linkedPurchaseImage: order.linkedPurchaseImage || '',
+        linkedPurchaseInvoice: order.linkedPurchaseInvoice || '',
+        linkedPurchasePaymentMethod: order.linkedPurchasePaymentMethod || '',
+        linkedPurchasePaymentSource: order.linkedPurchasePaymentSource || '',
+        linkedPurchasePurchaseDate: order.linkedPurchasePurchaseDate || '',
         estado: isPending ? 'Pendiente' : explicitStatus,
         resumen: order.resumen || comparison.message,
         createdAt: order.createdAt || new Date().toISOString()
@@ -1800,6 +2710,184 @@
     function createId(prefix='id'){ return prefix + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,8); }
     function createEmptyOrderItem(){ return { id:createId('line'), referencia:'', nombre:'', pedida:0, recibida:0 }; }
     function getSearchTerm(){ return els.globalSearch.value.trim().toLowerCase(); }
+    function toInputDate(value=''){
+      if(!value) return '';
+      if(/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return String(value);
+      const date = new Date(value);
+      if(Number.isNaN(date.getTime())) return String(value).slice(0,10);
+      return date.toISOString().slice(0,10);
+    }
+    function findPendingOrderByPurchaseId(purchaseId){
+      return state.orders.find(order => order.linkedPurchaseId === purchaseId && !order.fechaRecibido) || null;
+    }
+    function hasReceivedOrderForPurchase(purchaseId){
+      return state.orders.some(order => order.linkedPurchaseId === purchaseId && !!order.fechaRecibido);
+    }
+    function getReceptionPendingOrders(){
+      return state.orders.filter(order => order.linkedPurchaseId && !order.fechaRecibido);
+    }
+    function renderReceptionPendingList(){
+      if(!els.receptionPendingList || !els.receptionPendingSummary) return;
+      const q = getSearchTerm();
+      const pending = getReceptionPendingOrders().filter(order => {
+        const linked = getLinkedPurchaseSnapshot(order);
+        const text = [linked?.nombre, linked?.referencia, linked?.observaciones, linked?.tipoPagoCompra, linked?.origenPagoCompra, order.codigo, order.proveedor].join(' ').toLowerCase();
+        return !q || text.includes(q);
+      });
+      els.receptionPendingSummary.textContent = pending.length
+        ? `${pending.length} compra(s) confirmada(s) siguen pendientes por entrega. Selecciona una para registrar o continuar la recepción.`
+        : 'No hay compras confirmadas pendientes por entrega en este momento.';
+      if(!pending.length){
+        els.receptionPendingList.innerHTML = '<div class="empty-state">No hay pendientes por recibir desde Compras por hacer.</div>';
+        return;
+      }
+      const currentOrderId = (els.editingOrderId && els.editingOrderId.value) || '';
+      els.receptionPendingList.innerHTML = pending.map(order => {
+        const linked = getLinkedPurchaseSnapshot(order);
+        const isActive = currentOrderId === order.id;
+        return `
+          <article class="reception-pending-item">
+            <div class="compact-title">
+              <div>
+                <span class="status-banner ${order.codigo || order.proveedor ? 'warn' : 'ok'}">${order.codigo || order.proveedor ? '🕓 En recepción' : '📦 Pendiente por llegar'}</span>
+              </div>
+              ${isActive ? '<span class="badge ok">Seleccionado</span>' : ''}
+            </div>
+            <div>
+              <strong>${escapeHtml(linked?.nombre || order.linkedPurchaseName || 'Producto sin nombre')}</strong>
+              <small><b>Referencia:</b> ${escapeHtml(linked?.referencia || order.linkedPurchaseRef || 'Sin referencia')}</small>
+              <small><b>Cantidad comprada:</b> ${Number(linked?.cantidad || order.linkedPurchaseQty || 0)} ${escapeHtml(linked?.unidad || order.linkedPurchaseUnit || '')}</small>
+              <small><b>Compra confirmada:</b> ${formatDate(linked?.fechaCompraConfirmada || order.linkedPurchasePurchaseDate || toInputDate(order.createdAt || ''))}</small>
+              <small><b>Tipo de pago:</b> ${escapeHtml(linked?.tipoPagoCompra || order.linkedPurchasePaymentMethod || 'Sin registrar')}</small>
+              <small><b>Origen del dinero:</b> ${escapeHtml(linked?.origenPagoCompra || order.linkedPurchasePaymentSource || 'Sin registrar')}</small>
+              <small><b>Factura:</b> ${(linked?.facturaCompra || order.linkedPurchaseInvoice) ? 'Adjunta' : 'No adjunta'}</small>
+              ${(order.codigo || order.proveedor) ? `<small><b>Recepción en curso:</b> ${escapeHtml(order.codigo || 'Sin código')} · ${escapeHtml(order.proveedor || 'Proveedor pendiente')}</small>` : ''}
+            </div>
+            <div class="stack">
+              <button class="btn btn-primary btn-small" type="button" onclick="startReceptionFromPendingOrder('${order.id}')">${order.codigo || order.proveedor ? 'Continuar recepción' : 'Seleccionar pendiente'}</button>
+              ${(linked?.facturaCompra || order.linkedPurchaseInvoice) ? `<button class="btn btn-ghost btn-small" type="button" onclick="openImageViewer('${linked?.facturaCompra || order.linkedPurchaseInvoice}','Factura de compra')">Ver factura</button>` : '<span class="badge neutral">Sin factura</span>'}
+            </div>
+          </article>`;
+      }).join('');
+    }
+    function renderReceptionLinkedPurchase(){
+      if(!els.receptionLinkedPurchaseCard || !els.receptionLinkedPurchaseBody) return;
+      const editingId = (els.editingOrderId && els.editingOrderId.value) || '';
+      const activeOrder = editingId ? state.orders.find(order => order.id === editingId) || null : null;
+      const item = getLinkedReceptionPurchase();
+      if(!item){
+        els.receptionLinkedPurchaseCard.style.display = 'none';
+        els.receptionLinkedPurchaseBody.innerHTML = '';
+        return;
+      }
+      els.receptionLinkedPurchaseCard.style.display = 'block';
+      els.receptionLinkedPurchaseBody.innerHTML = `
+        <div class="compact-title">
+          <div>
+            <span class="status-banner warn">Pendiente cargado desde compras</span>
+            <div class="compact-subtle" style="margin-top:8px">Cuando completes esta recepción, este pendiente dejará de aparecer en la lista.</div>
+          </div>
+          <button class="btn btn-ghost btn-small" type="button" onclick="returnToReceptionPendingList()">Cambiar pendiente</button>
+        </div>
+        <div class="linked-reception-summary">
+          <div class="linked-reception-pill"><span>Producto</span><strong>${escapeHtml(item.nombre || 'Producto sin nombre')}</strong></div>
+          <div class="linked-reception-pill"><span>Referencia</span><strong>${escapeHtml(item.referencia || 'Sin referencia')}</strong></div>
+          <div class="linked-reception-pill"><span>Cantidad comprada</span><strong>${Number(item.cantidad || 0)} ${escapeHtml(item.unidad || '')}</strong></div>
+          <div class="linked-reception-pill"><span>Fecha de compra</span><strong>${formatDate(item.fechaCompraConfirmada || toInputDate(item.fechaRegistro))}</strong></div>
+          <div class="linked-reception-pill"><span>Tipo de pago</span><strong>${escapeHtml(item.tipoPagoCompra || 'Sin registrar')}</strong></div>
+          <div class="linked-reception-pill"><span>Origen del dinero</span><strong>${escapeHtml(item.origenPagoCompra || 'Sin registrar')}</strong></div>
+          <div class="linked-reception-pill"><span>Factura de compra</span><strong>${item.facturaCompra ? 'Adjunta y lista como soporte' : 'No adjunta'}</strong></div>
+          <div class="linked-reception-pill"><span>Recepción en curso</span><strong>${activeOrder ? escapeHtml(activeOrder.codigo || 'Sin código') : 'Nueva recepción'}</strong></div>
+        </div>
+        ${item.facturaCompra ? `<div class="preview-card" style="margin-top:12px"><h4>Recibo de compra cargado</h4><div class="image-preview-box small"><img src="${item.facturaCompra}" alt="Factura" data-view-image="${item.facturaCompra}" data-view-title="Factura de compra" /></div></div>` : ''}`;
+      attachInlineImageViewers(els.receptionLinkedPurchaseBody);
+    }
+    function syncReceptionSelectionUI(){
+      const hasSelection = !!(((els.linkedPurchaseId && els.linkedPurchaseId.value) || selectedReceptionPurchaseId || '') || (els.editingOrderId && els.editingOrderId.value));
+      if(els.receptionWorkspace) els.receptionWorkspace.classList.toggle('is-hidden', !hasSelection);
+      if(els.receptionSelectionNote) els.receptionSelectionNote.style.display = hasSelection ? 'none' : 'block';
+      renderReceptionLinkedPurchase();
+    }
+    function loadReceptionOrder(order){
+      els.editingOrderId.value = order.id;
+      if(els.linkedPurchaseId) els.linkedPurchaseId.value = order.linkedPurchaseId || '';
+      selectedReceptionPurchaseId = order.linkedPurchaseId || '';
+      els.orderSupplier.value = order.proveedor || '';
+      els.orderCode.value = order.codigo || '';
+      els.orderDate.value = order.fechaPedido || '';
+      els.paymentDate.value = order.fechaPago || '';
+      els.receiveDate.value = order.fechaRecibido || '';
+      els.orderTotal.value = Number(order.valorTotal || 0);
+      els.orderNotes.value = order.observaciones || '';
+      currentOrderItems = (order.items || []).map(item => ({ ...item, id: item.id || createId('line') }));
+      currentOrderSupportCompra = order.soporteCompra || '';
+      currentOrderSupportRecibido = order.soporteRecibido || '';
+      els.orderCancelBtn.textContent = 'Volver a pendientes';
+      els.orderCancelBtn.style.display = 'inline-flex';
+      if(els.orderProductSearch) els.orderProductSearch.value = '';
+      orderProductSearchTerm = '';
+      refreshOrderSupportPreview();
+      renderOrderItemRows();
+      updateReceptionHeaderSummary();
+      syncReceptionSelectionUI();
+      setReceptionMobileStep(1);
+      switchTab('recepcion');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function ensurePendingOrderFromPurchase(item){
+      if(!item) return null;
+      let draft = findPendingOrderByPurchaseId(item.id);
+      const purchaseDate = item.fechaCompraConfirmada || toInputDate(item.fechaRegistro);
+      const base = {
+        linkedPurchaseId: item.id,
+        linkedPurchaseName: item.nombre || '',
+        linkedPurchaseRef: item.referencia || '',
+        linkedPurchaseQty: Number(item.cantidad || 0),
+        linkedPurchaseUnit: item.unidad || '',
+        linkedPurchaseNotes: item.observaciones || '',
+        linkedPurchaseImage: item.imagen || '',
+        linkedPurchaseInvoice: item.facturaCompra || '',
+        linkedPurchasePaymentMethod: item.tipoPagoCompra || '',
+        linkedPurchasePaymentSource: item.origenPagoCompra || '',
+        linkedPurchasePurchaseDate: purchaseDate || '',
+        fechaPedido: draft?.fechaPedido || purchaseDate || '',
+        fechaPago: draft?.fechaPago || purchaseDate || '',
+        soporteCompra: draft?.soporteCompra || item.facturaCompra || '',
+        proveedor: draft?.proveedor || '',
+        codigo: draft?.codigo || '',
+        observaciones: draft?.observaciones || item.observaciones || '',
+        items: (draft?.items && draft.items.length ? draft.items : [{
+          id: createId('line'),
+          referencia: item.referencia || '',
+          nombre: item.nombre || '',
+          pedida: Number(item.cantidad || 0),
+          recibida: 0
+        }]),
+        estado: 'Pendiente',
+        resumen: draft?.resumen || 'Pendiente por recibir.',
+        createdAt: draft?.createdAt || new Date().toISOString()
+      };
+      if(draft){
+        Object.assign(draft, base);
+      } else {
+        draft = normalizeOrder({ id:createId('order'), ...base });
+        state.orders.unshift(draft);
+      }
+      return draft;
+    }
+
+    function startReceptionWithPurchase(item){
+      const linkedOrder = findPendingOrderByPurchaseId(item.id) || ensurePendingOrderFromPurchase(item);
+      if(linkedOrder){
+        els.orderFormTitle.textContent = linkedOrder.codigo || linkedOrder.proveedor ? 'Continuar recepción pendiente' : 'Registrar recepción del pendiente';
+        els.orderFormHint.textContent = linkedOrder.codigo || linkedOrder.proveedor
+          ? 'Este pendiente ya tenía una recepción en curso. Continúa desde donde quedó.'
+          : 'Seleccionaste un pendiente desde Compras por hacer. Completa la llegada y compara lo comprado contra lo recibido.';
+        els.orderSubmitBtn.textContent = linkedOrder.codigo || linkedOrder.proveedor ? 'Actualizar pedido pendiente' : 'Guardar pedido';
+        loadReceptionOrder(linkedOrder);
+        return;
+      }
+    }
 
     function buildComparison(items){
       const normalized = (items || []).map(item => ({
@@ -1828,10 +2916,12 @@
       syncOrdersState();
       renderPurchases();
       renderOrderItemRows();
+      renderReceptionPendingList();
       renderHistory();
       renderAccounting();
       renderMetrics();
       fillExpenseOrderOptions();
+      syncReceptionSelectionUI();
       syncAdminCollapseUI();
       renderAdminMobileUI();
       saveState();
@@ -1895,29 +2985,34 @@
       els.purchaseCurrentImagePreview.innerHTML = '';
     }
 
-    function renderPurchases(){
-      const q = getSearchTerm();
-      const onlyPendingForBuyer = currentRole === 'buyer';
-      const filtered = state.purchases.filter(item => {
-        if(onlyPendingForBuyer && (item.estado || 'Pendiente') !== 'Pendiente') return false;
-        if(currentRole === 'admin' && !matchesAdminFilter('compras', item)) return false;
-        const text = (item.referencia + ' ' + item.nombre + ' ' + item.estado + ' ' + item.observaciones).toLowerCase();
-        return !q || text.includes(q);
-      });
-      if(!filtered.length){
-        els.purchaseList.innerHTML = onlyPendingForBuyer
-          ? '<div class="empty-state">No hay pedidos nuevos o pendientes por comprar en este momento.</div>'
-          : '<div class="empty-state">No hay productos con ese filtro.</div>';
-        return;
-      }
-      const selection = getSelectionSet('compras');
-      els.purchaseList.innerHTML = filtered.map(item => {
-        const tone = item.estado === 'Pendiente' ? 'warn' : 'ok';
-        return `
+    function renderPurchaseCard(item, selection){
+      const isPending = (item.estado || 'Pendiente') === 'Pendiente';
+      const tone = isPending ? 'warn' : 'ok';
+      const paymentInfo = !isPending ? `
+          <div class="preview-card" style="margin-top:10px">
+            <h4>Compra confirmada</h4>
+            <small><b>Fecha:</b> ${formatDate(item.fechaCompraConfirmada)}</small>
+            <small><b>Tipo de pago:</b> ${escapeHtml(item.tipoPagoCompra || 'Sin registrar')}</small>
+            <small><b>Origen del dinero:</b> ${escapeHtml(item.origenPagoCompra || 'Sin registrar')}</small>
+            <small><b>Factura:</b> ${item.facturaCompra ? 'Adjunta' : 'No adjunta'}</small>
+          </div>` : '';
+      const adminActions = canManagePurchases() ? `
+            ${isPending
+              ? `<button class="btn btn-secondary btn-small action-only-admin" type="button" onclick="openPurchaseConfirmation('${item.id}')">Confirmar compra</button>`
+              : `<button class="btn btn-secondary btn-small action-only-admin" type="button" onclick="togglePurchaseState('${item.id}')">↺ Volver a pendiente</button>`}
+            <button class="btn btn-warning btn-small action-only-admin" type="button" onclick="editPurchase('${item.id}')">✏️ Editar</button>
+            <button class="btn btn-danger btn-small action-only-admin" type="button" onclick="deletePurchase('${item.id}')">🗑 Eliminar</button>
+            ${!isPending ? `<button class="btn btn-ghost btn-small action-only-admin" type="button" onclick="viewPurchaseConfirmation('${item.id}')">🧾 Ver compra</button>` : ''}` : '';
+      const buyerActions = currentRole === 'buyer'
+        ? `${isPending
+            ? `<button class="btn btn-primary btn-small" type="button" onclick="openPurchaseConfirmation('${item.id}')">Confirmar compra</button>`
+            : `<button class="btn btn-ghost btn-small" type="button" onclick="viewPurchaseConfirmation('${item.id}')">🧾 Ver compra</button>`}`
+        : '<span class="badge neutral">Solo lectura</span>';
+      return `
         <article class="purchase-card">
           <div class="compact-title">
             <div>
-              <span class="status-banner ${tone}">${item.estado === 'Pendiente' ? '⏳ Pendiente' : '✅ Comprado'}</span>
+              <span class="status-banner ${tone}">${isPending ? '⏳ Pendiente' : '✅ Comprado'}</span>
             </div>
             ${isAdminMobile() ? `<label class="record-select"><input type="checkbox" ${selection.has(item.id) ? 'checked' : ''} onchange="toggleSelectRecord('compras','${item.id}')"> Selección</label>` : ''}
           </div>
@@ -1929,15 +3024,72 @@
             <small><b>Referencia:</b> ${escapeHtml(item.referencia)}</small>
             <small><b>Cantidad:</b> ${Number(item.cantidad || 0)} ${escapeHtml(item.unidad || '')}</small>
             <small><b>Observaciones:</b> ${escapeHtml(item.observaciones || 'Sin observaciones')}</small>
+            ${paymentInfo}
           </div>
           <div class="stack">
-            ${canManagePurchases() ? `<button class="btn btn-secondary btn-small action-only-admin" type="button" onclick="togglePurchaseState('${item.id}')">${item.estado === 'Pendiente' ? '✓ Comprado' : '↺ Pendiente'}</button>
-            <button class="btn btn-warning btn-small action-only-admin" type="button" onclick="editPurchase('${item.id}')">✏️ Editar</button>
-            <button class="btn btn-danger btn-small action-only-admin" type="button" onclick="deletePurchase('${item.id}')">🗑 Eliminar</button>` : '<span class="badge neutral">Solo lectura</span>'}
+            ${canManagePurchases() ? adminActions : buyerActions}
           </div>
-        </article>
-      `;
-      }).join('');
+        </article>`;
+    }
+
+    function renderPurchaseGroup(title, items, selection, emptyText, tone){
+      return `
+        <section class="purchase-group">
+          <div class="purchase-group-head">
+            <h3>${title}</h3>
+            <span class="badge ${tone}">${items.length}</span>
+          </div>
+          ${items.length
+            ? `<div class="purchase-grid">${items.map(item => renderPurchaseCard(item, selection)).join('')}</div>`
+            : `<div class="empty-state">${emptyText}</div>`}
+        </section>`;
+    }
+
+    function setDesktopBuyerPurchaseTab(tab){
+      desktopBuyerPurchaseTab = tab === 'comprado' ? 'comprado' : 'pendiente';
+      renderPurchases();
+    }
+
+    function renderPurchases(){
+      const q = getSearchTerm();
+      const desktopPurchaseView = !isMobileView();
+      const onlyPendingForBuyer = currentRole === 'buyer' && !desktopPurchaseView;
+      const filtered = state.purchases.filter(item => {
+        if(onlyPendingForBuyer && (item.estado || 'Pendiente') !== 'Pendiente') return false;
+        if(currentRole === 'admin' && !matchesAdminFilter('compras', item)) return false;
+        const text = (item.referencia + ' ' + item.nombre + ' ' + item.estado + ' ' + item.observaciones + ' ' + (item.tipoPagoCompra || '') + ' ' + (item.origenPagoCompra || '')).toLowerCase();
+        return !q || text.includes(q);
+      });
+      const selection = getSelectionSet('compras');
+      if(desktopPurchaseView){
+        const pending = filtered.filter(item => (item.estado || 'Pendiente') === 'Pendiente');
+        const bought = filtered.filter(item => (item.estado || 'Pendiente') !== 'Pendiente');
+        const activeView = desktopBuyerPurchaseTab === 'comprado' ? 'comprado' : 'pendiente';
+        const activeItems = activeView === 'pendiente' ? pending : bought;
+        const activeEmpty = activeView === 'pendiente'
+          ? 'No hay pedidos nuevos o pendientes por comprar en este momento.'
+          : 'No hay compras confirmadas en este momento.';
+        const activeTone = activeView === 'pendiente' ? 'warn' : 'ok';
+        const activeTitle = activeView === 'pendiente' ? 'Pendientes' : 'Comprados';
+        if(els.purchaseTabsBar){
+          els.purchaseTabsBar.innerHTML = `
+            <button class="btn ${activeView === 'pendiente' ? 'btn-primary' : 'btn-ghost'}" type="button" onclick="setDesktopBuyerPurchaseTab('pendiente')">Pendientes (${pending.length})</button>
+            <button class="btn ${activeView === 'comprado' ? 'btn-primary' : 'btn-ghost'}" type="button" onclick="setDesktopBuyerPurchaseTab('comprado')">Comprados (${bought.length})</button>
+          `;
+        }
+        els.purchaseList.innerHTML = filtered.length
+          ? `<div data-desktop-purchase-view="${activeView}">${renderPurchaseGroup(activeTitle, activeItems, selection, activeEmpty, activeTone)}</div>`
+          : '<div class="empty-state">No hay productos con ese filtro.</div>';
+      } else {
+        if(els.purchaseTabsBar) els.purchaseTabsBar.innerHTML = '';
+        if(!filtered.length){
+          els.purchaseList.innerHTML = onlyPendingForBuyer
+            ? '<div class="empty-state">No hay pedidos nuevos o pendientes por comprar en este momento.</div>'
+            : '<div class="empty-state">No hay productos con ese filtro.</div>';
+          return;
+        }
+        els.purchaseList.innerHTML = `<div class="purchase-grid">${filtered.map(item => renderPurchaseCard(item, selection)).join('')}</div>`;
+      }
       attachInlineImageViewers(els.purchaseList);
     }
 
@@ -2103,41 +3255,17 @@
 
     async function handleOrderSubmit(e){
       e.preventDefault();
-      if(!canUseReceptionModule()) return roleDenied('Este perfil no tiene acceso para registrar pedidos recibidos.');
-      if(!els.orderSupplier.value.trim()){
-        alert('Debes escribir el proveedor o empresa del pedido.');
-        setReceptionMobileStep(1);
-        els.orderSupplier.focus();
-        return;
-      }
-      if(!els.orderCode.value.trim()){
-        alert('Debes escribir el código o número del pedido.');
-        setReceptionMobileStep(1);
-        els.orderCode.focus();
-        return;
-      }
-      if(!els.orderDate.value){
-        alert('Debes seleccionar la fecha del pedido.');
-        setReceptionMobileStep(1);
-        els.orderDate.focus();
-        return;
-      }
-      const validItems = currentOrderItems.map(item => ({
-        id: item.id || createId('line'),
-        referencia: String(item.referencia || '').trim(),
-        nombre: String(item.nombre || '').trim(),
-        pedida: Number(item.pedida || 0),
-        recibida: Number(item.recibida || 0)
-      })).filter(item => item.referencia || item.nombre || item.pedida || item.recibida);
-      if(!validItems.length){
-        alert('Debes agregar al menos un producto al pedido.');
-        setReceptionMobileStep(2);
+      const validItems = validateOrderDraft();
+      if(!validItems) return;
+      if(!isMobileView() && !desktopReceptionReviewOpen){
+        openReceptionDesktopReview();
         return;
       }
       const compraImg = await fileToDataUrl(els.purchaseReceipt.files[0]);
       const recibidoImg = await fileToDataUrl(els.receivedReceipt.files[0]);
       const comparison = buildComparison(validItems);
       const isPending = !els.receiveDate.value;
+      const linkedPurchase = getLinkedReceptionPurchase();
       const payload = {
         proveedor: els.orderSupplier.value.trim(),
         codigo: els.orderCode.value.trim(),
@@ -2149,6 +3277,17 @@
         items: validItems,
         soporteCompra: compraImg || currentOrderSupportCompra || '',
         soporteRecibido: recibidoImg || currentOrderSupportRecibido || '',
+        linkedPurchaseId: linkedPurchase ? linkedPurchase.id : ((els.linkedPurchaseId && els.linkedPurchaseId.value) || ''),
+        linkedPurchaseName: linkedPurchase ? (linkedPurchase.nombre || '') : '',
+        linkedPurchaseRef: linkedPurchase ? (linkedPurchase.referencia || '') : '',
+        linkedPurchaseQty: linkedPurchase ? Number(linkedPurchase.cantidad || 0) : 0,
+        linkedPurchaseUnit: linkedPurchase ? (linkedPurchase.unidad || '') : '',
+        linkedPurchaseNotes: linkedPurchase ? (linkedPurchase.observaciones || '') : '',
+        linkedPurchaseImage: linkedPurchase ? (linkedPurchase.imagen || '') : '',
+        linkedPurchaseInvoice: linkedPurchase ? (linkedPurchase.facturaCompra || '') : '',
+        linkedPurchasePaymentMethod: linkedPurchase ? (linkedPurchase.tipoPagoCompra || '') : '',
+        linkedPurchasePaymentSource: linkedPurchase ? (linkedPurchase.origenPagoCompra || '') : '',
+        linkedPurchasePurchaseDate: linkedPurchase ? (linkedPurchase.fechaCompraConfirmada || '') : '',
         estado: isPending ? 'Pendiente' : comparison.status,
         resumen: comparison.message,
         createdAt: new Date().toISOString()
@@ -2166,6 +3305,9 @@
         state.orders.unshift({ id:createId('order'), ...payload });
       }
       pendingFinalizeOrder = false;
+      closeDetailModal();
+      closeReceptionCaptureModal(false);
+      setReceptionDesktopReview(false);
       saveState();
       resetOrderForm();
       renderAll();
@@ -2176,9 +3318,12 @@
     function resetOrderForm(){
       els.orderForm.reset();
       els.editingOrderId.value = '';
+      if(els.linkedPurchaseId) els.linkedPurchaseId.value = '';
+      selectedReceptionPurchaseId = '';
       els.orderFormTitle.textContent = 'Registrar pedido recibido';
-      els.orderFormHint.textContent = 'Aquí comparas lo que pediste contra lo que realmente llegó.';
+      els.orderFormHint.textContent = 'Selecciona primero un pendiente por recibir para cargar la recepción con sus datos de compra.';
       els.orderSubmitBtn.textContent = 'Guardar pedido';
+      els.orderCancelBtn.textContent = 'Cancelar';
       els.orderCancelBtn.style.display = 'none';
       currentOrderItems = [createEmptyOrderItem()];
       currentOrderSupportCompra = '';
@@ -2186,16 +3331,19 @@
       orderProductSearchTerm = '';
       if(els.orderProductSearch) els.orderProductSearch.value = '';
       pendingFinalizeOrder = false;
+      setReceptionDesktopReview(false);
       setReceptionMobileStep(1);
       refreshOrderSupportPreview();
       renderOrderItemRows();
+      syncReceptionSelectionUI();
+      updateReceptionHeaderSummary();
     }
 
     function renderHistory(){
       const q = getSearchTerm();
       const filtered = state.orders.filter(order => {
         if(currentRole === 'admin' && !matchesAdminFilter('historial', order)) return false;
-        const text = [order.proveedor, order.codigo, order.estado, order.resumen, order.observaciones, order.valorTotal, ...(order.items || []).map(i => i.nombre + ' ' + i.referencia)].join(' ').toLowerCase();
+        const text = [order.proveedor, order.codigo, order.estado, order.resumen, order.observaciones, order.valorTotal, order.linkedPurchaseName, order.linkedPurchaseRef, order.linkedPurchasePaymentMethod, order.linkedPurchasePaymentSource, ...(order.items || []).map(i => i.nombre + ' ' + i.referencia)].join(' ').toLowerCase();
         return !q || text.includes(q);
       });
       if(!filtered.length){
@@ -2446,8 +3594,8 @@
 
       els.heroPending.textContent = pending;
       els.heroOrders.textContent = totalOrders;
-      els.heroOrderMoney.textContent = formatMoney(money.ordersTotal);
-      els.heroGeneralMoney.textContent = formatMoney(money.grandTotal);
+      if(els.heroOrderMoney) els.heroOrderMoney.textContent = formatMoney(money.ordersTotal);
+      if(els.heroGeneralMoney) els.heroGeneralMoney.textContent = formatMoney(money.grandTotal);
 
       els.kpiOrders.textContent = totalOrders;
       els.kpiComplete.textContent = complete;
@@ -2624,12 +3772,13 @@
 
     function closeDetailModal(){
       els.detailModal.classList.remove('active');
-      document.body.classList.remove('modal-open');
+      setReceptionDesktopReview(false);
+      syncBodyModalState();
     }
 
     function closeImageViewer(){
       els.imageViewer.classList.remove('active');
-      document.body.classList.remove('modal-open');
+      syncBodyModalState();
     }
 
     function openImageViewer(src,title){
@@ -2638,7 +3787,7 @@
       els.imageViewerImg.src = src;
       els.imageViewerImg.alt = title || 'Imagen';
       els.imageViewer.classList.add('active');
-      document.body.classList.add('modal-open');
+      syncBodyModalState();
     }
 
     function attachInlineImageViewers(container){
@@ -2683,9 +3832,154 @@
       if(!canManagePurchases()) return roleDenied('Solo el administrador general puede cambiar el estado de productos.');
       const item = state.purchases.find(p => p.id === id);
       if(!item) return;
-      item.estado = item.estado === 'Pendiente' ? 'Comprado' : 'Pendiente';
+      if((item.estado || 'Pendiente') === 'Pendiente') return openPurchaseConfirmation(id);
+      item.estado = 'Pendiente';
+      item.tipoPagoCompra = '';
+      item.origenPagoCompra = '';
+      item.facturaCompra = '';
+      item.fechaCompraConfirmada = '';
+      state.orders = state.orders.filter(order => !(order.linkedPurchaseId === item.id && !order.fechaRecibido));
       saveState();
       renderAll();
+    };
+
+    window.confirmReceptionDesktopReview = function(){
+      if(isMobileView()) return;
+      setReceptionDesktopReview(true);
+      els.orderForm.requestSubmit();
+    };
+
+    window.closeReceptionDesktopReviewModal = closeReceptionDesktopReviewModal;
+    window.startReceptionFromPurchase = function(id){
+      if(!canUseReceptionModule()) return roleDenied('Este perfil no tiene acceso para registrar recepciones.');
+      const item = state.purchases.find(purchase => purchase.id === id);
+      if(!item) return;
+      if(isMobileView()){
+        startReceptionWithPurchase(item);
+        return;
+      }
+      startReceptionWithPurchase(item);
+      const linkedOrder = findPendingOrderByPurchaseId(item.id);
+      openReceptionCaptureModal(
+        linkedOrder && (linkedOrder.codigo || linkedOrder.proveedor) ? 'Continuar recepción pendiente' : 'Registrar recepción pendiente',
+        linkedOrder && (linkedOrder.codigo || linkedOrder.proveedor)
+          ? 'Este pendiente ya tenía una recepción en curso. Continúa desde esta ventana.'
+          : 'Completa la llegada y compara lo comprado contra lo recibido desde esta ventana.'
+      );
+    };
+
+    window.startReceptionFromPendingOrder = function(orderId){
+      if(!canUseReceptionModule()) return roleDenied('Este perfil no tiene acceso para registrar recepciones.');
+      const order = state.orders.find(item => item.id === orderId);
+      if(!order) return;
+      loadReceptionOrder(order);
+      if(!isMobileView()){
+        openReceptionCaptureModal(
+          (order.codigo || order.proveedor) ? 'Continuar recepción pendiente' : 'Registrar recepción pendiente',
+          (order.codigo || order.proveedor)
+            ? 'Este pendiente ya tenía una recepción en curso. Continúa desde esta ventana.'
+            : 'Completa la llegada y compara lo comprado contra lo recibido desde esta ventana.'
+        );
+      }
+    };
+
+    window.returnToReceptionPendingList = function(){
+      if(!isMobileView()){
+        closeReceptionCaptureModal(false);
+      }
+      resetOrderForm();
+      switchTab('recepcion');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+
+    window.openPurchaseConfirmation = function(id){
+      if(!canConfirmPurchases()) return roleDenied('Este perfil no puede confirmar compras.');
+      const item = state.purchases.find(p => p.id === id);
+      if(!item) return;
+      els.modalTitle.textContent = 'Confirmar compra';
+      els.modalBody.innerHTML = `
+        <div class="detail-grid">
+          <div class="support-card">
+            <h3>Producto</h3>
+            <p><b>Nombre:</b> ${escapeHtml(item.nombre || '—')}</p>
+            <p><b>Referencia:</b> ${escapeHtml(item.referencia || '—')}</p>
+            <p><b>Cantidad:</b> ${Number(item.cantidad || 0)} ${escapeHtml(item.unidad || '')}</p>
+            <p><b>Observaciones:</b> ${escapeHtml(item.observaciones || 'Sin observaciones')}</p>
+          </div>
+          <div class="support-card">
+            <h3>Registrar compra realizada</h3>
+            <div class="field">
+              <label for="confirmPurchaseMethod">Tipo de pago</label>
+              <select id="confirmPurchaseMethod">
+                <option value="Tarjeta" ${(item.tipoPagoCompra || '') === 'Tarjeta' ? 'selected' : ''}>Tarjeta</option>
+                <option value="Efectivo" ${(item.tipoPagoCompra || '') === 'Efectivo' ? 'selected' : ''}>Efectivo</option>
+                <option value="Transferencia" ${(item.tipoPagoCompra || '') === 'Transferencia' ? 'selected' : ''}>Transferencia</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="confirmPurchaseFund">Origen del dinero</label>
+              <select id="confirmPurchaseFund">
+                <option value="Ofrenda" ${(item.origenPagoCompra || '') === 'Ofrenda' ? 'selected' : ''}>Ofrenda</option>
+                <option value="Pago iglesia" ${(item.origenPagoCompra || '') === 'Pago iglesia' ? 'selected' : ''}>Pago iglesia</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="confirmPurchaseInvoice">Factura de compra</label>
+              <input id="confirmPurchaseInvoice" type="file" accept="image/*" />
+            </div>
+            ${item.facturaCompra ? `<div class="preview-card"><h4>Factura actual</h4><div class="image-preview-box small"><img src="${item.facturaCompra}" alt="Factura" data-view-image="${item.facturaCompra}" data-view-title="Factura de compra" /></div></div>` : ''}
+            <div class="stack" style="margin-top:14px">
+              <button class="btn btn-primary" type="button" onclick="savePurchaseConfirmation('${item.id}')">Guardar confirmación</button>
+              <button class="btn btn-ghost" type="button" onclick="closeDetailModal()">Cancelar</button>
+            </div>
+          </div>
+        </div>`;
+      els.detailModal.classList.add('active');
+      attachInlineImageViewers(els.modalBody);
+    };
+
+    window.savePurchaseConfirmation = async function(id){
+      if(!canConfirmPurchases()) return roleDenied('Este perfil no puede confirmar compras.');
+      const item = state.purchases.find(p => p.id === id);
+      if(!item) return;
+      const methodEl = document.getElementById('confirmPurchaseMethod');
+      const fundEl = document.getElementById('confirmPurchaseFund');
+      const invoiceEl = document.getElementById('confirmPurchaseInvoice');
+      const invoice = invoiceEl && invoiceEl.files && invoiceEl.files[0] ? await fileToDataUrl(invoiceEl.files[0]) : '';
+      item.estado = 'Comprado';
+      item.tipoPagoCompra = methodEl ? methodEl.value : (item.tipoPagoCompra || '');
+      item.origenPagoCompra = fundEl ? fundEl.value : (item.origenPagoCompra || '');
+      item.facturaCompra = invoice || item.facturaCompra || '';
+      item.fechaCompraConfirmada = new Date().toISOString().slice(0,10);
+      ensurePendingOrderFromPurchase(item);
+      saveState();
+      closeDetailModal();
+      renderAll();
+    };
+
+    window.viewPurchaseConfirmation = function(id){
+      const item = state.purchases.find(p => p.id === id);
+      if(!item) return;
+      els.modalTitle.textContent = 'Detalle de compra confirmada';
+      els.modalBody.innerHTML = `
+        <div class="detail-grid">
+          <div class="support-card">
+            <h3>Producto</h3>
+            <p><b>Nombre:</b> ${escapeHtml(item.nombre || '—')}</p>
+            <p><b>Referencia:</b> ${escapeHtml(item.referencia || '—')}</p>
+            <p><b>Cantidad:</b> ${Number(item.cantidad || 0)} ${escapeHtml(item.unidad || '')}</p>
+            <p><b>Fecha confirmada:</b> ${formatDate(item.fechaCompraConfirmada)}</p>
+            <p><b>Tipo de pago:</b> ${escapeHtml(item.tipoPagoCompra || 'Sin registrar')}</p>
+            <p><b>Origen del dinero:</b> ${escapeHtml(item.origenPagoCompra || 'Sin registrar')}</p>
+          </div>
+          <div class="support-card">
+            <h3>Factura de compra</h3>
+            ${item.facturaCompra ? `<div class="image-preview-box"><img src="${item.facturaCompra}" alt="Factura" data-view-image="${item.facturaCompra}" data-view-title="Factura de compra" /></div>` : '<p>Sin factura adjunta.</p>'}
+          </div>
+        </div>`;
+      els.detailModal.classList.add('active');
+      attachInlineImageViewers(els.modalBody);
     };
 
     window.editPurchase = function(id){
@@ -2740,6 +4034,8 @@
             <p><b>Valor total:</b> ${formatMoney(order.valorTotal || 0)}</p>
             <p><b>Estado:</b> ${badge(order.estado)}</p>
             <p><b>Resultado:</b> ${escapeHtml(order.resumen || 'Sin resumen')}</p>
+            ${order.linkedPurchaseId ? `<p><b>Compra vinculada:</b> ${escapeHtml(order.linkedPurchaseName || 'Pendiente seleccionado')} · ${escapeHtml(order.linkedPurchaseRef || 'Sin referencia')}</p>` : ''}
+            ${order.linkedPurchasePaymentMethod ? `<p><b>Pago desde compras:</b> ${escapeHtml(order.linkedPurchasePaymentMethod)} · ${escapeHtml(order.linkedPurchasePaymentSource || 'Sin origen')}</p>` : ''}
             <p><b>Observaciones:</b> ${escapeHtml(order.observaciones || 'Sin observaciones')}</p>
           </div>
           <div class="support-card">
@@ -2797,28 +4093,10 @@
       if(order.fechaRecibido){
         return alert('Solo se pueden editar pedidos pendientes.');
       }
-      els.editingOrderId.value = order.id;
-      els.orderSupplier.value = order.proveedor || '';
-      els.orderCode.value = order.codigo || '';
-      els.orderDate.value = order.fechaPedido || '';
-      els.paymentDate.value = order.fechaPago || '';
-      els.receiveDate.value = order.fechaRecibido || '';
-      els.orderTotal.value = Number(order.valorTotal || 0);
-      els.orderNotes.value = order.observaciones || '';
-      currentOrderItems = (order.items || []).map(item => ({ ...item, id: item.id || createId('line') }));
-      currentOrderSupportCompra = order.soporteCompra || '';
-      currentOrderSupportRecibido = order.soporteRecibido || '';
       els.orderFormTitle.textContent = 'Editar pedido pendiente';
       els.orderFormHint.textContent = 'Solo los pedidos pendientes se pueden corregir si hubo un error en el registro.';
       els.orderSubmitBtn.textContent = 'Actualizar pedido pendiente';
-      els.orderCancelBtn.style.display = 'inline-flex';
-      refreshOrderSupportPreview();
-      if(els.orderProductSearch) els.orderProductSearch.value = '';
-      orderProductSearchTerm = '';
-      renderOrderItemRows();
-      setReceptionMobileStep(1);
-      switchTab('recepcion');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      loadReceptionOrder(order);
     };
 
     window.deleteOrder = function(id){
@@ -2878,6 +4156,61 @@
       if(!expense || !expense.soporte) return;
       openImageViewer(expense.soporte, 'Soporte gasto manual');
     };
+
+    function enhanceMobileComfort(){
+      if(!els.loginPassword || document.getElementById('toggleLoginPassword')) return;
+      const input = els.loginPassword;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'password-inline';
+      input.parentNode.insertBefore(wrapper, input);
+      wrapper.appendChild(input);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.id = 'toggleLoginPassword';
+      btn.className = 'password-toggle';
+      btn.textContent = 'Mostrar';
+      btn.addEventListener('click', () => {
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.textContent = show ? 'Ocultar' : 'Mostrar';
+      });
+      wrapper.appendChild(btn);
+    }
+
+    function scrollMobileViewportTop(){
+      if(window.innerWidth > 720) return;
+      const top = (document.getElementById('appShell')?.offsetTop || 0) - 6;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }
+
+    const __originalSwitchTab = switchTab;
+    switchTab = function(tabName){
+      __originalSwitchTab(tabName);
+      if(window.innerWidth <= 720 && typeof adminMobileState !== 'undefined'){
+        if(tabName !== 'compras') adminMobileState.forms.compras = false;
+        if(tabName !== 'recepcion') adminMobileState.forms.recepcion = false;
+        if(tabName !== 'contable') adminMobileState.forms.contable = false;
+        if(typeof syncAdminCollapseUI === 'function') syncAdminCollapseUI();
+        setTimeout(scrollMobileViewportTop, 40);
+      }
+    };
+
+    const __originalOpenReceptionCaptureModal = openReceptionCaptureModal;
+    openReceptionCaptureModal = function(title, hint){
+      __originalOpenReceptionCaptureModal(title, hint);
+      if(window.innerWidth <= 720) setTimeout(scrollMobileViewportTop, 40);
+    };
+
+    const __originalSetLoginRole = setLoginRole;
+    setLoginRole = function(role){
+      __originalSetLoginRole(role);
+      if(window.innerWidth <= 720){
+        setTimeout(() => els.loginPassword && els.loginPassword.focus(), 80);
+      }
+    };
+
+    enhanceMobileComfort();
+
   </script>
 </body>
 </html>
