@@ -4027,11 +4027,12 @@
       return escapeHtml(value).replaceAll('`','&#96;');
     }
 
-    window.togglePurchaseState = function(id){
+    window.togglePurchaseState = async function(id){
       if(!canManagePurchases()) return roleDenied('Solo el administrador general puede cambiar el estado de productos.');
       const item = state.purchases.find(p => p.id === id);
       if(!item) return;
       if((item.estado || 'Pendiente') === 'Pendiente') return openPurchaseConfirmation(id);
+      const removedOrderIds = state.orders.filter(order => order.linkedPurchaseId === item.id && !order.fechaRecibido).map(order => order.id);
       item.estado = 'Pendiente';
       item.tipoPagoCompra = '';
       item.origenPagoCompra = '';
@@ -4040,6 +4041,14 @@
       state.orders = state.orders.filter(order => !(order.linkedPurchaseId === item.id && !order.fechaRecibido));
       saveState();
       renderAll();
+      if(removedOrderIds.length){
+        try {
+          await deleteCloudDocs('orders', removedOrderIds);
+        } catch(error){
+          console.error('Firebase order cleanup error:', error);
+          updateCloudStatus('Error en Firebase', 'error', getFirebaseFriendlyError(error));
+        }
+      }
     };
 
     window.confirmReceptionDesktopReview = function(){
@@ -4151,10 +4160,20 @@
       item.origenPagoCompra = fundEl ? fundEl.value : (item.origenPagoCompra || '');
       item.facturaCompra = invoice || item.facturaCompra || '';
       item.fechaCompraConfirmada = new Date().toISOString().slice(0,10);
-      ensurePendingOrderFromPurchase(item);
+      const linkedOrder = ensurePendingOrderFromPurchase(item);
       saveState();
       closeDetailModal();
       renderAll();
+
+      if(linkedOrder){
+        try {
+          await upsertLinkedOrderCloudDoc(linkedOrder);
+          updateCloudStatus('Firebase conectado', 'ready', 'La compra confirmada ya quedó disponible en pedidos recibidos.');
+        } catch(error){
+          console.error('Firebase pending-order sync error:', error);
+          updateCloudStatus('Error en Firebase', 'error', 'La compra se confirmó, pero no fue posible publicar el pendiente en recepción. Revisa permisos de orders.');
+        }
+      }
     };
 
     window.viewPurchaseConfirmation = function(id){
@@ -4217,6 +4236,22 @@
       if(cloudCollectionIndex[collectionName]){
         uniqueIds.forEach(itemId => cloudCollectionIndex[collectionName].delete(itemId));
       }
+    }
+
+    async function upsertLinkedOrderCloudDoc(order){
+      if(!order || !order.id || !firebaseReady || !currentFirebaseUser || !navigator.onLine || !firebaseModules?.setDoc || !firestoreDb) return false;
+      const preparedOrder = normalizeOrder({ ...order });
+      preparedOrder.soporteCompra = await keepAssetInFirestore(preparedOrder.soporteCompra);
+      preparedOrder.soporteRecibido = await keepAssetInFirestore(preparedOrder.soporteRecibido);
+      preparedOrder.linkedPurchaseImage = await keepAssetInFirestore(preparedOrder.linkedPurchaseImage);
+      preparedOrder.linkedPurchaseInvoice = await keepAssetInFirestore(preparedOrder.linkedPurchaseInvoice);
+      await firebaseModules.setDoc(
+        firebaseModules.doc(firestoreDb, 'orders', preparedOrder.id),
+        serializeForCloud(preparedOrder, 'orders')
+      );
+      if(!cloudCollectionIndex.orders) cloudCollectionIndex.orders = new Set();
+      cloudCollectionIndex.orders.add(preparedOrder.id);
+      return true;
     }
 
     window.deletePurchase = async function(id){
