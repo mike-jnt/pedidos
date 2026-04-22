@@ -3,1766 +3,2253 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo contable local</title>
+  <title>Control de Pedidos</title>
   <style>
-    :root {
-      --green-900: #0f5132;
-      --green-800: #166534;
-      --green-700: #1f7a4f;
-      --green-600: #2f9e68;
-      --green-100: #e8f7ef;
-      --green-50: #f5fcf8;
-      --border: #d8e6dd;
-      --text: #173124;
-      --muted: #62806f;
-      --danger: #b42318;
-      --warn: #b54708;
-      --ok: #067647;
-      --shadow: 0 12px 28px rgba(17, 24, 39, 0.08);
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --line:#e8eaf2;
+      --text:#1e2430;
+      --muted:#697386;
+      --primary:#ff7a00;
+      --primary-dark:#dd6900;
+      --green:#138a4f;
+      --green-soft:#eaf8f0;
+      --yellow:#a46b00;
+      --yellow-soft:#fff6dd;
+      --blue:#0f5fc5;
+      --blue-soft:#eaf2ff;
+      --red:#b42318;
+      --red-soft:#fff0ef;
+      --shadow:0 10px 30px rgba(13, 22, 42, .08);
+      --radius:18px;
     }
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background: linear-gradient(180deg, #f7fbf8 0%, #eef7f1 100%);
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);
     }
-
-    .app {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 20px;
+    button,input,select,textarea{font:inherit}
+    .hidden{display:none !important}
+    .container{max-width:1280px;margin:0 auto;padding:20px}
+    .login-shell{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .login-card{
+      width:min(100%,480px);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--shadow);
     }
-
-    .hero {
-      background: linear-gradient(135deg, var(--green-900), var(--green-700));
-      color: #fff;
-      border-radius: 22px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1.4fr 0.8fr;
-      align-items: start;
+    .logo-title{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+    .logo-dot{
+      width:50px;height:50px;border-radius:16px;
+      background:linear-gradient(135deg,var(--primary),#ffb066);
+      display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;
     }
-
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
+    h1,h2,h3,h4,p{margin:0}
+    .subtitle{color:var(--muted);margin-top:6px;line-height:1.5}
+    .grid{display:grid;gap:16px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .field{display:flex;flex-direction:column;gap:8px}
+    .field label{font-size:14px;font-weight:600}
+    .input, select, textarea{
+      width:100%;
+      border:1px solid #dce0ea;
+      background:#fff;
+      border-radius:14px;
+      padding:13px 14px;
+      color:var(--text);
+      outline:none;
+      transition:.2s ease;
     }
-
-    .hero p {
-      margin: 0;
-      line-height: 1.45;
-      color: rgba(255,255,255,0.92);
+    textarea{min-height:100px;resize:vertical}
+    .input:focus, select:focus, textarea:focus{
+      border-color:rgba(255,122,0,.55);
+      box-shadow:0 0 0 4px rgba(255,122,0,.12);
     }
-
-    .hero-box {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 18px;
-      padding: 16px;
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px 16px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-decoration:none;
     }
-
-    .hero-box strong { display:block; margin-bottom: 6px; }
-
-    .tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 18px 0;
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark)}
+    .btn-secondary{background:#fff;border:1px solid var(--line);color:var(--text)}
+    .btn-danger{background:var(--red);color:#fff}
+    .btn-success{background:var(--green);color:#fff}
+    .btn-soft{background:#fff7ef;color:var(--primary);border:1px solid #ffd3a7}
+    .btn-sm{padding:9px 12px;border-radius:12px;font-size:13px}
+    .btn-full{width:100%}
+    .header{
+      position:sticky;top:0;z-index:20;
+      backdrop-filter:blur(10px);
+      background:rgba(255,255,255,.88);
+      border-bottom:1px solid rgba(232,234,242,.9);
     }
-
-    .tab-btn, .btn, .mini-btn {
-      border: 0;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: 0.2s ease;
+    .header-inner{
+      max-width:1280px;margin:0 auto;padding:16px 20px;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
     }
-
-    .tab-btn {
-      padding: 12px 16px;
-      background: #fff;
-      color: var(--green-900);
-      border: 1px solid var(--border);
+    .header-left{display:flex;align-items:center;gap:14px}
+    .user-chip{
+      display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:999px;
     }
-
-    .tab-btn.active {
-      background: var(--green-700);
-      color: #fff;
-      border-color: var(--green-700);
+    .avatar{
+      width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#fff4e8;color:var(--primary);font-weight:800;
     }
-
-    .btn {
-      padding: 11px 15px;
-      background: var(--green-700);
-      color: #fff;
+    .nav-tabs{
+      display:flex;gap:10px;flex-wrap:wrap;padding-top:18px;padding-bottom:6px;
     }
-
-    .btn.secondary {
-      background: #fff;
-      color: var(--green-900);
-      border: 1px solid var(--border);
+    .tab-btn{
+      padding:10px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;font-weight:700;
     }
-
-    .mini-btn {
-      padding: 8px 10px;
-      background: #fff;
-      color: var(--green-900);
-      border: 1px solid var(--border);
-      font-size: 12px;
+    .tab-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+    .panel{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);
     }
-
-    .btn:hover, .tab-btn:hover, .mini-btn:hover { transform: translateY(-1px); }
-    .danger-btn { background: #fee4e2; color: var(--danger); border: 1px solid #fecdca; }
-    .empty-state { padding: 18px; border: 1px dashed var(--border); border-radius: 16px; background: var(--green-50); }
-    .empty-state strong { display:block; margin-bottom: 6px; }
-
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      padding: 18px;
+    .section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .stat-card{
+      background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)
     }
-
-    .grid-4, .grid-3, .grid-2 {
-      display: grid;
-      gap: 16px;
+    .stat-card small{color:var(--muted);display:block;margin-bottom:10px}
+    .stat-card strong{font-size:30px;display:block;margin-bottom:6px}
+    .items-box{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfcff}
+    .items-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .item-card{
+      border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;margin-bottom:12px;
     }
-    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-    .metric-title {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: .04em;
+    .item-card-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;
     }
-
-    .metric-value {
-      font-size: 28px;
-      font-weight: 700;
+    .item-card-head strong{font-size:14px}
+    .item-row{
+      display:grid;grid-template-columns:1.4fr .8fr .9fr 1.4fr;gap:10px;align-items:start;margin-bottom:10px;
     }
-
-    .metric-note { color: var(--muted); font-size: 13px; margin-top: 6px; }
-
-    .section-head {
-      display: flex;
-      gap: 12px;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
+    .item-row-2{
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;
     }
-
-    .section-head h2, .section-head h3 {
-      margin: 0;
-      color: var(--green-900);
+    .thumb-mini{
+      width:48px;height:48px;border-radius:12px;border:1px solid var(--line);object-fit:cover;background:#fff;
     }
-
-    .layout-main {
-      display: grid;
-      grid-template-columns: 380px 1fr;
-      gap: 18px;
-      align-items: start;
+    .clickable-image{cursor:zoom-in;transition:transform .18s ease, box-shadow .18s ease}
+    .clickable-image:hover{transform:scale(1.02);box-shadow:0 10px 24px rgba(15,23,42,.12)}
+    .product-stack{display:flex;align-items:flex-start;gap:12px}
+    .product-stack-text strong{display:block;margin-bottom:4px}
+    .product-list-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+    .product-card{
+      border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;
     }
-
-    .purchase-list {
-      display: grid;
-      gap: 10px;
-      max-height: 980px;
-      overflow: auto;
-      padding-right: 4px;
+    .product-card img{
+      width:100%;height:180px;object-fit:cover;border-radius:14px;border:1px solid var(--line);margin-bottom:12px;background:#fafafa;
     }
-
-    .purchase-item {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px;
-      cursor: pointer;
-      background: #fff;
+    .product-card .placeholder{
+      width:100%;height:180px;border-radius:14px;border:1px dashed var(--line);margin-bottom:12px;background:#fafafa;
+      display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:10px;
     }
-
-    .purchase-item.active {
-      border-color: var(--green-700);
-      box-shadow: 0 0 0 3px rgba(47, 158, 104, 0.10);
-      background: var(--green-50);
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
+    table{width:100%;border-collapse:collapse;min-width:900px;background:#fff}
+    th,td{padding:14px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:top}
+    th{background:#fafbff;color:#4c5667;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+    tbody tr:hover{background:#fffaf4}
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap;
     }
-
-    .purchase-item h4 { margin: 0 0 6px; font-size: 16px; }
-    .purchase-item p { margin: 4px 0; font-size: 13px; color: var(--muted); }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
+    .badge-pendiente{background:var(--yellow-soft);color:var(--yellow)}
+    .badge-comprado{background:var(--blue-soft);color:var(--blue)}
+    .badge-recibido{background:var(--green-soft);color:var(--green)}
+    .badge-novedad{background:var(--red-soft);color:var(--red)}
+    .table-actions{display:flex;flex-wrap:wrap;gap:8px}
+    .empty{
+      padding:30px 16px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:18px;
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      border-radius: 999px;
-      background: #eef5f0;
-      color: var(--green-900);
+    .modal{
+      position:fixed;inset:0;background:rgba(15,23,42,.48);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;
     }
-
-    .badge.ok { background: #e7f8ee; color: var(--ok); }
-    .badge.warn { background: #fff4e5; color: var(--warn); }
-    .badge.danger { background: #ffe9e7; color: var(--danger); }
-
-    .detail-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1.2fr 0.8fr;
+    .modal-card{
+      width:min(100%,860px);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.25);padding:24px;border:1px solid rgba(255,255,255,.22)
     }
-
-    .stack { display: grid; gap: 16px; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+    .modal-card.modal-image-card{
+      width:min(100%,1180px);background:#0f172a;color:#fff;padding:16px;border:1px solid rgba(255,255,255,.12)
     }
+    .modal-card.modal-image-card .modal-head p{color:rgba(255,255,255,.72)}
+    .image-viewer-wrap{display:flex;flex-direction:column;gap:14px}
+    .image-viewer-stage{display:flex;justify-content:center;align-items:center;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:10px;min-height:300px}
+    .image-viewer-stage img{max-width:100%;max-height:75vh;object-fit:contain;border-radius:14px;background:#fff}
+    .image-viewer-actions{display:flex;flex-wrap:wrap;gap:10px}
+    .compare-wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}
+    .compare-pane{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px}
+    .compare-pane h4{margin:0;font-size:15px}
+    .compare-pane p{margin:0;color:rgba(255,255,255,.72);font-size:13px}
+    .compare-stage{display:flex;align-items:center;justify-content:center;min-height:320px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:10px}
+    .compare-stage img{max-width:100%;max-height:65vh;object-fit:contain;border-radius:14px;background:#fff}
+    .compare-actions{display:flex;flex-wrap:wrap;gap:10px}
+    .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+    .modal-head p{color:var(--muted);margin-top:6px}
+    .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+    .detail-card{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff}
+    .detail-card small{display:block;color:var(--muted);margin-bottom:8px}
+    .detail-card strong{display:block}
+    .receipt-preview{display:flex;flex-direction:column;gap:10px}
+    .receipt-preview img{max-width:100%;border-radius:14px;border:1px solid var(--line)}
+    .list-mini{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .list-mini div{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fafcff}
+    .muted{color:var(--muted)}
+    .top-space{margin-top:18px}
+    .accounting-grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px;align-items:start}
+    .accounting-box{display:flex;flex-direction:column;gap:14px}
+    .accounting-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .accounting-meta .detail-card{height:100%}
+    .accounting-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .accounting-view-btn{padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--text);font-weight:700;cursor:pointer}
+    .accounting-view-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+    .form-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+    .tab-btn .tab-icon{font-size:16px;line-height:1;display:block}
+    .tab-btn .tab-label{display:block}
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    @media (max-width: 1024px){
+      .stats,.grid-4,.accounting-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .accounting-grid{grid-template-columns:1fr}
     }
-
-    .field label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 14px;
-      color: var(--text);
-      background: #fff;
-      min-height: 42px;
-    }
-
-    textarea { min-height: 88px; resize: vertical; }
-
-    .field.full { grid-column: 1 / -1; }
-    .field.two { grid-column: span 2; }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 10px 8px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th { color: var(--muted); font-size: 12px; text-transform: uppercase; }
-
-    .entry-table td:last-child, .entry-table th:last-child,
-    .entry-table td:nth-last-child(2), .entry-table th:nth-last-child(2) {
-      text-align: right;
-    }
-
-    .alert-list, .audit-list, .provider-list, .report-list, .param-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .alert-item, .audit-item, .provider-item, .report-item, .param-item {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .subtle {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .split {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .totals-box {
-      background: var(--green-50);
-      border: 1px dashed #bdd8c7;
-      border-radius: 16px;
-      padding: 14px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .totals-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 14px;
-    }
-
-    .totals-row strong { font-size: 16px; }
-
-    .pill-nav {
-      display: inline-flex;
-      gap: 6px;
-      padding: 5px;
-      border-radius: 999px;
-      background: var(--green-100);
-    }
-
-    .pill-nav button {
-      border: 0;
-      background: transparent;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 700;
-      cursor: pointer;
-      color: var(--green-900);
-    }
-
-    .pill-nav button.active {
-      background: var(--green-700);
-      color: #fff;
-    }
-
-    .footer-note {
-      margin-top: 20px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    @media (max-width: 1180px) {
-      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .detail-grid, .layout-main, .grid-3, .grid-2 { grid-template-columns: 1fr; }
-      .hero { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 720px) {
-      .app { padding: 12px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .grid-4 { grid-template-columns: 1fr; }
-      .metric-value { font-size: 24px; }
-      .section-head { align-items: stretch; }
-      .toolbar, .split { flex-direction: column; align-items: stretch; }
+    @media (max-width: 768px){
+      body{background:var(--bg)}
+      .container{padding:12px 12px 132px}
+      .grid{gap:12px}
+      .grid-2,.grid-3,.grid-4,.detail-grid,.item-row,.item-row-2,.product-list-grid,.compare-wrap,.accounting-grid,.accounting-meta{grid-template-columns:1fr}
+      .stats{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x proximity}
+      .stats::-webkit-scrollbar,.nav-tabs::-webkit-scrollbar{display:none}
+      .stat-card{min-width:220px;scroll-snap-align:start;padding:16px;border-radius:18px}
+      .stat-card strong{font-size:24px}
+      .item-row .remove-item{grid-column:1 / -1}
+      .header{top:0}
+      .header-inner{padding:10px 12px 12px;flex-direction:column;align-items:flex-start}
+      .header-left{width:100%;gap:10px}
+      .header-left .logo-dot{width:40px !important;height:40px !important;border-radius:12px !important;font-size:17px}
+      .title-stack h2{font-size:16px;line-height:1.2}
+      .user-chip{width:100%;justify-content:space-between;padding:8px 10px;border-radius:18px}
+      .avatar{width:32px;height:32px}
+      .section-title{flex-direction:column;align-items:flex-start;margin-bottom:14px}
+      .login-card,.modal-card,.panel,.stat-card{border-radius:20px}
+      .panel{padding:14px}
+      .items-box{padding:12px}
+      .items-head{flex-direction:column;align-items:stretch}
+      .items-head .btn,.form-actions .btn,.image-viewer-actions .btn,.compare-actions .btn,.modal .btn,.accounting-actions .btn{width:100%}
+      .nav-tabs{
+        position:fixed;left:0;right:0;bottom:0;z-index:40;
+        display:grid;grid-template-columns:repeat(var(--mobile-nav-cols,3),minmax(0,1fr));
+        gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+        background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+        border-top:1px solid rgba(232,234,242,.98);box-shadow:0 -12px 30px rgba(15,23,42,.08)
+      }
+      .tab-btn{min-height:62px;border-radius:18px;padding:8px 6px;display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:11px;line-height:1.1;text-align:center}
+      .tab-btn .tab-icon{font-size:18px}
+      .table-wrap{border:none;overflow:visible;background:transparent}
+      table{min-width:0;background:transparent}
+      .table-wrap thead{display:none}
+      .table-wrap tbody{display:grid;gap:12px}
+      .table-wrap tr{display:block;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 12px;box-shadow:var(--shadow)}
+      .table-wrap td{display:grid;grid-template-columns:98px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid #eef1f6;font-size:13px;word-break:break-word}
+      .table-wrap td:last-child{border-bottom:none;padding-bottom:2px}
+      .table-wrap td::before{content:attr(data-label);font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+      .table-actions{gap:8px}
+      .table-actions .btn{flex:1 1 100%;min-height:42px}
+      .product-stack{align-items:flex-start}
+      .thumb-mini{width:56px;height:56px;border-radius:14px}
+      .product-card img,.product-card .placeholder{height:150px}
+      .modal{padding:10px;align-items:flex-end}
+      .modal-card{width:100%;max-height:92vh;border-radius:22px;padding:16px}
+      .modal-head{margin-bottom:12px}
+      .modal-head .btn{width:auto}
+      .image-viewer-stage{min-height:220px}
+      .compare-stage{min-height:200px}
+      .accounting-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .accounting-view-btn{padding:13px 10px;font-size:12px}
+      .empty{padding:18px 12px;border-radius:16px}
+      .receipt-preview img{max-height:220px;object-fit:contain}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <section class="hero">
-      <div>
-        <h1>Demo contable local</h1>
-        <p>Versión de prueba para que revises cómo se vería el área contable con IVA, retenciones, documento soporte, parámetros tributarios, asiento automático, cuentas por pagar, reportes, auditoría y alertas. Todo funciona en local y trae ejemplos precargados.</p>
-      </div>
-      <div class="hero-box">
-        <strong>Qué incluye en esta demo</strong>
-        <div class="badge-row">
-          <span class="badge">1. Bloque fiscal</span>
-          <span class="badge">2. Proveedor tributario</span>
-          <span class="badge">3. Parámetros</span>
-          <span class="badge">4. Asiento</span>
-          <span class="badge">5. Causación/Pago</span>
-          <span class="badge">6. Soporte</span>
-          <span class="badge">7. Fondo/Centro</span>
-          <span class="badge">8. Reportes</span>
-          <span class="badge">9. Auditoría</span>
-          <span class="badge">10. Alertas</span>
+  <div id="loginView" class="login-shell">
+    <div class="login-card">
+      <div class="logo-title">
+        <div class="logo-dot">CP</div>
+        <div>
+          <h1>Control de Pedidos</h1>
+          
         </div>
       </div>
-    </section>
 
-    <div class="tabs" id="tabs"></div>
+      <form id="loginForm" class="grid top-space">
+        <div class="field">
+          <label for="username">Usuario</label>
+          <input class="input" id="username" type="text" placeholder="Ingresa tu usuario" required />
+        </div>
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <input class="input" id="password" type="password" placeholder="Ingresa tu contraseña" required />
+        </div>
+        <button class="btn btn-primary btn-full" type="submit">Ingresar</button>
+      </form>
 
-    <section class="panel active" data-panel="dashboard">
-      <div class="grid-4" id="dashboardMetrics"></div>
-      <div style="height:16px"></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="section-head">
-            <h3>Compras del mes</h3>
+    </div>
+  </div>
+
+  <div id="appView" class="hidden">
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-left">
+          <div class="logo-dot" style="width:46px;height:46px;border-radius:14px;">CP</div>
+          <div class="title-stack">
+            <h2>Control de pedidos y recepción</h2>
           </div>
-          <div id="monthlySummary"></div>
         </div>
-        <div class="card">
-          <div class="section-head">
-            <h3>Alertas contables activas</h3>
-          </div>
-          <div class="alert-list" id="dashboardAlerts"></div>
-        </div>
-      </div>
-      <div style="height:16px"></div>
-      <div class="grid-3">
-        <div class="card">
-          <div class="section-head"><h3>IVA descontable</h3></div>
-          <div id="ivaBreakdown"></div>
-        </div>
-        <div class="card">
-          <div class="section-head"><h3>Retenciones del periodo</h3></div>
-          <div id="retentionBreakdown"></div>
-        </div>
-        <div class="card">
-          <div class="section-head"><h3>Cuentas por pagar</h3></div>
-          <div id="payableBreakdown"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" data-panel="compras">
-      <div class="layout-main">
-        <div class="card">
-          <div class="section-head">
-            <h2>Compras de ejemplo</h2>
-            <div class="toolbar">
-              <button class="btn secondary" id="newPurchaseBtn">Nuevo registro</button>
-              <button class="btn danger-btn" id="deletePurchaseBtn">Eliminar registro</button>
-              <button class="btn" id="savePurchaseBtn">Guardar</button>
+        <div class="user-chip">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="avatar" id="userInitial">A</div>
+            <div>
+              <strong id="userName">Usuario</strong>
+              <div class="muted" id="userRole">Rol</div>
             </div>
           </div>
-          <div class="purchase-list" id="purchaseList"></div>
+          <button class="btn btn-secondary btn-sm" id="logoutBtn">Cerrar sesión</button>
         </div>
-        <div class="stack">
-          <div class="card">
-            <div class="section-head">
-              <h2>Detalle fiscal y contable</h2>
-              <div class="pill-nav" id="purchaseModeTabs">
-                <button data-mode="detalle" class="active">Detalle</button>
-                <button data-mode="asiento">Asiento</button>
-                <button data-mode="auditoria">Auditoría</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <div id="navTabs" class="nav-tabs"></div>
+
+      <section id="tab-resumen" class="tab-content hidden">
+        <div class="stats">
+          <div class="stat-card">
+            <small>Pedidos pendientes de compra</small>
+            <strong id="kpiPendientes">0</strong>
+            
+          </div>
+          <div class="stat-card">
+            <small>Pedidos comprados</small>
+            <strong id="kpiComprados">0</strong>
+            
+          </div>
+          <div class="stat-card">
+            <small>Pedidos recibidos</small>
+            <strong id="kpiRecibidos">0</strong>
+            
+          </div>
+          <div class="stat-card">
+            <small>Valor total comprado</small>
+            <strong id="kpiValor">$0</strong>
+            
+          </div>
+        </div>
+
+        <div class="panel top-space">
+          <div class="section-title">
+            <div>
+              <h3>Resumen general</h3>
+              
+            </div>
+          </div>
+          <div id="summaryList"></div>
+        </div>
+      </section>
+
+      <section id="tab-contabilidad" class="tab-content hidden">
+        <div class="panel">
+          <div class="section-title">
+            <div>
+              <h3>Contabilidad y trazabilidad</h3>
+              
+            </div>
+          </div>
+
+          <div id="accountingStats" class="stats"></div>
+
+          <div class="accounting-grid top-space">
+            <div class="accounting-box">
+              <div class="section-title" style="margin-bottom:14px;">
+                <div>
+                  <h4>Registro de ingresos y otros movimientos</h4>
+                  
+                </div>
+              </div>
+
+              <div class="empty" style="text-align:left;">
+                
+                
+                <div style="display:flex;justify-content:flex-start;gap:10px;flex-wrap:wrap;">
+                  <button type="button" id="openAccountingModalBtn" class="btn btn-primary">Registrar movimiento</button>
+                </div>
               </div>
             </div>
-            <div id="purchaseContent"></div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="panel" data-panel="proveedores">
-      <div class="grid-2">
-        <div class="card">
-          <div class="section-head">
-            <h2>Ficha tributaria de proveedores</h2>
-            <div class="toolbar">
-              <button class="btn secondary" id="newProviderBtn">Nuevo proveedor</button>
+            <div class="accounting-box">
+              <div class="section-title" style="margin-bottom:14px;">
+                <div>
+                  <h4>Corte financiero actual</h4>
+                  
+                </div>
+              </div>
+              <div id="accountingHighlights"></div>
+              <div class="ledger-note" id="accountingNote"></div>
             </div>
           </div>
-          <div class="provider-list" id="providerList"></div>
-        </div>
-        <div class="card">
-          <div class="section-head">
-            <h2>Proveedor seleccionado</h2>
-            <div class="toolbar">
-              <button class="btn danger-btn" id="deleteProviderBtn">Eliminar proveedor</button>
-              <button class="btn" id="saveProviderBtn">Guardar proveedor</button>
+
+          <div class="top-space">
+            <div class="accounting-actions">
+              <button type="button" class="accounting-view-btn active" data-accounting-view="reconciliation" onclick="setAccountingView('reconciliation')">Conciliación por pedido</button>
+              <button type="button" class="accounting-view-btn" data-accounting-view="ledger" onclick="setAccountingView('ledger')">Libro contable rastreable</button>
+            </div>
+            <div id="accountingReconciliationSection" class="top-space">
+              <div id="accountingReconciliation"></div>
+            </div>
+            <div id="accountingLedgerSection" class="top-space hidden">
+              <div id="accountingLedger"></div>
             </div>
           </div>
-          <div id="providerDetail"></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="panel" data-panel="parametros">
-      <div class="grid-2">
-        <div class="card">
-          <div class="section-head">
-            <h2>Motor de impuestos</h2>
-            <button class="btn" id="savePresetBtn">Guardar preset</button>
+      <section id="tab-crear" class="tab-content hidden">
+        <div class="panel">
+          <div class="section-title">
+            <div>
+              <h3>Cargar nuevo pedido</h3>
+              
+            </div>
           </div>
-          <div class="param-list" id="presetList"></div>
-        </div>
-        <div class="card">
-          <div class="section-head"><h2>Preset seleccionado</h2></div>
-          <div id="presetDetail"></div>
-        </div>
-      </div>
-    </section>
 
-    <section class="panel" data-panel="reportes">
-      <div class="section-head">
-        <h2>Reportes contables</h2>
-        <div class="toolbar">
-          <button class="btn" id="exportReportsBtn">Descargar Excel</button>
-        </div>
-      </div>
-      <div class="grid-3" id="reportCards"></div>
-      <div style="height:16px"></div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="section-head"><h2>Compras por proveedor</h2></div>
-          <div class="report-list" id="reportBySupplier"></div>
-        </div>
-        <div class="card">
-          <div class="section-head"><h2>Totales por fondo / centro</h2></div>
-          <div class="report-list" id="reportByFund"></div>
-        </div>
-      </div>
-      <div style="height:16px"></div>
-      <div class="card">
-        <div class="section-head"><h2>Reporte mensual</h2></div>
-        <div id="reportMonthlyTable"></div>
-      </div>
-    </section>
+          <form id="createOrderForm" class="grid">
+            <div class="grid grid-3">
+              <div class="field">
+                <label>Proveedor / almacén</label>
+                <input class="input" name="supplier" placeholder="Ej. Ferretería Central" required />
+              </div>
+              <div class="field">
+                <label>Fecha en que se montó el pedido</label>
+                <input class="input" type="date" name="orderDate" required />
+              </div>
+              <div class="field">
+                <label>Total estimado</label>
+                <input class="input" type="number" min="0" step="0.01" name="estimatedTotal" placeholder="0" />
+              </div>
+            </div>
 
-    <section class="panel" data-panel="alertas">
-      <div class="grid-2">
-        <div class="card">
-          <div class="section-head"><h2>Alertas detectadas</h2></div>
-          <div class="alert-list" id="alertsFull"></div>
-        </div>
-        <div class="card">
-          <div class="section-head"><h2>Auditoría reciente</h2></div>
-          <div class="audit-list" id="auditFull"></div>
-        </div>
-      </div>
-    </section>
+            <div class="items-box">
+              <div class="items-head">
+                <div>
+                  <h4>Productos solicitados</h4>
+                  
+                </div>
+                <button type="button" class="btn btn-soft btn-sm" id="addItemBtn">+ Agregar producto</button>
+              </div>
+              
+              <div id="itemsContainer"></div>
+            </div>
 
-    <p class="footer-note">Esta es una versión local de prueba. Guarda los cambios en tu navegador para que puedas evaluar cómo se sentiría antes de llevarlo a la versión principal.</p>
+            <div class="form-actions">
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+              <button type="submit" class="btn btn-primary">Guardar pedido</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="tab-compras" class="tab-content hidden">
+        <div class="panel">
+          <div class="section-title">
+            <div>
+              <h3>Control de compras</h3>
+              
+            </div>
+          </div>
+
+          <div id="purchasePendingWrap"></div>
+
+          <div class="top-space">
+            <h4 style="margin-bottom:12px;">Compras registradas</h4>
+            <div id="purchaseDoneWrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-recibidos" class="tab-content hidden">
+        <div class="panel">
+          <div class="section-title">
+            <div>
+              <h3>Control de recibido</h3>
+              
+            </div>
+          </div>
+
+          <div id="receptionPendingWrap"></div>
+
+          <div class="top-space">
+            <h4 style="margin-bottom:12px;">Recibidos finalizados</h4>
+            <div id="receivedDoneWrap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-historial" class="tab-content hidden">
+        <div class="panel">
+          <div class="section-title">
+            <div>
+              <h3>Historial completo</h3>
+              
+            </div>
+          </div>
+          <div id="historyWrap"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div id="modalCard" class="modal-card">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div id="accountingEntryModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h3>Registrar movimiento contable</h3>
+          
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeAccountingEntryModal()">Cerrar</button>
+      </div>
+
+      <form id="accountingForm" class="grid">
+        <div class="grid grid-3">
+          <div class="field">
+            <label>Fecha del movimiento</label>
+            <input class="input" type="datetime-local" name="movementDate" required />
+          </div>
+          <div class="field">
+            <label>Tipo de movimiento</label>
+            <select class="input" name="type" required>
+              <option value="">Selecciona</option>
+              <option value="ingreso">Ingreso</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Valor real</label>
+            <input class="input" type="number" min="0" step="0.01" name="amount" placeholder="0" required />
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="field">
+            <label>Categoría</label>
+            <input class="input" name="category" placeholder="Ej. Ingreso operativo, transporte, ajuste" required />
+          </div>
+          <div class="field">
+            <label>Tercero / origen</label>
+            <input class="input" name="sourceName" placeholder="Ej. Cliente, caja, socio, proveedor" required />
+          </div>
+          <div class="field">
+            <label>Relacionar con pedido (opcional)</label>
+            <select class="input" name="relatedOrderId" id="accountingRelatedOrder">
+              <option value="">Sin relación</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="field">
+            <label>Tipo de pago / ingreso</label>
+            <select class="input" name="paymentType">
+              <option value="">Selecciona</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Cuenta / origen del dinero</label>
+            <select class="input" name="paymentSource">
+              <option value="">Selecciona</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Concepto</label>
+          <textarea class="input" name="concept" rows="3" placeholder="Describe bien de dónde viene este ingreso o gasto y por qué se registró." required></textarea>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="field">
+            <label>Soporte contable (imagen)</label>
+            <input class="input" type="file" name="support" accept="image/*" />
+            
+          </div>
+          <div class="field">
+            <label>Observaciones</label>
+            <textarea class="input" name="notes" rows="3" placeholder="Dato adicional para auditoría interna"></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+          <button type="reset" class="btn btn-secondary">Limpiar</button>
+          <button type="submit" class="btn btn-primary">Guardar movimiento</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
-    const STORAGE_KEY = 'demo_contable_local_v2';
+    const STORAGE_KEY = 'control_pedidos_roles_v1';
+    const SESSION_KEY = 'control_pedidos_session_v1';
 
-    const demoSeed = {
-      providers: [
-        {
-          id: 'prov-001',
-          name: 'Abastecimientos El Olivo SAS',
-          nit: '901234567-8',
-          type: 'Persona jurídica',
-          invoiceObligated: true,
-          ivaResponsible: true,
-          autoretenedor: false,
-          reteivaAgent: true,
-          municipality: 'Bogotá D.C.',
-          email: 'facturacion@olivo.com',
-          phone: '3001234567',
-          comments: 'Proveedor de mercado y aseo.'
-        },
-        {
-          id: 'prov-002',
-          name: 'Servicios Contables María Pérez',
-          nit: '52123456-1',
-          type: 'Persona natural',
-          invoiceObligated: false,
-          ivaResponsible: false,
-          autoretenedor: false,
-          reteivaAgent: false,
-          municipality: 'Bogotá D.C.',
-          email: 'maria.perez@gmail.com',
-          phone: '3115559988',
-          comments: 'Ejemplo para documento soporte a no obligado a facturar.'
-        },
-        {
-          id: 'prov-003',
-          name: 'Ferretería y mantenimiento Vida Nueva',
-          nit: '800556677-2',
-          type: 'Persona jurídica',
-          invoiceObligated: true,
-          ivaResponsible: true,
-          autoretenedor: true,
-          reteivaAgent: false,
-          municipality: 'Soacha',
-          email: 'ventas@vidanueva.com',
-          phone: '3204441200',
-          comments: 'Usado para compras con IVA 19% y reteICA de ejemplo.'
-        }
+    const state = {
+      data: {
+        users: [],
+        orders: [],
+        accountingEntries: []
+      },
+      session: null,
+      activeTab: null,
+      accountingView: 'reconciliation'
+    };
+
+    const TABS_BY_ROLE = {
+      admin: [
+        { id: 'resumen', label: 'Resumen' },
+        { id: 'contabilidad', label: 'Contabilidad' },
+        { id: 'crear', label: 'Cargar pedido' },
+        { id: 'compras', label: 'Compras' },
+        { id: 'recibidos', label: 'Recibidos' },
+        { id: 'historial', label: 'Historial' }
       ],
-      presets: [
-        {
-          id: 'pre-001',
-          name: 'Bienes gravados 19%',
-          category: 'Mercado y suministros',
-          ivaRate: 19,
-          retefuenteRate: 2.5,
-          reteivaRate: 15,
-          reteicaRate: 0.966,
-          accountExpense: '519595 - Gastos operacionales',
-          accountIva: '240805 - IVA descontable',
-          accountPayable: '220505 - Proveedores nacionales',
-          accountWithholding: '236540 - Retención en la fuente',
-          accountReteiva: '236801 - Retención IVA',
-          accountReteica: '236815 - ReteICA',
-          notes: 'Preset de ejemplo para compras gravadas.'
-        },
-        {
-          id: 'pre-002',
-          name: 'Honorarios no obligado a facturar',
-          category: 'Servicios',
-          ivaRate: 0,
-          retefuenteRate: 10,
-          reteivaRate: 0,
-          reteicaRate: 0,
-          accountExpense: '511010 - Honorarios',
-          accountIva: '240805 - IVA descontable',
-          accountPayable: '233595 - Cuentas por pagar',
-          accountWithholding: '236540 - Retención en la fuente',
-          accountReteiva: '236801 - Retención IVA',
-          accountReteica: '236815 - ReteICA',
-          notes: 'Ejemplo con documento soporte.'
-        },
-        {
-          id: 'pre-003',
-          name: 'Gasto excluido',
-          category: 'Mantenimiento menor',
-          ivaRate: 0,
-          retefuenteRate: 4,
-          reteivaRate: 0,
-          reteicaRate: 0.966,
-          accountExpense: '513595 - Reparaciones locativas',
-          accountIva: '240805 - IVA descontable',
-          accountPayable: '220505 - Proveedores nacionales',
-          accountWithholding: '236540 - Retención en la fuente',
-          accountReteiva: '236801 - Retención IVA',
-          accountReteica: '236815 - ReteICA',
-          notes: 'Ejemplo de compra sin IVA.'
-        }
+      compras: [
+        { id: 'compras', label: 'Compras' }
       ],
-      purchases: [
-        {
-          id: 'cmp-001',
-          code: 'COMP-1001',
-          concept: 'Mercado general de domingo',
-          providerId: 'prov-001',
-          presetId: 'pre-001',
-          documentType: 'Factura electrónica',
-          documentNumber: 'FE-45891',
-          cufe: 'CUFE-DEMO-45891',
-          accrualDate: '2026-03-05',
-          invoiceDate: '2026-03-05',
-          dueDate: '2026-03-20',
-          paymentDate: '2026-03-15',
-          paymentStatus: 'Pagada total',
-          paymentMethod: 'Transferencia',
-          accountType: 'Cuenta iglesia',
-          fund: 'Ofrenda',
-          costCenter: 'Alimentos / domingo',
-          category: 'Mercado y suministros',
-          supplierSupport: 'factura-mercado.pdf',
-          baseAmount: 850000,
-          ivaRate: 19,
-          retefuenteRate: 2.5,
-          reteivaRate: 15,
-          reteicaRate: 0.966,
-          notes: 'Compra grande del mes con IVA y retenciones completas.',
-          createdBy: 'Admin demo',
-          approvedBy: 'Tesorera demo',
-          paidBy: 'Admin demo',
-          receivedBy: 'Recepción demo',
-          auditTrail: [
-            { date: '2026-03-05 09:15', action: 'Creó el registro contable inicial', user: 'Admin demo' },
-            { date: '2026-03-05 09:22', action: 'Aplicó preset Bienes gravados 19%', user: 'Admin demo' },
-            { date: '2026-03-15 13:05', action: 'Marcó pago total por transferencia', user: 'Tesorera demo' }
-          ]
-        },
-        {
-          id: 'cmp-002',
-          code: 'COMP-1002',
-          concept: 'Honorarios contables marzo',
-          providerId: 'prov-002',
-          presetId: 'pre-002',
-          documentType: 'Documento soporte',
-          documentNumber: 'DS-2026-031',
-          cufe: '',
-          accrualDate: '2026-03-08',
-          invoiceDate: '2026-03-08',
-          dueDate: '2026-03-30',
-          paymentDate: '',
-          paymentStatus: 'Pendiente',
-          paymentMethod: 'Transferencia',
-          accountType: 'Cuenta iglesia',
-          fund: 'Pago iglesia',
-          costCenter: 'Administración',
-          category: 'Servicios',
-          supplierSupport: 'doc-soporte-honorarios.pdf',
-          baseAmount: 1200000,
-          ivaRate: 0,
-          retefuenteRate: 10,
-          reteivaRate: 0,
-          reteicaRate: 0,
-          notes: 'Ejemplo de documento soporte para no obligado a facturar.',
-          createdBy: 'Admin demo',
-          approvedBy: 'Pastora demo',
-          paidBy: '',
-          receivedBy: 'Admin demo',
-          auditTrail: [
-            { date: '2026-03-08 11:40', action: 'Registró documento soporte', user: 'Admin demo' },
-            { date: '2026-03-08 11:44', action: 'Dejó pendiente de pago', user: 'Admin demo' }
-          ]
-        },
-        {
-          id: 'cmp-003',
-          code: 'COMP-1003',
-          concept: 'Herramientas y reparación del templo',
-          providerId: 'prov-003',
-          presetId: 'pre-003',
-          documentType: 'Factura electrónica',
-          documentNumber: 'FV-9091',
-          cufe: 'CUFE-DEMO-9091',
-          accrualDate: '2026-03-10',
-          invoiceDate: '2026-03-10',
-          dueDate: '2026-03-18',
-          paymentDate: '2026-03-10',
-          paymentStatus: 'Pagada parcial',
-          paymentMethod: 'Efectivo',
-          accountType: 'Cuenta iglesia',
-          fund: 'Pago iglesia',
-          costCenter: 'Mantenimiento',
-          category: 'Mantenimiento menor',
-          supplierSupport: '',
-          baseAmount: 410000,
-          ivaRate: 0,
-          retefuenteRate: 4,
-          reteivaRate: 0,
-          reteicaRate: 0.966,
-          notes: 'Ejemplo con soporte pendiente para disparar alerta.',
-          createdBy: 'Admin demo',
-          approvedBy: 'Admin demo',
-          paidBy: 'Caja menor',
-          receivedBy: 'Compras demo',
-          auditTrail: [
-            { date: '2026-03-10 08:10', action: 'Creó el registro desde compras', user: 'Compras demo' },
-            { date: '2026-03-10 08:30', action: 'Marcó pago parcial en efectivo', user: 'Caja menor' }
-          ]
-        }
+      recepcion: [
+        { id: 'recibidos', label: 'Recibidos' }
       ]
     };
 
-    const appState = loadState();
-    const uiState = {
-      activeTab: 'dashboard',
-      selectedPurchaseId: appState.purchases[0]?.id || null,
-      purchaseMode: 'detalle',
-      selectedProviderId: appState.providers[0]?.id || null,
-      selectedPresetId: appState.presets[0]?.id || null
+    const TAB_ICONS = {
+      resumen: '📊',
+      contabilidad: '💰',
+      crear: '📝',
+      compras: '🛒',
+      recibidos: '📦',
+      historial: '🗂️'
     };
 
-    const tabs = [
-      { id: 'dashboard', label: 'Panel' },
-      { id: 'compras', label: 'Compras' },
-      { id: 'proveedores', label: 'Proveedores' },
-      { id: 'parametros', label: 'Parámetros' },
-      { id: 'reportes', label: 'Reportes' },
-      { id: 'alertas', label: 'Alertas y auditoría' }
-    ];
+    const paymentTypes = ['Transferencia', 'Bancolombia', 'Tarjeta', 'Efectivo', 'Mixto'];
+    const paymentSources = ['Caja general', 'Cuenta bancaria', 'Cuenta personal', 'Cuenta iglesia', 'Fondo operativo', 'Otro'];
+    const accountingCategories = ['Ingreso operativo', 'Aporte de socio', 'Ajuste de caja', 'Compra extra', 'Transporte', 'Mano de obra', 'Servicios', 'Herramientas', 'Materiales', 'Otro'];
+    const measureUnits = ['Unidad', 'Caja', 'Paquete', 'Bulto', 'Bolsa', 'Saco', 'Kilo', 'Gramo', 'Libra', 'Litro', 'Mililitro', 'Metro', 'Metro cuadrado', 'Metro cúbico', 'Centímetro', 'Pulgada', 'Galón', 'Rollo', 'Varilla', 'Tubo'];
+    const receptionConditions = ['Completo', 'Parcial', 'Con novedad'];
 
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return structuredClone(demoSeed);
-        const parsed = JSON.parse(raw);
-        return mergeSeed(parsed);
-      } catch (error) {
-        console.warn('No se pudo leer el estado local, se carga demo.', error);
-        return structuredClone(demoSeed);
+    const loginView = document.getElementById('loginView');
+    const appView = document.getElementById('appView');
+    const loginForm = document.getElementById('loginForm');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const navTabs = document.getElementById('navTabs');
+    const createOrderForm = document.getElementById('createOrderForm');
+    const accountingForm = document.getElementById('accountingForm');
+    const openAccountingModalBtn = document.getElementById('openAccountingModalBtn');
+    const accountingEntryModal = document.getElementById('accountingEntryModal');
+    const itemsContainer = document.getElementById('itemsContainer');
+    const modal = document.getElementById('modal');
+    const modalCard = document.getElementById('modalCard');
+    const modalContent = document.getElementById('modalContent');
+
+    function loadState(){
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      const savedSession = localStorage.getItem(SESSION_KEY);
+      if(savedData){
+        state.data = JSON.parse(savedData);
+      } else {
+        seedData();
+      }
+      normalizeState();
+      if(savedSession){
+        state.session = JSON.parse(savedSession);
       }
     }
 
-    function mergeSeed(parsed) {
-      return {
-        providers: Array.isArray(parsed.providers) && parsed.providers.length ? parsed.providers : structuredClone(demoSeed.providers),
-        presets: Array.isArray(parsed.presets) && parsed.presets.length ? parsed.presets : structuredClone(demoSeed.presets),
-        purchases: Array.isArray(parsed.purchases) && parsed.purchases.length ? parsed.purchases : structuredClone(demoSeed.purchases)
+    function normalizeState(){
+      state.data = state.data || {};
+      state.data.users = Array.isArray(state.data.users) ? state.data.users : [];
+      state.data.orders = Array.isArray(state.data.orders) ? state.data.orders : [];
+      state.data.accountingEntries = Array.isArray(state.data.accountingEntries) ? state.data.accountingEntries : [];
+    }
+
+    function seedData(){
+      state.data = {
+        users: [
+          { id: crypto.randomUUID(), username: 'admin', password: '1234', role: 'admin', name: 'Administrador' },
+          { id: crypto.randomUUID(), username: 'compras', password: '1234', role: 'compras', name: 'Equipo de compras' },
+          { id: crypto.randomUUID(), username: 'recepcion', password: '1234', role: 'recepcion', name: 'Equipo de recepción' }
+        ],
+        orders: [],
+        accountingEntries: []
       };
+      saveData();
     }
 
-    function persistState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+    function saveData(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
     }
 
-    function formatCOP(value) {
-      const numeric = Number(value || 0);
-      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(numeric);
+    function saveSession(){
+      if(state.session){
+        localStorage.setItem(SESSION_KEY, JSON.stringify(state.session));
+      } else {
+        localStorage.removeItem(SESSION_KEY);
+      }
     }
 
-    function parseNumber(value) {
-      if (typeof value === 'number') return value;
-      return Number(String(value || '').replace(/[^\d.-]/g, '')) || 0;
+    function formatCurrency(value){
+      const num = Number(value || 0);
+      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(num);
     }
 
-    function computePurchase(purchase) {
-      const base = parseNumber(purchase.baseAmount);
-      const ivaRate = Number(purchase.ivaRate || 0);
-      const retefuenteRate = Number(purchase.retefuenteRate || 0);
-      const reteivaRate = Number(purchase.reteivaRate || 0);
-      const reteicaRate = Number(purchase.reteicaRate || 0);
-      const ivaAmount = Math.round(base * (ivaRate / 100));
-      const grossTotal = base + ivaAmount;
-      const retefuenteAmount = Math.round(base * (retefuenteRate / 100));
-      const reteivaAmount = Math.round(ivaAmount * (reteivaRate / 100));
-      const reteicaAmount = Math.round(base * (reteicaRate / 100));
-      const totalRetentions = retefuenteAmount + reteivaAmount + reteicaAmount;
-      const netPayable = grossTotal - totalRetentions;
-      const paidAmount = purchase.paymentStatus === 'Pagada total'
-        ? netPayable
-        : purchase.paymentStatus === 'Pagada parcial'
-          ? Math.round(netPayable * 0.55)
-          : 0;
-      const balance = netPayable - paidAmount;
-      return {
-        base,
-        ivaRate,
-        retefuenteRate,
-        reteivaRate,
-        reteicaRate,
-        ivaAmount,
-        grossTotal,
-        retefuenteAmount,
-        reteivaAmount,
-        reteicaAmount,
-        totalRetentions,
-        netPayable,
-        paidAmount,
-        balance
-      };
+    function formatDate(dateString, withTime = false){
+      if(!dateString) return '—';
+      const date = new Date(dateString);
+      if(Number.isNaN(date.getTime())) return '—';
+      return new Intl.DateTimeFormat('es-CO', {
+        dateStyle: 'medium',
+        ...(withTime ? { timeStyle: 'short' } : {})
+      }).format(date);
     }
 
-    function getProvider(providerId) {
-      return appState.providers.find(item => item.id === providerId) || null;
+    function shortText(value, limit = 80){
+      const text = String(value || '').trim();
+      if(!text) return '—';
+      return text.length > limit ? text.slice(0, limit) + '…' : text;
     }
 
-    function getPreset(presetId) {
-      return appState.presets.find(item => item.id === presetId) || null;
+    function orderProductSummary(order){
+      if(!order?.items?.length) return 'Sin productos';
+      if(order.items.length === 1){
+        const item = order.items[0];
+        return `${item.name} · ${item.qty} ${item.unit || ''}`.trim();
+      }
+      const first = order.items[0];
+      return `${first.name} · ${first.qty} ${first.unit || ''} y ${order.items.length - 1} más`.trim();
     }
 
-    function getSelectedPurchase() {
-      return appState.purchases.find(item => item.id === uiState.selectedPurchaseId) || null;
+    function productImageThumb(item){
+      if(item?.imageData){
+        return `<img src="${item.imageData}" alt="${escapeHtml(item.name || 'Producto')}" class="thumb-mini clickable-image" data-title="${escapeHtml(item.name || 'Producto')}" />`;
+      }
+      return `<div class="thumb-mini" style="display:grid;place-items:center;color:var(--muted);font-size:11px;">Sin foto</div>`;
     }
 
-    function getAlertsForPurchase(purchase) {
-      const provider = getProvider(purchase.providerId);
-      const computed = computePurchase(purchase);
-      const alerts = [];
-      if (!purchase.documentNumber) alerts.push({ severity: 'danger', text: 'No tiene número de soporte o factura.' });
-      if (!purchase.supplierSupport) alerts.push({ severity: 'warn', text: 'No tiene archivo soporte cargado.' });
-      if (!purchase.costCenter || !purchase.fund) alerts.push({ severity: 'warn', text: 'Falta fondo o centro de costo.' });
-      if (purchase.paymentStatus !== 'Pendiente' && !purchase.paymentDate) alerts.push({ severity: 'warn', text: 'Tiene estado de pago sin fecha de pago.' });
-      if (purchase.ivaRate > 0 && provider && !provider.ivaResponsible) alerts.push({ severity: 'danger', text: 'Proveedor marcado como no responsable de IVA pero la compra tiene IVA.' });
-      if (purchase.documentType === 'Documento soporte' && provider?.invoiceObligated) alerts.push({ severity: 'warn', text: 'El proveedor figura como obligado a facturar, revisa el tipo de soporte.' });
-      if (computed.balance > 0 && purchase.dueDate && new Date(purchase.dueDate) < new Date('2026-03-24')) alerts.push({ severity: 'warn', text: 'La obligación está vencida y aún tiene saldo pendiente.' });
-      return alerts;
-    }
-
-    function getAllAlerts() {
-      return appState.purchases.flatMap(purchase => {
-        const provider = getProvider(purchase.providerId);
-        return getAlertsForPurchase(purchase).map(alert => ({
-          purchaseId: purchase.id,
-          code: purchase.code,
-          concept: purchase.concept,
-          provider: provider?.name || 'Sin proveedor',
-          ...alert
-        }));
-      });
-    }
-
-    function getAllAudit() {
-      return appState.purchases
-        .flatMap(purchase => (purchase.auditTrail || []).map(entry => ({ ...entry, purchaseCode: purchase.code, concept: purchase.concept })))
-        .sort((a, b) => b.date.localeCompare(a.date));
-    }
-
-    function computeTotals() {
-      const purchases = appState.purchases.map(item => ({ item, provider: getProvider(item.providerId), computed: computePurchase(item) }));
-      const totals = {
-        purchases: purchases.length,
-        gross: purchases.reduce((sum, row) => sum + row.computed.grossTotal, 0),
-        iva: purchases.reduce((sum, row) => sum + row.computed.ivaAmount, 0),
-        retefuente: purchases.reduce((sum, row) => sum + row.computed.retefuenteAmount, 0),
-        reteiva: purchases.reduce((sum, row) => sum + row.computed.reteivaAmount, 0),
-        reteica: purchases.reduce((sum, row) => sum + row.computed.reteicaAmount, 0),
-        net: purchases.reduce((sum, row) => sum + row.computed.netPayable, 0),
-        paid: purchases.reduce((sum, row) => sum + row.computed.paidAmount, 0),
-        balance: purchases.reduce((sum, row) => sum + row.computed.balance, 0)
-      };
-      return { purchases, totals };
-    }
-
-    function groupBy(rows, keyGetter) {
-      return rows.reduce((acc, row) => {
-        const key = keyGetter(row);
-        acc[key] = acc[key] || [];
-        acc[key].push(row);
-        return acc;
-      }, {});
-    }
-
-    function renderTabs() {
-      const container = document.getElementById('tabs');
-      container.innerHTML = tabs.map(tab => `
-        <button class="tab-btn ${uiState.activeTab === tab.id ? 'active' : ''}" data-tab="${tab.id}">${tab.label}</button>
-      `).join('');
-      container.querySelectorAll('[data-tab]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          uiState.activeTab = btn.dataset.tab;
-          document.querySelectorAll('.panel').forEach(panel => {
-            panel.classList.toggle('active', panel.dataset.panel === uiState.activeTab);
-          });
-          renderTabs();
-        });
-      });
-    }
-
-    function renderDashboard() {
-      const { purchases, totals } = computeTotals();
-      document.getElementById('dashboardMetrics').innerHTML = `
-        <div class="card"><div class="metric-title">Compras registradas</div><div class="metric-value">${totals.purchases}</div><div class="metric-note">Ejemplos precargados para revisar flujo completo.</div></div>
-        <div class="card"><div class="metric-title">Total bruto</div><div class="metric-value">${formatCOP(totals.gross)}</div><div class="metric-note">Base + IVA antes de retenciones.</div></div>
-        <div class="card"><div class="metric-title">Total neto a pagar</div><div class="metric-value">${formatCOP(totals.net)}</div><div class="metric-note">Después de retefuente, reteIVA y reteICA.</div></div>
-        <div class="card"><div class="metric-title">Saldo pendiente</div><div class="metric-value">${formatCOP(totals.balance)}</div><div class="metric-note">Separado de la causación para ver cuentas por pagar.</div></div>
-      `;
-
-      document.getElementById('monthlySummary').innerHTML = `
-        <div class="totals-box">
-          <div class="totals-row"><span>Base gravable</span><strong>${formatCOP(purchases.reduce((sum, row) => sum + row.computed.base, 0))}</strong></div>
-          <div class="totals-row"><span>IVA descontable</span><strong>${formatCOP(totals.iva)}</strong></div>
-          <div class="totals-row"><span>Retenciones</span><strong>${formatCOP(totals.retefuente + totals.reteiva + totals.reteica)}</strong></div>
-          <div class="totals-row"><span>Pagado</span><strong>${formatCOP(totals.paid)}</strong></div>
-          <div class="totals-row"><span>Por pagar</span><strong>${formatCOP(totals.balance)}</strong></div>
-        </div>
-      `;
-
-      const allAlerts = getAllAlerts();
-      document.getElementById('dashboardAlerts').innerHTML = allAlerts.length
-        ? allAlerts.slice(0, 6).map(alert => `
-          <div class="alert-item">
-            <div class="split">
-              <strong>${alert.code}</strong>
-              <span class="badge ${alert.severity}">${alert.severity === 'danger' ? 'Alta' : 'Media'}</span>
-            </div>
-            <div class="subtle">${alert.concept} · ${alert.provider}</div>
-            <div style="margin-top:6px">${alert.text}</div>
-          </div>
-        `).join('')
-        : '<div class="subtle">No hay alertas activas.</div>';
-
-      document.getElementById('ivaBreakdown').innerHTML = `
-        <div class="totals-box">
-          <div class="totals-row"><span>IVA 19%</span><strong>${formatCOP(purchases.filter(row => row.item.ivaRate === 19).reduce((sum, row) => sum + row.computed.ivaAmount, 0))}</strong></div>
-          <div class="totals-row"><span>IVA 5%</span><strong>${formatCOP(purchases.filter(row => row.item.ivaRate === 5).reduce((sum, row) => sum + row.computed.ivaAmount, 0))}</strong></div>
-          <div class="totals-row"><span>Sin IVA / Excluido</span><strong>${formatCOP(purchases.filter(row => row.item.ivaRate === 0).reduce((sum, row) => sum + row.computed.base, 0))}</strong></div>
-        </div>
-      `;
-
-      document.getElementById('retentionBreakdown').innerHTML = `
-        <div class="totals-box">
-          <div class="totals-row"><span>ReteFuente</span><strong>${formatCOP(totals.retefuente)}</strong></div>
-          <div class="totals-row"><span>ReteIVA</span><strong>${formatCOP(totals.reteiva)}</strong></div>
-          <div class="totals-row"><span>ReteICA</span><strong>${formatCOP(totals.reteica)}</strong></div>
-        </div>
-      `;
-
-      const payables = purchases.filter(row => row.computed.balance > 0);
-      document.getElementById('payableBreakdown').innerHTML = payables.length ? `
-        <div class="report-list">
-          ${payables.map(row => `
-            <div class="report-item">
-              <div class="split"><strong>${row.item.code}</strong><strong>${formatCOP(row.computed.balance)}</strong></div>
-              <div class="subtle">${row.item.concept} · Vence ${row.item.dueDate || 'sin fecha'}</div>
+    function renderOrderItemsSummary(items = []){
+      if(!items.length) return '<span class="muted">Sin productos</span>';
+      return `
+        <div class="list-mini" style="margin-top:0;">
+          ${items.map((item, index) => `
+            <div style="padding:10px 12px;">
+              <strong>${index + 1}. ${escapeHtml(item.name || 'Producto')}</strong><br>
+              <span class="muted">Cantidad: ${item.qty || 0} ${escapeHtml(item.unit || '')}</span>
+              ${item.details ? `<br><span class="muted">${escapeHtml(shortText(item.details, 120))}</span>` : ''}
             </div>
           `).join('')}
         </div>
-      ` : '<div class="subtle">No hay cuentas por pagar pendientes.</div>';
+      `;
     }
 
-    function renderPurchaseList() {
-      const container = document.getElementById('purchaseList');
-      if (!appState.purchases.length) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <strong>No hay registros contables.</strong>
-            <div class="subtle">Crea un nuevo registro para probar IVA, retenciones y flujo de pago.</div>
-          </div>
-        `;
-        return;
+    function renderProductCards(items = []){
+      if(!items.length){
+        return '<div class="empty">No hay productos registrados.</div>';
       }
-      container.innerHTML = appState.purchases.map(purchase => {
-        const provider = getProvider(purchase.providerId);
-        const computed = computePurchase(purchase);
-        return `
-          <div class="purchase-item ${purchase.id === uiState.selectedPurchaseId ? 'active' : ''}" data-purchase-id="${purchase.id}">
-            <h4>${purchase.code}</h4>
-            <p><strong>${purchase.concept}</strong></p>
-            <p>${provider?.name || 'Sin proveedor'} · ${purchase.documentType}</p>
-            <p>Neto a pagar: <strong>${formatCOP(computed.netPayable)}</strong></p>
-            <div class="badge-row">
-              <span class="badge">${purchase.paymentStatus}</span>
-              <span class="badge ${getAlertsForPurchase(purchase).length ? 'warn' : 'ok'}">${getAlertsForPurchase(purchase).length ? getAlertsForPurchase(purchase).length + ' alerta(s)' : 'Sin alertas'}</span>
-              <span class="badge">${purchase.fund}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      container.querySelectorAll('[data-purchase-id]').forEach(item => {
-        item.addEventListener('click', () => {
-          uiState.selectedPurchaseId = item.dataset.purchaseId;
-          renderPurchaseList();
-          renderPurchaseDetail();
-        });
-      });
-    }
-
-    function purchaseDetailForm(purchase) {
-      const providerOptions = appState.providers.map(provider => `<option value="${provider.id}" ${provider.id === purchase.providerId ? 'selected' : ''}>${provider.name}</option>`).join('');
-      const presetOptions = appState.presets.map(preset => `<option value="${preset.id}" ${preset.id === purchase.presetId ? 'selected' : ''}>${preset.name}</option>`).join('');
-      const provider = getProvider(purchase.providerId);
-      const computed = computePurchase(purchase);
-      const alerts = getAlertsForPurchase(purchase);
       return `
-        <div class="detail-grid">
-          <div class="stack">
-            <div class="card" style="padding:16px">
-              <div class="section-head"><h3>1. Bloque fiscal y documento</h3></div>
-              <div class="form-grid" id="purchaseFormGrid">
-                <div class="field"><label>Código</label><input data-field="code" value="${purchase.code}" /></div>
-                <div class="field two"><label>Concepto</label><input data-field="concept" value="${purchase.concept}" /></div>
-                <div class="field"><label>Proveedor</label><select data-field="providerId">${providerOptions}</select></div>
-                <div class="field"><label>Preset tributario</label><select data-field="presetId">${presetOptions}</select></div>
-                <div class="field"><label>Tipo de documento</label>
-                  <select data-field="documentType">
-                    ${['Factura electrónica','Documento equivalente','Documento soporte'].map(type => `<option value="${type}" ${purchase.documentType === type ? 'selected' : ''}>${type}</option>`).join('')}
-                  </select>
-                </div>
-                <div class="field"><label>Número documento</label><input data-field="documentNumber" value="${purchase.documentNumber || ''}" /></div>
-                <div class="field"><label>CUFE/CUDS</label><input data-field="cufe" value="${purchase.cufe || ''}" /></div>
-                <div class="field"><label>Fecha causación</label><input type="date" data-field="accrualDate" value="${purchase.accrualDate || ''}" /></div>
-                <div class="field"><label>Fecha factura</label><input type="date" data-field="invoiceDate" value="${purchase.invoiceDate || ''}" /></div>
-                <div class="field"><label>Fecha vencimiento</label><input type="date" data-field="dueDate" value="${purchase.dueDate || ''}" /></div>
-                <div class="field"><label>Fecha pago</label><input type="date" data-field="paymentDate" value="${purchase.paymentDate || ''}" /></div>
-                <div class="field"><label>Estado de pago</label>
-                  <select data-field="paymentStatus">
-                    ${['Pendiente','Pagada parcial','Pagada total','Anulada'].map(status => `<option value="${status}" ${purchase.paymentStatus === status ? 'selected' : ''}>${status}</option>`).join('')}
-                  </select>
-                </div>
-                <div class="field"><label>Tipo de pago</label>
-                  <select data-field="paymentMethod">
-                    ${['Transferencia','Bancolombia','Tarjeta','Efectivo'].map(method => `<option value="${method}" ${purchase.paymentMethod === method ? 'selected' : ''}>${method}</option>`).join('')}
-                  </select>
-                </div>
-                <div class="field"><label>Cuenta</label>
-                  <select data-field="accountType">
-                    ${['Cuenta personal','Cuenta iglesia'].map(account => `<option value="${account}" ${purchase.accountType === account ? 'selected' : ''}>${account}</option>`).join('')}
-                  </select>
-                </div>
-                <div class="field"><label>Fondo</label>
-                  <select data-field="fund">
-                    ${['Ofrenda','Pago iglesia','Donación dirigida','Caja menor'].map(fund => `<option value="${fund}" ${purchase.fund === fund ? 'selected' : ''}>${fund}</option>`).join('')}
-                  </select>
-                </div>
-                <div class="field"><label>Centro de costo</label><input data-field="costCenter" value="${purchase.costCenter || ''}" /></div>
-                <div class="field"><label>Archivo soporte</label><input data-field="supplierSupport" value="${purchase.supplierSupport || ''}" placeholder="ejemplo.pdf" /></div>
-                <div class="field"><label>Base gravable</label><input data-money="baseAmount" value="${formatCOP(purchase.baseAmount)}" /></div>
-                <div class="field"><label>IVA %</label><input data-number="ivaRate" value="${purchase.ivaRate}" /></div>
-                <div class="field"><label>ReteFuente %</label><input data-number="retefuenteRate" value="${purchase.retefuenteRate}" /></div>
-                <div class="field"><label>ReteIVA % del IVA</label><input data-number="reteivaRate" value="${purchase.reteivaRate}" /></div>
-                <div class="field"><label>ReteICA %</label><input data-number="reteicaRate" value="${purchase.reteicaRate}" /></div>
-                <div class="field full"><label>Observaciones</label><textarea data-field="notes">${purchase.notes || ''}</textarea></div>
-              </div>
+        <div class="product-list-grid">
+          ${items.map((item, index) => `
+            <div class="product-card">
+              ${item.imageData
+                ? `<img src="${item.imageData}" alt="${escapeHtml(item.name || 'Producto')}" class="clickable-image" data-title="${escapeHtml(item.name || 'Producto')}" />`
+                : `<div class="placeholder">Sin imagen de referencia</div>`}
+              <strong>${index + 1}. ${escapeHtml(item.name || 'Producto')}</strong>
+              <div class="muted" style="margin-top:6px;">Cantidad: ${item.qty || 0} ${escapeHtml(item.unit || '')}</div>
+              ${item.amount ? `<div class="muted" style="margin-top:6px;">Valor estimado: ${formatCurrency(item.amount)}</div>` : ''}
+              ${item.details ? `<div style="margin-top:10px;line-height:1.5;">${escapeHtml(item.details)}</div>` : '<div class="muted" style="margin-top:10px;">Sin detalle adicional.</div>'}
             </div>
-            <div class="card" style="padding:16px">
-              <div class="section-head"><h3>5. Causación vs pago</h3></div>
-              <div class="grid-3">
-                <div class="totals-box"><div class="metric-title">Valor causado</div><strong>${formatCOP(computed.netPayable)}</strong><div class="subtle">Total reconocido contablemente.</div></div>
-                <div class="totals-box"><div class="metric-title">Pagado</div><strong>${formatCOP(computed.paidAmount)}</strong><div class="subtle">Según estado y fecha de pago.</div></div>
-                <div class="totals-box"><div class="metric-title">Saldo</div><strong>${formatCOP(computed.balance)}</strong><div class="subtle">Cuenta por pagar pendiente.</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="stack">
-            <div class="card" style="padding:16px">
-              <div class="section-head"><h3>Resumen tributario</h3></div>
-              <div class="totals-box">
-                <div class="totals-row"><span>Proveedor</span><strong>${provider?.name || 'Sin proveedor'}</strong></div>
-                <div class="totals-row"><span>NIT</span><strong>${provider?.nit || 'Sin NIT'}</strong></div>
-                <div class="totals-row"><span>Base</span><strong>${formatCOP(computed.base)}</strong></div>
-                <div class="totals-row"><span>IVA</span><strong>${formatCOP(computed.ivaAmount)}</strong></div>
-                <div class="totals-row"><span>ReteFuente</span><strong>${formatCOP(computed.retefuenteAmount)}</strong></div>
-                <div class="totals-row"><span>ReteIVA</span><strong>${formatCOP(computed.reteivaAmount)}</strong></div>
-                <div class="totals-row"><span>ReteICA</span><strong>${formatCOP(computed.reteicaAmount)}</strong></div>
-                <div class="totals-row"><span>Neto a pagar</span><strong>${formatCOP(computed.netPayable)}</strong></div>
-              </div>
-            </div>
-            <div class="card" style="padding:16px">
-              <div class="section-head"><h3>10. Alertas</h3></div>
-              ${alerts.length ? `<div class="alert-list">${alerts.map(alert => `<div class="alert-item"><span class="badge ${alert.severity}">${alert.severity === 'danger' ? 'Alta' : 'Media'}</span><div style="margin-top:8px">${alert.text}</div></div>`).join('')}</div>` : '<div class="subtle">Sin alertas para este registro.</div>'}
-            </div>
-          </div>
+          `).join('')}
         </div>
       `;
     }
 
-    function purchaseEntryView(purchase) {
-      const provider = getProvider(purchase.providerId);
-      const preset = getPreset(purchase.presetId);
-      const computed = computePurchase(purchase);
-      return `
-        <div class="stack">
-          <div class="card" style="padding:16px">
-            <div class="section-head"><h3>4. Comprobante contable automático</h3></div>
-            <table class="entry-table">
-              <thead><tr><th>Cuenta</th><th>Detalle</th><th>Débito</th><th>Crédito</th></tr></thead>
-              <tbody>
-                <tr><td>${preset?.accountExpense || 'Cuenta gasto'}</td><td>${purchase.concept}</td><td>${formatCOP(computed.base)}</td><td></td></tr>
-                <tr><td>${preset?.accountIva || 'IVA descontable'}</td><td>IVA compra ${provider?.name || ''}</td><td>${formatCOP(computed.ivaAmount)}</td><td></td></tr>
-                <tr><td>${preset?.accountPayable || 'Proveedores'}</td><td>${provider?.name || ''}</td><td></td><td>${formatCOP(computed.grossTotal)}</td></tr>
-                <tr><td>${preset?.accountWithholding || 'Retefuente'}</td><td>Retención practicada</td><td>${formatCOP(computed.retefuenteAmount)}</td><td></td></tr>
-                <tr><td>${preset?.accountReteiva || 'ReteIVA'}</td><td>Retención IVA</td><td>${formatCOP(computed.reteivaAmount)}</td><td></td></tr>
-                <tr><td>${preset?.accountReteica || 'ReteICA'}</td><td>Retención ICA</td><td>${formatCOP(computed.reteicaAmount)}</td><td></td></tr>
-              </tbody>
-            </table>
-            <p class="subtle" style="margin-top:12px">Ejemplo visual del asiento que podría generarse automáticamente. Aquí ves por qué este bloque le ahorra trabajo al contador.</p>
-          </div>
-          <div class="grid-2">
-            <div class="card" style="padding:16px">
-              <div class="section-head"><h3>6. Documento y soporte</h3></div>
-              <div class="totals-box">
-                <div class="totals-row"><span>Tipo</span><strong>${purchase.documentType}</strong></div>
-                <div class="totals-row"><span>Número</span><strong>${purchase.documentNumber || 'Pendiente'}</strong></div>
-                <div class="totals-row"><span>CUFE/CUDS</span><strong>${purchase.cufe || 'No aplica'}</strong></div>
-                <div class="totals-row"><span>Archivo</span><strong>${purchase.supplierSupport || 'Pendiente'}</strong></div>
-              </div>
-            </div>
-            <div class="card" style="padding:16px">
-              <div class="section-head"><h3>7. Clasificación</h3></div>
-              <div class="totals-box">
-                <div class="totals-row"><span>Fondo</span><strong>${purchase.fund || 'Pendiente'}</strong></div>
-                <div class="totals-row"><span>Centro de costo</span><strong>${purchase.costCenter || 'Pendiente'}</strong></div>
-                <div class="totals-row"><span>Tipo pago</span><strong>${purchase.paymentMethod || 'Pendiente'}</strong></div>
-                <div class="totals-row"><span>Cuenta</span><strong>${purchase.accountType || 'Pendiente'}</strong></div>
-                <div class="totals-row"><span>Categoría</span><strong>${purchase.category || 'Pendiente'}</strong></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
+    function moneyNumber(value){
+      const num = Number(value || 0);
+      return Number.isFinite(num) ? num : 0;
     }
 
-    function purchaseAuditView(purchase) {
-      const provider = getProvider(purchase.providerId);
-      return `
-        <div class="grid-2">
-          <div class="card" style="padding:16px">
-            <div class="section-head"><h3>9. Trazabilidad</h3></div>
-            <div class="totals-box">
-              <div class="totals-row"><span>Creó</span><strong>${purchase.createdBy || 'Pendiente'}</strong></div>
-              <div class="totals-row"><span>Aprobó</span><strong>${purchase.approvedBy || 'Pendiente'}</strong></div>
-              <div class="totals-row"><span>Pagó</span><strong>${purchase.paidBy || 'Pendiente'}</strong></div>
-              <div class="totals-row"><span>Recibió</span><strong>${purchase.receivedBy || 'Pendiente'}</strong></div>
-              <div class="totals-row"><span>Proveedor</span><strong>${provider?.name || 'Pendiente'}</strong></div>
-            </div>
-          </div>
-          <div class="card" style="padding:16px">
-            <div class="section-head"><h3>Historial de cambios</h3></div>
-            <div class="audit-list">
-              ${(purchase.auditTrail || []).map(entry => `
-                <div class="audit-item">
-                  <div class="split"><strong>${entry.action}</strong><span class="badge">${entry.user}</span></div>
-                  <div class="subtle">${entry.date}</div>
-                </div>
-              `).join('') || '<div class="subtle">Aún no hay movimientos.</div>'}
-            </div>
-          </div>
-        </div>
-      `;
+    function orderCostDifference(order){
+      return moneyNumber(order.purchase?.amount) - moneyNumber(order.estimatedTotal);
     }
 
-    function renderPurchaseDetail() {
-      const purchase = getSelectedPurchase();
-      const content = document.getElementById('purchaseContent');
-      if (!purchase) {
-        content.innerHTML = `
-          <div class="empty-state">
-            <strong>No hay un registro seleccionado.</strong>
-            <div class="subtle">Crea uno nuevo o selecciona un registro de la lista.</div>
-          </div>
-        `;
-        renderPurchaseModeTabs();
-        return;
-      }
-      if (uiState.purchaseMode === 'detalle') content.innerHTML = purchaseDetailForm(purchase);
-      if (uiState.purchaseMode === 'asiento') content.innerHTML = purchaseEntryView(purchase);
-      if (uiState.purchaseMode === 'auditoria') content.innerHTML = purchaseAuditView(purchase);
-      bindPurchaseDetailEvents();
-      renderPurchaseModeTabs();
+    function movementTypeBadge(type){
+      return type === 'ingreso'
+        ? '<span class="badge badge-ingreso">Ingreso</span>'
+        : '<span class="badge badge-gasto">Gasto</span>';
     }
 
-    function renderPurchaseModeTabs() {
-      const container = document.getElementById('purchaseModeTabs');
-      container.querySelectorAll('button').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === uiState.purchaseMode);
-        btn.onclick = () => {
-          uiState.purchaseMode = btn.dataset.mode;
-          renderPurchaseDetail();
-        };
-      });
+    function buildPaymentTypeOptions(selectedValue = ''){
+      const current = String(selectedValue || '');
+      return ['<option value="">Selecciona</option>']
+        .concat(paymentTypes.map(item => `<option value="${escapeHtml(item)}" ${current === item ? 'selected' : ''}>${escapeHtml(item)}</option>`))
+        .join('');
     }
 
-    function bindPurchaseDetailEvents() {
-      const purchase = getSelectedPurchase();
-      if (!purchase) return;
-      const detailRoot = document.getElementById('purchaseContent');
-      detailRoot.querySelectorAll('[data-field]').forEach(input => {
-        input.addEventListener('input', () => {
-          purchase[input.dataset.field] = input.value;
-          if (input.dataset.field === 'providerId') {
-            const provider = getProvider(purchase.providerId);
-            if (provider) purchase.category = purchase.category || 'General';
-          }
-        });
-      });
-      detailRoot.querySelectorAll('[data-number]').forEach(input => {
-        input.addEventListener('input', () => {
-          purchase[input.dataset.number] = parseFloat(input.value) || 0;
-          renderPurchaseDetail();
-        });
-      });
-      detailRoot.querySelectorAll('[data-money]').forEach(input => {
-        input.addEventListener('input', () => {
-          const numeric = parseNumber(input.value);
-          purchase[input.dataset.money] = numeric;
-          input.value = numeric ? formatCOP(numeric) : '';
-          renderPurchaseDetail();
-        });
-      });
-      const presetSelect = detailRoot.querySelector('[data-field="presetId"]');
-      if (presetSelect) {
-        presetSelect.addEventListener('change', () => {
-          applyPresetToPurchase(purchase, presetSelect.value, true);
-          renderAll();
-        });
-      }
+    function buildPaymentSourceOptions(selectedValue = ''){
+      const current = String(selectedValue || '');
+      return ['<option value="">Selecciona</option>']
+        .concat(paymentSources.map(item => `<option value="${escapeHtml(item)}" ${current === item ? 'selected' : ''}>${escapeHtml(item)}</option>`))
+        .join('');
     }
 
-    function applyPresetToPurchase(purchase, presetId, addAudit = false) {
-      const preset = getPreset(presetId);
-      if (!preset) return;
-      purchase.presetId = preset.id;
-      purchase.category = preset.category;
-      purchase.ivaRate = preset.ivaRate;
-      purchase.retefuenteRate = preset.retefuenteRate;
-      purchase.reteivaRate = preset.reteivaRate;
-      purchase.reteicaRate = preset.reteicaRate;
-      if (addAudit) {
-        purchase.auditTrail = purchase.auditTrail || [];
-        purchase.auditTrail.unshift({
-          date: currentTimestamp(),
-          action: `Aplicó preset ${preset.name}`,
-          user: 'Usuario local'
-        });
-      }
+    function buildRelatedOrderOptions(selectedValue = ''){
+      const current = String(selectedValue || '');
+      return ['<option value="">Sin relación</option>']
+        .concat(state.data.orders.map(order => `<option value="${order.id}" ${current === order.id ? 'selected' : ''}>${escapeHtml(order.code)} · ${escapeHtml(order.supplier || 'Sin proveedor')}</option>`))
+        .join('');
     }
 
-    function renderProviders() {
-      const list = document.getElementById('providerList');
-      if (!appState.providers.length) {
-        list.innerHTML = `
-          <div class="empty-state">
-            <strong>No hay proveedores creados.</strong>
-            <div class="subtle">Agrega uno nuevo para vincularlo a las compras.</div>
-          </div>
-        `;
-      } else {
-        list.innerHTML = appState.providers.map(provider => `
-          <div class="provider-item ${provider.id === uiState.selectedProviderId ? 'active' : ''}" data-provider-id="${provider.id}" style="cursor:pointer">
-            <div class="split"><strong>${provider.name}</strong><span class="badge">${provider.nit || 'Sin NIT'}</span></div>
-            <div class="subtle">${provider.type} · ${provider.municipality}</div>
-            <div class="badge-row">
-              <span class="badge ${provider.invoiceObligated ? 'ok' : 'warn'}">${provider.invoiceObligated ? 'Factura' : 'No factura'}</span>
-              <span class="badge ${provider.ivaResponsible ? 'ok' : 'warn'}">${provider.ivaResponsible ? 'Responsable IVA' : 'No responsable IVA'}</span>
-            </div>
-          </div>
-        `).join('');
-        list.querySelectorAll('[data-provider-id]').forEach(item => {
-          item.addEventListener('click', () => {
-            uiState.selectedProviderId = item.dataset.providerId;
-            renderProviders();
-          });
-        });
-      }
+    function buildAccountingRows(){
+      const automaticRows = state.data.orders
+        .filter(order => moneyNumber(order.purchase?.amount) > 0)
+        .map(order => ({
+          id: `auto_${order.id}`,
+          sourceType: 'order',
+          sourceId: order.id,
+          isAuto: true,
+          type: 'gasto',
+          category: 'Compra de materiales',
+          movementDate: order.purchase?.purchaseDate || order.purchase?.createdAt || order.orderDate || order.createdAt,
+          amount: moneyNumber(order.purchase?.amount),
+          sourceName: order.supplier || 'Proveedor',
+          concept: `${order.code} · ${orderProductSummary(order)}`,
+          paymentType: order.purchase?.paymentType || '',
+          paymentSource: order.purchase?.paymentSource || '',
+          notes: order.purchase?.notes || '',
+          createdAt: order.purchase?.createdAt || order.createdAt,
+          relatedOrderId: order.id,
+          supportData: order.purchase?.receiptData || '',
+          supportName: order.purchase?.receiptName || '',
+          hasReceipt: !!order.purchase?.receiptData,
+          hasRemission: !!order.reception?.remissionData,
+          logisticsStatus: order.status
+        }));
 
-      const provider = getProvider(uiState.selectedProviderId) || appState.providers[0] || null;
-      if (!provider && uiState.selectedProviderId) uiState.selectedProviderId = null;
-      const detail = document.getElementById('providerDetail');
-      if (!provider) {
-        detail.innerHTML = `
-          <div class="empty-state">
-            <strong>No hay proveedor seleccionado.</strong>
-            <div class="subtle">Usa “Nuevo proveedor” para empezar.</div>
-          </div>
-        `;
-        return;
-      }
-      detail.innerHTML = `
-        <div class="form-grid" id="providerForm">
-          <div class="field two"><label>Razón social</label><input data-provider-field="name" value="${provider.name}" /></div>
-          <div class="field"><label>NIT</label><input data-provider-field="nit" value="${provider.nit || ''}" /></div>
-          <div class="field"><label>Tipo de tercero</label>
-            <select data-provider-field="type">
-              ${['Persona jurídica','Persona natural'].map(type => `<option value="${type}" ${provider.type === type ? 'selected' : ''}>${type}</option>`).join('')}
-            </select>
-          </div>
-          <div class="field"><label>Obligado a facturar</label>
-            <select data-provider-bool="invoiceObligated">
-              <option value="true" ${provider.invoiceObligated ? 'selected' : ''}>Sí</option>
-              <option value="false" ${!provider.invoiceObligated ? 'selected' : ''}>No</option>
-            </select>
-          </div>
-          <div class="field"><label>Responsable IVA</label>
-            <select data-provider-bool="ivaResponsible">
-              <option value="true" ${provider.ivaResponsible ? 'selected' : ''}>Sí</option>
-              <option value="false" ${!provider.ivaResponsible ? 'selected' : ''}>No</option>
-            </select>
-          </div>
-          <div class="field"><label>Autorretenedor</label>
-            <select data-provider-bool="autoretenedor">
-              <option value="true" ${provider.autoretenedor ? 'selected' : ''}>Sí</option>
-              <option value="false" ${!provider.autoretenedor ? 'selected' : ''}>No</option>
-            </select>
-          </div>
-          <div class="field"><label>Agente reteIVA</label>
-            <select data-provider-bool="reteivaAgent">
-              <option value="true" ${provider.reteivaAgent ? 'selected' : ''}>Sí</option>
-              <option value="false" ${!provider.reteivaAgent ? 'selected' : ''}>No</option>
-            </select>
-          </div>
-          <div class="field"><label>Municipio ICA</label><input data-provider-field="municipality" value="${provider.municipality || ''}" /></div>
-          <div class="field"><label>Correo</label><input data-provider-field="email" value="${provider.email || ''}" /></div>
-          <div class="field"><label>Teléfono</label><input data-provider-field="phone" value="${provider.phone || ''}" /></div>
-          <div class="field full"><label>Observaciones</label><textarea data-provider-field="comments">${provider.comments || ''}</textarea></div>
-        </div>
-      `;
-      detail.querySelectorAll('[data-provider-field]').forEach(input => {
-        input.addEventListener('input', () => {
-          provider[input.dataset.providerField] = input.value;
-        });
-      });
-      detail.querySelectorAll('[data-provider-bool]').forEach(select => {
-        select.addEventListener('change', () => {
-          provider[select.dataset.providerBool] = select.value === 'true';
-        });
-      });
-    }
-
-    function renderPresets() {
-      const list = document.getElementById('presetList');
-      list.innerHTML = appState.presets.map(preset => `
-        <div class="param-item" data-preset-id="${preset.id}" style="cursor:pointer; border-color:${preset.id === uiState.selectedPresetId ? '#2f9e68' : 'var(--border)'}">
-          <div class="split"><strong>${preset.name}</strong><span class="badge">${preset.category}</span></div>
-          <div class="subtle">IVA ${preset.ivaRate}% · RF ${preset.retefuenteRate}% · RIVA ${preset.reteivaRate}% · RICA ${preset.reteicaRate}%</div>
-        </div>
-      `).join('');
-      list.querySelectorAll('[data-preset-id]').forEach(item => {
-        item.addEventListener('click', () => {
-          uiState.selectedPresetId = item.dataset.presetId;
-          renderPresets();
-        });
-      });
-      const preset = getPreset(uiState.selectedPresetId) || appState.presets[0];
-      const detail = document.getElementById('presetDetail');
-      detail.innerHTML = `
-        <div class="form-grid" id="presetForm">
-          <div class="field two"><label>Nombre</label><input data-preset-field="name" value="${preset.name}" /></div>
-          <div class="field"><label>Categoría</label><input data-preset-field="category" value="${preset.category || ''}" /></div>
-          <div class="field"><label>IVA %</label><input data-preset-number="ivaRate" value="${preset.ivaRate}" /></div>
-          <div class="field"><label>ReteFuente %</label><input data-preset-number="retefuenteRate" value="${preset.retefuenteRate}" /></div>
-          <div class="field"><label>ReteIVA %</label><input data-preset-number="reteivaRate" value="${preset.reteivaRate}" /></div>
-          <div class="field"><label>ReteICA %</label><input data-preset-number="reteicaRate" value="${preset.reteicaRate}" /></div>
-          <div class="field"><label>Cuenta gasto</label><input data-preset-field="accountExpense" value="${preset.accountExpense || ''}" /></div>
-          <div class="field"><label>Cuenta IVA</label><input data-preset-field="accountIva" value="${preset.accountIva || ''}" /></div>
-          <div class="field"><label>Cuenta proveedores</label><input data-preset-field="accountPayable" value="${preset.accountPayable || ''}" /></div>
-          <div class="field"><label>Cuenta retefuente</label><input data-preset-field="accountWithholding" value="${preset.accountWithholding || ''}" /></div>
-          <div class="field"><label>Cuenta reteIVA</label><input data-preset-field="accountReteiva" value="${preset.accountReteiva || ''}" /></div>
-          <div class="field"><label>Cuenta reteICA</label><input data-preset-field="accountReteica" value="${preset.accountReteica || ''}" /></div>
-          <div class="field full"><label>Notas</label><textarea data-preset-field="notes">${preset.notes || ''}</textarea></div>
-        </div>
-      `;
-      detail.querySelectorAll('[data-preset-field]').forEach(input => {
-        input.addEventListener('input', () => {
-          preset[input.dataset.presetField] = input.value;
-        });
-      });
-      detail.querySelectorAll('[data-preset-number]').forEach(input => {
-        input.addEventListener('input', () => {
-          preset[input.dataset.presetNumber] = parseFloat(input.value) || 0;
-        });
-      });
-    }
-
-    function renderReports() {
-      const { purchases, totals } = computeTotals();
-      document.getElementById('reportCards').innerHTML = `
-        <div class="card"><div class="metric-title">Compras del periodo</div><div class="metric-value">${formatCOP(totals.gross)}</div><div class="metric-note">Total bruto facturado.</div></div>
-        <div class="card"><div class="metric-title">IVA descontable</div><div class="metric-value">${formatCOP(totals.iva)}</div><div class="metric-note">Para revisión con el contador.</div></div>
-        <div class="card"><div class="metric-title">Retenciones</div><div class="metric-value">${formatCOP(totals.retefuente + totals.reteiva + totals.reteica)}</div><div class="metric-note">Suma de todas las retenciones de ejemplo.</div></div>
-      `;
-      const bySupplier = Object.entries(groupBy(purchases, row => row.provider?.name || 'Sin proveedor')).map(([name, rows]) => ({
-        name,
-        gross: rows.reduce((sum, row) => sum + row.computed.grossTotal, 0),
-        net: rows.reduce((sum, row) => sum + row.computed.netPayable, 0),
-        count: rows.length
+      const manualRows = state.data.accountingEntries.map(entry => ({
+        id: `manual_${entry.id}`,
+        sourceType: 'manual',
+        sourceId: entry.id,
+        isAuto: false,
+        type: entry.type,
+        category: entry.category,
+        movementDate: entry.movementDate,
+        amount: moneyNumber(entry.amount),
+        sourceName: entry.sourceName,
+        concept: entry.concept,
+        paymentType: entry.paymentType || '',
+        paymentSource: entry.paymentSource || '',
+        notes: entry.notes || '',
+        createdAt: entry.createdAt,
+        relatedOrderId: entry.relatedOrderId || '',
+        supportData: entry.supportData || '',
+        supportName: entry.supportName || '',
+        hasReceipt: !!entry.supportData,
+        hasRemission: false,
+        logisticsStatus: entry.relatedOrderId ? (findOrder(entry.relatedOrderId)?.status || '') : ''
       }));
-      document.getElementById('reportBySupplier').innerHTML = bySupplier.map(item => `
-        <div class="report-item">
-          <div class="split"><strong>${item.name}</strong><strong>${formatCOP(item.net)}</strong></div>
-          <div class="subtle">${item.count} compra(s) · bruto ${formatCOP(item.gross)}</div>
-        </div>
-      `).join('');
-      const byFund = Object.entries(groupBy(purchases, row => `${row.item.fund} · ${row.item.costCenter}`)).map(([name, rows]) => ({
-        name,
-        net: rows.reduce((sum, row) => sum + row.computed.netPayable, 0)
-      }));
-      document.getElementById('reportByFund').innerHTML = byFund.map(item => `
-        <div class="report-item">
-          <div class="split"><strong>${item.name}</strong><strong>${formatCOP(item.net)}</strong></div>
-        </div>
-      `).join('');
-      document.getElementById('reportMonthlyTable').innerHTML = `
-        <table>
-          <thead><tr><th>Código</th><th>Proveedor</th><th>Documento</th><th>Base</th><th>IVA</th><th>Retenciones</th><th>Neto</th><th>Estado</th></tr></thead>
-          <tbody>
-            ${purchases.map(row => `
-              <tr>
-                <td>${row.item.code}</td>
-                <td>${row.provider?.name || 'Sin proveedor'}</td>
-                <td>${row.item.documentType}<br><span class="subtle">${row.item.documentNumber || 'Sin número'}</span></td>
-                <td>${formatCOP(row.computed.base)}</td>
-                <td>${formatCOP(row.computed.ivaAmount)}</td>
-                <td>${formatCOP(row.computed.totalRetentions)}</td>
-                <td>${formatCOP(row.computed.netPayable)}</td>
-                <td>${row.item.paymentStatus}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
+
+      return [...automaticRows, ...manualRows].sort((a, b) => {
+        const dateA = new Date(a.movementDate || a.createdAt || 0).getTime();
+        const dateB = new Date(b.movementDate || b.createdAt || 0).getTime();
+        return dateB - dateA;
+      });
     }
 
-    function renderAlertsAudit() {
-      const alerts = getAllAlerts();
-      document.getElementById('alertsFull').innerHTML = alerts.length ? alerts.map(alert => `
-        <div class="alert-item">
-          <div class="split"><strong>${alert.code}</strong><span class="badge ${alert.severity}">${alert.severity === 'danger' ? 'Alta' : 'Media'}</span></div>
-          <div class="subtle">${alert.concept} · ${alert.provider}</div>
-          <div style="margin-top:6px">${alert.text}</div>
-        </div>
-      `).join('') : '<div class="subtle">No hay alertas.</div>';
-
-      const audit = getAllAudit();
-      document.getElementById('auditFull').innerHTML = audit.length ? audit.map(entry => `
-        <div class="audit-item">
-          <div class="split"><strong>${entry.purchaseCode}</strong><span class="badge">${entry.user}</span></div>
-          <div>${entry.action}</div>
-          <div class="subtle">${entry.date} · ${entry.concept}</div>
-        </div>
-      `).join('') : '<div class="subtle">No hay auditoría.</div>';
+    function statusAccountingText(order){
+      if(!order.purchase?.amount) return 'Sin compra registrada';
+      if(order.status === 'recibido') return 'Cerrado con recibido';
+      if(order.status === 'comprado') return 'Comprado pendiente de recibir';
+      return 'Pendiente de compra';
     }
 
-    function createNewProvider() {
-      const item = {
-        id: 'prov-' + Math.random().toString(36).slice(2, 8),
-        name: 'Nuevo proveedor',
-        nit: '',
-        type: 'Persona jurídica',
-        invoiceObligated: true,
-        ivaResponsible: true,
-        autoretenedor: false,
-        reteivaAgent: false,
-        municipality: 'Bogotá D.C.',
-        email: '',
-        phone: '',
-        comments: ''
+    function statusLabel(status){
+      const map = {
+        pendiente_compra: { text: 'Pendiente de compra', cls: 'badge-pendiente' },
+        comprado: { text: 'Comprado', cls: 'badge-comprado' },
+        recibido: { text: 'Recibido', cls: 'badge-recibido' }
       };
-      appState.providers.unshift(item);
-      uiState.selectedProviderId = item.id;
-      persistState();
-      renderProviders();
-      renderPurchaseDetail();
+      return map[status] || map.pendiente_compra;
     }
 
-    function deleteSelectedPurchase() {
-      const purchase = getSelectedPurchase();
-      if (!purchase) {
-        alert('No hay registro seleccionado para eliminar.');
+    function getSessionUser(){
+      if(!state.session) return null;
+      return state.data.users.find(u => u.id === state.session.userId) || null;
+    }
+
+    function showToast(message){
+      alert(message);
+    }
+
+    function showApp(){
+      const user = getSessionUser();
+      if(!user){
+        state.session = null;
+        saveSession();
+        loginView.classList.remove('hidden');
+        appView.classList.add('hidden');
         return;
       }
-      if (!confirm(`¿Eliminar el registro ${purchase.code}?`)) return;
-      const index = appState.purchases.findIndex(item => item.id === purchase.id);
-      if (index === -1) return;
-      appState.purchases.splice(index, 1);
-      uiState.selectedPurchaseId = appState.purchases[0]?.id || null;
-      persistState();
+
+      loginView.classList.add('hidden');
+      appView.classList.remove('hidden');
+
+      document.getElementById('userInitial').textContent = user.name.charAt(0).toUpperCase();
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userRole').textContent = 'Rol: ' + user.role;
+
+      buildNav(user.role);
       renderAll();
     }
 
-    function deleteSelectedProvider() {
-      const provider = getProvider(uiState.selectedProviderId);
-      if (!provider) {
-        alert('No hay proveedor seleccionado para eliminar.');
-        return;
+    function buildNav(role){
+      const tabs = TABS_BY_ROLE[role] || [];
+      navTabs.style.setProperty('--mobile-nav-cols', String(Math.min(3, Math.max(1, tabs.length))));
+      navTabs.innerHTML = tabs.map(tab => `
+        <button class="tab-btn ${state.activeTab === tab.id ? 'active' : ''}" data-tab="${tab.id}" aria-label="${tab.label}">
+          <span class="tab-icon">${TAB_ICONS[tab.id] || '•'}</span>
+          <span class="tab-label">${tab.label}</span>
+        </button>
+      `).join('');
+
+      if(!tabs.some(t => t.id === state.activeTab)){
+        state.activeTab = tabs[0]?.id || null;
       }
-      const linked = appState.purchases.filter(item => item.providerId === provider.id);
-      if (linked.length && appState.providers.length === 1) {
-        alert('No puedes eliminar el único proveedor mientras existan compras asociadas.');
-        return;
+      renderTabs();
+
+      navTabs.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeTab = btn.dataset.tab;
+          renderTabs();
+          buildNav(role);
+        });
+      });
+    }
+
+    function renderTabs(){
+      document.querySelectorAll('.tab-content').forEach(section => section.classList.add('hidden'));
+      if(state.activeTab){
+        const target = document.getElementById(`tab-${state.activeTab}`);
+        if(target) target.classList.remove('hidden');
       }
-      let fallbackProviderId = null;
-      if (linked.length) {
-        const fallback = appState.providers.find(item => item.id !== provider.id);
-        if (!fallback) {
-          alert('Crea otro proveedor antes de eliminar este registro.');
+    }
+
+    function buildMeasureOptions(selectedValue = ''){
+      const current = String(selectedValue || '');
+      return ['<option value="">Selecciona</option>']
+        .concat(measureUnits.map(unit => `<option value="${escapeHtml(unit)}" ${current === unit ? 'selected' : ''}>${escapeHtml(unit)}</option>`))
+        .join('');
+    }
+
+    function addItemRow(item = {}){
+      const index = itemsContainer.children.length + 1;
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.innerHTML = `
+        <div class="item-card-head">
+          <strong>Producto ${index}</strong>
+          <button type="button" class="btn btn-secondary btn-sm remove-item">Eliminar</button>
+        </div>
+        <div class="item-row">
+          <div class="field">
+            <label>Nombre del producto</label>
+            <input class="input" name="itemName" placeholder="Ej. Cemento gris, malla, puntilla..." value="${escapeHtml(item.name || '')}" required />
+          </div>
+          <div class="field">
+            <label>Cantidad</label>
+            <input class="input" name="itemQty" type="number" min="0" step="0.01" placeholder="Cantidad" value="${item.qty || ''}" required />
+          </div>
+          <div class="field">
+            <label>Unidad</label>
+            <select name="itemUnit">
+              ${buildMeasureOptions(item.unit || '')}
+            </select>
+          </div>
+          <div class="field">
+            <label>Valor estimado</label>
+            <input class="input" name="itemAmount" type="number" min="0" step="0.01" placeholder="0" value="${item.amount || ''}" />
+          </div>
+        </div>
+        <div class="item-row-2">
+          <div class="field">
+            <label>Detalle del producto</label>
+            <textarea name="itemDetails" placeholder="Marca, color, medida, calibre, uso o cualquier referencia útil">${escapeHtml(item.details || '')}</textarea>
+          </div>
+          <div class="field">
+            <label>Imagen de referencia</label>
+            <input class="input" name="itemImage" type="file" accept="image/*" />
+            
+            <div class="item-image-preview" style="margin-top:10px;">
+              ${item.imageData ? `<img src="${item.imageData}" alt="Referencia" class="thumb-mini clickable-image" data-title="Referencia de producto" style="width:92px;height:92px;border-radius:16px;" />` : '<span class="muted">Sin imagen cargada.</span>'}
+            </div>
+          </div>
+        </div>
+      `;
+      const removeBtn = card.querySelector('.remove-item');
+      removeBtn.addEventListener('click', () => {
+        if(itemsContainer.children.length > 1){
+          card.remove();
+          refreshItemHeaders();
+        } else {
+          card.querySelectorAll('input').forEach(input => {
+            if(input.type === 'file') input.value = '';
+            else input.value = '';
+          });
+          card.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+          const preview = card.querySelector('.item-image-preview');
+          preview.innerHTML = '<span class="muted">Sin imagen cargada.</span>';
+        }
+      });
+
+      const fileInput = card.querySelector('[name="itemImage"]');
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files[0];
+        const preview = card.querySelector('.item-image-preview');
+        if(!file){
+          preview.innerHTML = '<span class="muted">Sin imagen cargada.</span>';
           return;
         }
-        if (!confirm(`El proveedor está asociado a ${linked.length} compra(s). ¿Deseas eliminarlo y mover esas compras a ${fallback.name}?`)) return;
-        fallbackProviderId = fallback.id;
-      } else if (!confirm(`¿Eliminar el proveedor ${provider.name}?`)) {
-        return;
-      }
-      appState.providers = appState.providers.filter(item => item.id !== provider.id);
-      if (fallbackProviderId) {
-        appState.purchases.forEach(item => {
-          if (item.providerId === provider.id) item.providerId = fallbackProviderId;
-        });
-      } else {
-        appState.purchases.forEach(item => {
-          if (item.providerId === provider.id) item.providerId = '';
-        });
-      }
-      uiState.selectedProviderId = appState.providers[0]?.id || null;
-      persistState();
-      renderAll();
-    }
-
-    function exportReportsToExcel() {
-      const { purchases, totals } = computeTotals();
-      const supplierRows = Object.entries(groupBy(purchases, row => row.provider?.name || 'Sin proveedor')).map(([name, rows]) => ({
-        proveedor: name,
-        compras: rows.length,
-        bruto: rows.reduce((sum, row) => sum + row.computed.grossTotal, 0),
-        neto: rows.reduce((sum, row) => sum + row.computed.netPayable, 0)
-      }));
-      const fundRows = Object.entries(groupBy(purchases, row => `${row.item.fund} · ${row.item.costCenter}`)).map(([name, rows]) => ({
-        fondo: name,
-        neto: rows.reduce((sum, row) => sum + row.computed.netPayable, 0)
-      }));
-      const alertRows = getAllAlerts().map(alert => ({
-        codigo: alert.code,
-        proveedor: alert.provider,
-        severidad: alert.severity,
-        alerta: alert.text
-      }));
-      const sheets = [
-        { name: 'Resumen', headers: ['Indicador', 'Valor'], rows: [
-          ['Compras registradas', totals.purchases],
-          ['Total bruto', totals.gross],
-          ['IVA descontable', totals.iva],
-          ['ReteFuente', totals.retefuente],
-          ['ReteIVA', totals.reteiva],
-          ['ReteICA', totals.reteica],
-          ['Total neto', totals.net],
-          ['Pagado', totals.paid],
-          ['Saldo pendiente', totals.balance]
-        ]},
-        { name: 'Compras', headers: ['Código','Concepto','Proveedor','Documento','Número','Base','IVA','ReteFuente','ReteIVA','ReteICA','Neto','Estado de pago','Fondo','Centro de costo'], rows: purchases.map(row => [
-          row.item.code, row.item.concept, row.provider?.name || 'Sin proveedor', row.item.documentType, row.item.documentNumber || '', row.computed.base, row.computed.ivaAmount, row.computed.retefuenteAmount, row.computed.reteivaAmount, row.computed.reteicaAmount, row.computed.netPayable, row.item.paymentStatus, row.item.fund, row.item.costCenter
-        ])},
-        { name: 'Por proveedor', headers: ['Proveedor','Compras','Total bruto','Total neto'], rows: supplierRows.map(item => [item.proveedor, item.compras, item.bruto, item.neto])},
-        { name: 'Por fondo', headers: ['Fondo / Centro','Total neto'], rows: fundRows.map(item => [item.fondo, item.neto])},
-        { name: 'Alertas', headers: ['Código','Proveedor','Severidad','Alerta'], rows: alertRows.map(item => [item.codigo, item.proveedor, item.severidad, item.alerta])}
-      ];
-      const workbookXml = buildExcelWorkbook(sheets);
-      const blob = new Blob([workbookXml], { type: 'application/vnd.ms-excel' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.href = url;
-      link.download = 'reportes_contables_demo.xls';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function buildExcelWorkbook(sheets) {
-      const xmlEscape = value => String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&apos;');
-      const cellXml = value => {
-        if (typeof value === 'number' && Number.isFinite(value)) {
-          return `<Cell><Data ss:Type="Number">${value}</Data></Cell>`;
+        if(file.size > 1.5 * 1024 * 1024){
+          showToast('La imagen del producto es muy pesada. Usa una de máximo 1.5 MB.');
+          fileInput.value = '';
+          preview.innerHTML = '<span class="muted">Sin imagen cargada.</span>';
+          return;
         }
-        return `<Cell><Data ss:Type="String">${xmlEscape(value)}</Data></Cell>`;
+        const dataUrl = await fileToDataUrl(file);
+        preview.innerHTML = `<img src="${dataUrl}" alt="Referencia" class="thumb-mini clickable-image" data-title="Referencia de producto" style="width:92px;height:92px;border-radius:16px;" />`;
+      });
+
+      itemsContainer.appendChild(card);
+      refreshItemHeaders();
+    }
+
+    function refreshItemHeaders(){
+      [...itemsContainer.querySelectorAll('.item-card')].forEach((card, index) => {
+        const title = card.querySelector('.item-card-head strong');
+        if(title) title.textContent = `Producto ${index + 1}`;
+      });
+    }
+
+    async function collectItems(){
+      const cards = [...itemsContainer.querySelectorAll('.item-card')];
+      const items = [];
+      for(const card of cards){
+        const fileInput = card.querySelector('[name="itemImage"]');
+        const existingPreviewImg = card.querySelector('.item-image-preview img');
+        let imageData = existingPreviewImg?.src || '';
+        let imageName = '';
+        const file = fileInput.files[0];
+        if(file){
+          if(file.size > 1.5 * 1024 * 1024){
+            throw new Error('La imagen del producto es muy pesada. Usa una de máximo 1.5 MB.');
+          }
+          imageData = await fileToDataUrl(file);
+          imageName = file.name;
+        }
+        const item = {
+          name: card.querySelector('[name="itemName"]').value.trim(),
+          qty: Number(card.querySelector('[name="itemQty"]').value || 0),
+          unit: card.querySelector('[name="itemUnit"]').value.trim(),
+          amount: Number(card.querySelector('[name="itemAmount"]').value || 0),
+          details: card.querySelector('[name="itemDetails"]').value.trim(),
+          imageData,
+          imageName
+        };
+        if(item.name && item.qty > 0){
+          items.push(item);
+        }
+      }
+      return items;
+    }
+
+    function nextOrderCode(){
+      const year = new Date().getFullYear();
+      const count = state.data.orders.length + 1;
+      return `PED-${year}-${String(count).padStart(4,'0')}`;
+    }
+
+    function createOrder(payload){
+      const user = getSessionUser();
+      const newOrder = {
+        id: crypto.randomUUID(),
+        code: nextOrderCode(),
+        supplier: payload.supplier,
+        orderDate: payload.orderDate || '',
+        estimatedTotal: Number(payload.estimatedTotal || 0),
+        requester: payload.requester || '',
+        priority: payload.priority || '',
+        requiredDate: payload.requiredDate || '',
+        reference: payload.reference || '',
+        notes: payload.notes || '',
+        items: payload.items,
+        status: 'pendiente_compra',
+        createdAt: new Date().toISOString(),
+        createdBy: user?.name || 'Sistema',
+        purchase: null,
+        reception: null
       };
-      const worksheetXml = sheets.map(sheet => `
-        <Worksheet ss:Name="${xmlEscape(sheet.name)}">
-          <Table>
-            <Row>${sheet.headers.map(header => cellXml(header)).join('')}</Row>
-            ${sheet.rows.map(row => `<Row>${row.map(value => cellXml(value)).join('')}</Row>`).join('')}
-          </Table>
-        </Worksheet>
-      `).join('');
-      return `<?xml version="1.0"?>
-        <?mso-application progid="Excel.Sheet"?>
-        <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
-          xmlns:o="urn:schemas-microsoft-com:office:office"
-          xmlns:x="urn:schemas-microsoft-com:office:excel"
-          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
-          xmlns:html="http://www.w3.org/TR/REC-html40">
-          <Styles>
-            <Style ss:ID="Default" ss:Name="Normal">
-              <Alignment ss:Vertical="Bottom"/>
-              <Borders/>
-              <Font/>
-              <Interior/>
-              <NumberFormat/>
-              <Protection/>
-            </Style>
-          </Styles>
-          ${worksheetXml}
-        </Workbook>`;
+      state.data.orders.unshift(newOrder);
+      saveData();
+      renderAll();
+      return newOrder;
     }
 
-    function currentTimestamp() {
-      const now = new Date();
-      const pad = value => String(value).padStart(2, '0');
-      return `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    function renderAll(){
+      renderSummary();
+      renderAccounting();
+      renderPurchases();
+      renderReception();
+      renderHistory();
+      enhanceResponsiveTables();
     }
 
-    function createNewPurchase() {
-      const provider = appState.providers[0];
-      const preset = appState.presets[0];
-      if (!provider) {
-        alert('Primero crea un proveedor para asociar el registro.');
-        uiState.activeTab = 'proveedores';
+    function enhanceResponsiveTables(){
+      document.querySelectorAll('.table-wrap table').forEach(table => {
+        const headers = [...table.querySelectorAll('thead th')].map(th => th.textContent.trim());
+        table.querySelectorAll('tbody tr').forEach(row => {
+          [...row.children].forEach((cell, index) => {
+            if(cell.tagName === 'TD'){
+              cell.setAttribute('data-label', headers[index] || 'Dato');
+            }
+          });
+        });
+      });
+    }
+
+    function renderSummary(){
+      const orders = state.data.orders;
+      const pending = orders.filter(o => o.status === 'pendiente_compra').length;
+      const bought = orders.filter(o => o.status === 'comprado').length;
+      const received = orders.filter(o => o.status === 'recibido').length;
+      const totalValue = orders.reduce((acc, order) => acc + Number(order.purchase?.amount || 0), 0);
+
+      const kpiPendientes = document.getElementById('kpiPendientes');
+      const kpiComprados = document.getElementById('kpiComprados');
+      const kpiRecibidos = document.getElementById('kpiRecibidos');
+      const kpiValor = document.getElementById('kpiValor');
+      if(kpiPendientes){
+        kpiPendientes.textContent = pending;
+        kpiComprados.textContent = bought;
+        kpiRecibidos.textContent = received;
+        kpiValor.textContent = formatCurrency(totalValue);
+      }
+
+      const summaryList = document.getElementById('summaryList');
+      if(!summaryList) return;
+
+      summaryList.innerHTML = buildTable(
+        ['Pedido', 'Productos solicitados', 'Detalle del pedido', 'Compra', 'Recibo compra', 'Recibido / remisión', 'Acciones'],
+        orders.map(order => {
+          const badge = statusLabel(order.status);
+          const purchaseInfo = order.purchase
+            ? `${formatDate(order.purchase.purchaseDate, true)}<br><span class="muted">${formatCurrency(order.purchase.amount)} · ${escapeHtml(order.purchase.paymentType || '—')}</span><br><span class="muted">${escapeHtml(order.purchase.paymentSource || '—')}</span>`
+            : '<span class="muted">Aún no registrada</span>';
+          const receptionInfo = order.reception
+            ? `${formatDate(order.reception.receivedDate, true)}<br><span class="muted">${escapeHtml(order.reception.condition || '—')}</span><br><span class="muted">${escapeHtml(order.reception.receiverName || '—')}</span>`
+            : '<span class="muted">Aún no confirmado</span>';
+          const receiptButtons = `
+            <div class="table-actions">
+              ${order.purchase?.receiptData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','purchase')">Ver recibo</button>` : '<span class="muted">Sin recibo</span>'}
+            </div>`;
+          const remissionButtons = `
+            <div class="table-actions">
+              ${order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','reception')">Ver remisión</button>` : '<span class="muted">Sin remisión</span>'}
+            </div>`;
+          return `
+            <tr>
+              <td>
+                <strong>${order.code}</strong><br>
+                <span class="muted">${escapeHtml(order.supplier)}</span><br>
+                <span class="badge ${badge.cls}" style="margin-top:8px;">${badge.text}</span>
+              </td>
+              <td>${renderOrderItemsSummary(order.items)}</td>
+              <td>
+                <strong>Fecha pedido:</strong> ${formatDate(order.orderDate || order.createdAt)}<br>
+                <strong>Total estimado:</strong> ${formatCurrency(order.estimatedTotal)}
+              </td>
+              <td>${purchaseInfo}</td>
+              <td>${receiptButtons}</td>
+              <td>
+                ${receptionInfo}
+                <div style="margin-top:8px;">${remissionButtons}</div>
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                  ${order.purchase?.receiptData && order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openCompareModal('${order.id}')">Comparar soportes</button>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+    }
+
+    function buildTable(columns, rows){
+      if(!rows.length){
+        return `<div class="empty">No hay registros para mostrar.</div>`;
+      }
+      return `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>${columns.map(col => `<th>${col}</th>`).join('')}</tr>
+            </thead>
+            <tbody>${rows.join('')}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function setAccountingView(view){
+      state.accountingView = view === 'ledger' ? 'ledger' : 'reconciliation';
+      updateAccountingView();
+    }
+
+    function updateAccountingView(){
+      const reconciliationSection = document.getElementById('accountingReconciliationSection');
+      const ledgerSection = document.getElementById('accountingLedgerSection');
+      document.querySelectorAll('[data-accounting-view]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.accountingView === state.accountingView);
+      });
+      reconciliationSection?.classList.toggle('hidden', state.accountingView !== 'reconciliation');
+      ledgerSection?.classList.toggle('hidden', state.accountingView !== 'ledger');
+    }
+
+    function renderAccounting(){
+      const statsWrap = document.getElementById('accountingStats');
+      const highlightsWrap = document.getElementById('accountingHighlights');
+      const noteWrap = document.getElementById('accountingNote');
+      const reconciliationWrap = document.getElementById('accountingReconciliation');
+      const ledgerWrap = document.getElementById('accountingLedger');
+      const relatedOrderSelect = document.getElementById('accountingRelatedOrder');
+      const paymentTypeSelect = accountingForm?.querySelector('[name="paymentType"]');
+      const paymentSourceSelect = accountingForm?.querySelector('[name="paymentSource"]');
+
+      if(paymentTypeSelect) paymentTypeSelect.innerHTML = buildPaymentTypeOptions(paymentTypeSelect.value);
+      if(paymentSourceSelect) paymentSourceSelect.innerHTML = buildPaymentSourceOptions(paymentSourceSelect.value);
+      if(relatedOrderSelect) relatedOrderSelect.innerHTML = buildRelatedOrderOptions(relatedOrderSelect.value);
+
+      if(!statsWrap || !highlightsWrap || !noteWrap || !reconciliationWrap || !ledgerWrap) return;
+
+      const rows = buildAccountingRows();
+      const orders = state.data.orders;
+      const totalOrderExpenses = orders.reduce((sum, order) => sum + moneyNumber(order.purchase?.amount), 0);
+      const manualIncome = state.data.accountingEntries
+        .filter(entry => entry.type === 'ingreso')
+        .reduce((sum, entry) => sum + moneyNumber(entry.amount), 0);
+      const manualExpenses = state.data.accountingEntries
+        .filter(entry => entry.type === 'gasto')
+        .reduce((sum, entry) => sum + moneyNumber(entry.amount), 0);
+      const pendingEstimate = orders
+        .filter(order => order.status === 'pendiente_compra')
+        .reduce((sum, order) => sum + moneyNumber(order.estimatedTotal), 0);
+      const purchasedPendingReceive = orders
+        .filter(order => order.status === 'comprado')
+        .reduce((sum, order) => sum + moneyNumber(order.purchase?.amount), 0);
+      const receivedValue = orders
+        .filter(order => order.status === 'recibido')
+        .reduce((sum, order) => sum + moneyNumber(order.purchase?.amount), 0);
+      const netBalance = manualIncome - (totalOrderExpenses + manualExpenses);
+      const supportPending = orders.filter(order => order.purchase?.amount && (!order.purchase?.receiptData || (order.status === 'recibido' && !order.reception?.remissionData))).length;
+
+      statsWrap.innerHTML = `
+        <div class="stat-card">
+          <small>Gastos reales desde compras</small>
+          <strong>${formatCurrency(totalOrderExpenses)}</strong>
+        </div>
+        <div class="stat-card">
+          <small>Ingresos registrados</small>
+          <strong>${formatCurrency(manualIncome)}</strong>
+        </div>
+        <div class="stat-card">
+          <small>Balance neto</small>
+          <strong>${formatCurrency(netBalance)}</strong>
+        </div>
+        <div class="stat-card">
+          <small>Pendiente por comprar</small>
+          <strong>${formatCurrency(pendingEstimate)}</strong>
+        </div>
+      `;
+
+      highlightsWrap.innerHTML = `
+        <div class="accounting-meta">
+          <div class="detail-card">
+            <small>Comprado pendiente de recibir</small>
+            <strong>${formatCurrency(purchasedPendingReceive)}</strong>
+          </div>
+          <div class="detail-card">
+            <small>Valor recibido</small>
+            <strong>${formatCurrency(receivedValue)}</strong>
+          </div>
+          <div class="detail-card">
+            <small>Otros gastos manuales</small>
+            <strong>${formatCurrency(manualExpenses)}</strong>
+          </div>
+        </div>
+      `;
+
+      noteWrap.innerHTML = '';
+
+      reconciliationWrap.innerHTML = buildTable(
+        ['Pedido', 'Proveedor', 'Estimado', 'Compra real', 'Diferencia', 'Estado', 'Soportes', 'Acciones'],
+        orders.map(order => {
+          const difference = orderCostDifference(order);
+          const differenceText = order.purchase?.amount
+            ? `${difference >= 0 ? '+' : '-'} ${formatCurrency(Math.abs(difference))}`
+            : '—';
+          const supportBlock = `
+            <div class="table-actions">
+              ${order.purchase?.receiptData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','purchase')">Recibo</button>` : '<span class="muted">Sin recibo</span>'}
+              ${order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','reception')">Remisión</button>` : ''}
+            </div>
+          `;
+          return `
+            <tr>
+              <td><strong>${order.code}</strong><br><span class="muted">${formatDate(order.orderDate || order.createdAt)}</span></td>
+              <td><strong>${escapeHtml(order.supplier || '—')}</strong><br><span class="muted">${escapeHtml(orderProductSummary(order))}</span></td>
+              <td>${formatCurrency(order.estimatedTotal)}</td>
+              <td>${order.purchase?.amount ? formatCurrency(order.purchase.amount) : '<span class="muted">Sin compra</span>'}</td>
+              <td>${differenceText}</td>
+              <td>${escapeHtml(statusAccountingText(order))}</td>
+              <td>${supportBlock}</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                  ${order.purchase?.receiptData && order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openCompareModal('${order.id}')">Comparar</button>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+
+      ledgerWrap.innerHTML = buildTable(
+        ['Fecha', 'Tipo', 'Categoría', 'Origen', 'Detalle rastreable', 'Pago / cuenta', 'Valor', 'Soporte', 'Acciones'],
+        rows.map(row => {
+          const relatedOrder = row.relatedOrderId ? findOrder(row.relatedOrderId) : null;
+          const traceSource = row.isAuto
+            ? `<span class="badge badge-auto">Automático</span><br><span class="muted">${escapeHtml(row.sourceName || '—')}</span>`
+            : `<span class="badge badge-pendiente">Manual</span><br><span class="muted">${escapeHtml(row.sourceName || '—')}</span>`;
+          const traceDetail = `
+            <strong>${escapeHtml(row.concept || 'Sin concepto')}</strong>
+            ${relatedOrder ? `<br><span class="muted">Pedido: ${escapeHtml(relatedOrder.code)} · Estado: ${escapeHtml(relatedOrder.status)}</span>` : ''}
+            ${row.notes ? `<br><span class="muted">${escapeHtml(shortText(row.notes, 90))}</span>` : ''}
+          `;
+          const supportHtml = row.isAuto
+            ? `${row.hasReceipt ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${row.relatedOrderId}','purchase')">Recibo</button>` : '<span class="muted">Sin recibo</span>'}
+               ${relatedOrder?.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${row.relatedOrderId}','reception')">Remisión</button>` : ''}`
+            : `${row.supportData ? `<button class="btn btn-soft btn-sm" onclick="openAccountingSupport('${row.sourceId}')">Ver soporte</button>` : '<span class="muted">Sin soporte</span>'}`;
+          const actionsHtml = row.isAuto
+            ? `<div class="table-actions">
+                 <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${row.relatedOrderId}')">Ver pedido</button>
+                 ${relatedOrder?.purchase?.receiptData && relatedOrder?.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openCompareModal('${row.relatedOrderId}')">Comparar</button>` : ''}
+               </div>`
+            : `<div class="table-actions">
+                 ${relatedOrder ? `<button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${relatedOrder.id}')">Pedido relacionado</button>` : ''}
+                 <button class="btn btn-danger btn-sm" onclick="deleteAccountingEntry('${row.sourceId}')">Eliminar</button>
+               </div>`;
+          return `
+            <tr>
+              <td>${formatDate(row.movementDate, true)}</td>
+              <td>${movementTypeBadge(row.type)}</td>
+              <td>${escapeHtml(row.category || '—')}</td>
+              <td>${traceSource}</td>
+              <td>${traceDetail}</td>
+              <td>${escapeHtml(row.paymentType || '—')}<br><span class="muted">${escapeHtml(row.paymentSource || '—')}</span></td>
+              <td>${formatCurrency(row.amount)}</td>
+              <td><div class="table-actions">${supportHtml}</div></td>
+              <td>${actionsHtml}</td>
+            </tr>
+          `;
+        })
+      );
+
+      updateAccountingView();
+    }
+
+    function renderPurchases(){
+      const pendingWrap = document.getElementById('purchasePendingWrap');
+      const doneWrap = document.getElementById('purchaseDoneWrap');
+      if(!pendingWrap || !doneWrap) return;
+
+      const pending = state.data.orders.filter(order => order.status === 'pendiente_compra');
+      const done = state.data.orders.filter(order => order.status !== 'pendiente_compra');
+
+      pendingWrap.innerHTML = buildTable(
+        ['Pedido', 'Producto principal', 'Detalle del pedido', 'Total estimado', 'Fecha creación', 'Acciones'],
+        pending.map(order => {
+          const first = order.items?.[0];
+          return `
+            <tr>
+              <td><strong>${order.code}</strong><br><span class="muted">${formatDate(order.orderDate || order.createdAt)}</span></td>
+              <td>
+                <div class="product-stack">
+                  ${productImageThumb(first)}
+                  <div class="product-stack-text">
+                    <strong>${escapeHtml(first?.name || 'Sin producto')}</strong>
+                    <span class="muted">Cantidad: ${first?.qty || 0} ${escapeHtml(first?.unit || '')}</span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <strong>${escapeHtml(order.supplier)}</strong><br>
+                <span class="muted">${escapeHtml(shortText(first?.details || 'Sin detalle adicional'))}</span>
+                ${order.items.length > 1 ? `<div class="muted" style="margin-top:4px;">+ ${order.items.length - 1} producto(s) más</div>` : ''}
+              </td>
+              <td>${formatCurrency(order.estimatedTotal)}</td>
+              <td>${formatDate(order.createdAt, true)}</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-primary btn-sm" onclick="openPurchaseModal('${order.id}')">Registrar compra</button>
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+
+      doneWrap.innerHTML = buildTable(
+        ['Pedido', 'Producto', 'Estado', 'Monto compra', 'Pago', 'Recibo', 'Acciones'],
+        done.map(order => {
+          const badge = statusLabel(order.status);
+          const first = order.items?.[0];
+          const receiptLabel = order.purchase?.receiptName ? 'Cargado' : 'No cargado';
+          return `
+            <tr>
+              <td><strong>${order.code}</strong><br><span class="muted">${escapeHtml(order.supplier)}</span></td>
+              <td>
+                <div class="product-stack">
+                  ${productImageThumb(first)}
+                  <div class="product-stack-text">
+                    <strong>${escapeHtml(first?.name || 'Sin producto')}</strong>
+                    <span class="muted">${escapeHtml(orderProductSummary(order))}</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge ${badge.cls}">${badge.text}</span></td>
+              <td>${formatCurrency(order.purchase?.amount || 0)}</td>
+              <td>${escapeHtml(order.purchase?.paymentType || '—')}<br><span class="muted">${escapeHtml(order.purchase?.paymentSource || '—')}</span></td>
+              <td>${receiptLabel}</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                  ${order.purchase?.receiptData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','purchase')">Ver recibo</button>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+    }
+
+    function renderReception(){
+      const pendingWrap = document.getElementById('receptionPendingWrap');
+      const doneWrap = document.getElementById('receivedDoneWrap');
+      if(!pendingWrap || !doneWrap) return;
+
+      const pending = state.data.orders.filter(order => order.status === 'comprado');
+      const done = state.data.orders.filter(order => order.status === 'recibido');
+
+      pendingWrap.innerHTML = buildTable(
+        ['Pedido', 'Producto', 'Compra registrada', 'Monto', 'Recibo compra', 'Acciones'],
+        pending.map(order => {
+          const first = order.items?.[0];
+          return `
+            <tr>
+              <td><strong>${order.code}</strong><br><span class="muted">${formatDate(order.orderDate || order.createdAt)}</span></td>
+              <td>
+                <div class="product-stack">
+                  ${productImageThumb(first)}
+                  <div class="product-stack-text">
+                    <strong>${escapeHtml(first?.name || 'Sin producto')}</strong>
+                    <span class="muted">${escapeHtml(orderProductSummary(order))}</span>
+                  </div>
+                </div>
+              </td>
+              <td>${formatDate(order.purchase?.purchaseDate || order.purchase?.createdAt, true)}</td>
+              <td>${formatCurrency(order.purchase?.amount || 0)}</td>
+              <td>
+                ${order.purchase?.receiptData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','purchase')">Ver recibo</button>` : '<span class="muted">No cargado</span>'}
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-success btn-sm" onclick="openReceptionModal('${order.id}')">Confirmar recibido</button>
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+
+      doneWrap.innerHTML = buildTable(
+        ['Pedido', 'Producto', 'Fecha recibido', 'Estado del recibido', 'Recibido por', 'Remisión', 'Acciones'],
+        done.map(order => {
+          const conditionCls = order.reception?.condition === 'Con novedad' ? 'badge-novedad' : 'badge-recibido';
+          const first = order.items?.[0];
+          return `
+            <tr>
+              <td><strong>${order.code}</strong></td>
+              <td>
+                <div class="product-stack">
+                  ${productImageThumb(first)}
+                  <div class="product-stack-text">
+                    <strong>${escapeHtml(first?.name || 'Sin producto')}</strong>
+                    <span class="muted">${escapeHtml(orderProductSummary(order))}</span>
+                  </div>
+                </div>
+              </td>
+              <td>${formatDate(order.reception?.receivedDate, true)}</td>
+              <td><span class="badge ${conditionCls}">${escapeHtml(order.reception?.condition || 'Completo')}</span></td>
+              <td>${escapeHtml(order.reception?.receiverName || '—')}</td>
+              <td>
+                ${order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','reception')">Ver remisión</button>` : '<span class="muted">No cargada</span>'}
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                  ${order.purchase?.receiptData && order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openCompareModal('${order.id}')">Comparar soportes</button>` : ''}
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+    }
+
+    function renderHistory(){
+      const historyWrap = document.getElementById('historyWrap');
+      if(!historyWrap) return;
+      const orders = state.data.orders;
+      historyWrap.innerHTML = buildTable(
+        ['Pedido', 'Producto', 'Estado', 'Creado', 'Compra', 'Recibido', 'Soportes', 'Acciones'],
+        orders.map(order => {
+          const badge = statusLabel(order.status);
+          const first = order.items?.[0];
+          const purchaseText = order.purchase ? `${formatDate(order.purchase.purchaseDate, true)}<br><span class="muted">${escapeHtml(order.purchase.paymentType || '—')}</span>` : '—';
+          const receiveText = order.reception ? `${formatDate(order.reception.receivedDate, true)}<br><span class="muted">${escapeHtml(order.reception.condition || '')}</span>` : '—';
+          return `
+            <tr>
+              <td><strong>${order.code}</strong><br><span class="muted">${escapeHtml(order.supplier)}</span></td>
+              <td>
+                <div class="product-stack">
+                  ${productImageThumb(first)}
+                  <div class="product-stack-text">
+                    <strong>${escapeHtml(first?.name || 'Sin producto')}</strong>
+                    <span class="muted">${escapeHtml(orderProductSummary(order))}</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge ${badge.cls}">${badge.text}</span></td>
+              <td>${formatDate(order.createdAt, true)}</td>
+              <td>${purchaseText}</td>
+              <td>${receiveText}</td>
+              <td>
+                <div class="table-actions">
+                  ${order.purchase?.receiptData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','purchase')">Recibo compra</button>` : ''}
+                  ${order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','reception')">Remisión</button>` : ''}
+                  ${order.purchase?.receiptData && order.reception?.remissionData ? `<button class="btn btn-soft btn-sm" onclick="openCompareModal('${order.id}')">Comparar</button>` : ''}
+                  ${!order.purchase?.receiptData && !order.reception?.remissionData ? '<span class="muted">Sin soportes</span>' : ''}
+                </div>
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn btn-secondary btn-sm" onclick="openDetailsModal('${order.id}')">Ver detalle</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteOrder('${order.id}')">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+      );
+    }
+
+    function closeModal(){
+      modal.classList.add('hidden');
+      modalCard.classList.remove('modal-image-card');
+      modalContent.innerHTML = '';
+    }
+
+    function openAccountingEntryModal(){
+      if(accountingForm){
+        const movementDateField = accountingForm.querySelector('[name="movementDate"]');
+        const paymentTypeField = accountingForm.querySelector('[name="paymentType"]');
+        const paymentSourceField = accountingForm.querySelector('[name="paymentSource"]');
+        const relatedOrderField = document.getElementById('accountingRelatedOrder');
+        if(movementDateField && !movementDateField.value) movementDateField.value = new Date().toISOString().slice(0,16);
+        if(paymentTypeField) paymentTypeField.innerHTML = buildPaymentTypeOptions(paymentTypeField.value);
+        if(paymentSourceField) paymentSourceField.innerHTML = buildPaymentSourceOptions(paymentSourceField.value);
+        if(relatedOrderField) relatedOrderField.innerHTML = buildRelatedOrderOptions(relatedOrderField.value);
+      }
+      accountingEntryModal?.classList.remove('hidden');
+    }
+
+    function closeAccountingEntryModal(){
+      accountingEntryModal?.classList.add('hidden');
+    }
+
+    function openModal(html, options = {}){
+      modalContent.innerHTML = html;
+      modalCard.classList.toggle('modal-image-card', !!options.imageMode);
+      modal.classList.remove('hidden');
+    }
+
+    function openImageViewer(src, title = 'Imagen', fileName = 'imagen'){
+      if(!src) return;
+      openModal(`
+        <div class="image-viewer-wrap">
+          <div class="modal-head">
+            <div>
+              <h3>${escapeHtml(title)}</h3>
+              
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="closeModal()">Cerrar</button>
+          </div>
+          <div class="image-viewer-stage">
+            <img src="${src}" alt="${escapeHtml(title)}" />
+          </div>
+          <div class="image-viewer-actions">
+            <a class="btn btn-soft" href="${src}" download="${escapeHtml(fileName)}">Descargar imagen</a>
+          </div>
+        </div>
+      `, { imageMode: true });
+    }
+
+    function escapeHtml(value){
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function findOrder(orderId){
+      return state.data.orders.find(order => order.id === orderId);
+    }
+
+    window.openAccountingSupport = function(entryId){
+      const entry = state.data.accountingEntries.find(item => item.id === entryId);
+      if(!entry?.supportData) return;
+      openImageViewer(entry.supportData, `Soporte contable · ${entry.category || 'Movimiento'}`, entry.supportName || 'soporte_contable');
+    };
+
+    window.deleteAccountingEntry = function(entryId){
+      const entry = state.data.accountingEntries.find(item => item.id === entryId);
+      if(!entry) return;
+      const ok = confirm(`¿Eliminar este movimiento contable de ${entry.category || 'sin categoría'} por ${formatCurrency(entry.amount)}?`);
+      if(!ok) return;
+      state.data.accountingEntries = state.data.accountingEntries.filter(item => item.id !== entryId);
+      saveData();
+      renderAll();
+      showToast('Movimiento contable eliminado.');
+    };
+
+    window.openPurchaseModal = function(orderId){
+      const order = findOrder(orderId);
+      if(!order) return;
+      const user = getSessionUser();
+      const paymentTypeOptions = paymentTypes.map(item => `<option value="${item}">${item}</option>`).join('');
+      const paymentSourceOptions = paymentSources.map(item => `<option value="${item}">${item}</option>`).join('');
+
+      openModal(`
+        <div class="modal-head">
+          <div>
+            <h3>Registrar compra · ${order.code}</h3>
+            
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="closeModal()">Cerrar</button>
+        </div>
+
+        <form id="purchaseForm" class="grid">
+          <div class="detail-card">
+            <small>Proveedor / almacén</small>
+            <strong>${escapeHtml(order.supplier)}</strong>
+            <div class="muted" style="margin-top:8px;">Pedido montado: ${formatDate(order.orderDate || order.createdAt)}</div>
+          </div>
+
+          <div class="panel" style="padding:16px;box-shadow:none;">
+            <h4>Productos solicitados</h4>
+            
+            ${renderProductCards(order.items)}
+          </div>
+
+          <div class="grid grid-2">
+            <div class="field">
+              <label>Fecha de compra</label>
+              <input class="input" type="datetime-local" name="purchaseDate" required />
+            </div>
+            <div class="field">
+              <label>Valor pagado</label>
+              <input class="input" type="number" min="0" step="0.01" name="amount" required />
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="field">
+              <label>Tipo de pago</label>
+              <select name="paymentType" required>
+                <option value="">Selecciona</option>
+                ${paymentTypeOptions}
+              </select>
+            </div>
+            <div class="field">
+              <label>Origen del pago</label>
+              <select name="paymentSource" required>
+                <option value="">Selecciona</option>
+                ${paymentSourceOptions}
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Detalle adicional del pago</label>
+            <input class="input" name="paymentSourceDetail" placeholder="Ej. Bancolombia terminada en 2244" />
+          </div>
+
+          <div class="field">
+            <label>Recibo / soporte (imagen)</label>
+            <input class="input" type="file" name="receipt" accept="image/*" />
+            
+          </div>
+
+          <div class="field">
+            <label>Observaciones de compra</label>
+            <textarea name="notes" placeholder="Ej. Se compró completo, hubo cambio de precio, etc."></textarea>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar compra</button>
+          </div>
+        </form>
+      `);
+
+      const purchaseForm = document.getElementById('purchaseForm');
+      const dtInput = purchaseForm.querySelector('[name="purchaseDate"]');
+      dtInput.value = new Date().toISOString().slice(0,16);
+
+      purchaseForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(purchaseForm);
+        const file = purchaseForm.querySelector('[name="receipt"]').files[0];
+        let receiptData = order.purchase?.receiptData || '';
+        let receiptName = order.purchase?.receiptName || '';
+
+        if(file){
+          if(file.size > 2 * 1024 * 1024){
+            showToast('El recibo es muy pesado. Usa una imagen de máximo 2 MB.');
+            return;
+          }
+          receiptData = await fileToDataUrl(file);
+          receiptName = file.name;
+        }
+
+        order.purchase = {
+          purchaseDate: formData.get('purchaseDate'),
+          amount: Number(formData.get('amount') || 0),
+          paymentType: formData.get('paymentType'),
+          paymentSource: formData.get('paymentSource'),
+          paymentSourceDetail: formData.get('paymentSourceDetail')?.toString().trim() || '',
+          notes: formData.get('notes')?.toString().trim() || '',
+          buyerName: user?.name || 'Compras',
+          createdAt: new Date().toISOString(),
+          receiptData,
+          receiptName
+        };
+        order.status = 'comprado';
+        saveData();
         renderAll();
+        closeModal();
+        showToast('Compra registrada correctamente.');
+      }, { once:true });
+    }
+
+    window.openReceptionModal = function(orderId){
+      const order = findOrder(orderId);
+      if(!order) return;
+      const user = getSessionUser();
+      openModal(`
+        <div class="modal-head">
+          <div>
+            <h3>Confirmar recibido · ${order.code}</h3>
+            
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="closeModal()">Cerrar</button>
+        </div>
+
+        <form id="receptionForm" class="grid">
+          <div class="detail-card">
+            <small>Proveedor / almacén</small>
+            <strong>${escapeHtml(order.supplier)}</strong>
+            <div class="muted" style="margin-top:8px;">Comprado por: ${escapeHtml(order.purchase?.buyerName || '—')}</div>
+          </div>
+
+          <div class="panel" style="padding:16px;box-shadow:none;">
+            <h4>Productos que deben llegar</h4>
+            ${renderProductCards(order.items)}
+          </div>
+
+          <div class="grid grid-2">
+            <div class="field">
+              <label>Fecha de recibido</label>
+              <input class="input" type="datetime-local" name="receivedDate" required />
+            </div>
+            <div class="field">
+              <label>Estado del recibido</label>
+              <select name="condition" required>
+                <option value="">Selecciona</option>
+                ${receptionConditions.map(item => `<option value="${item}">${item}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Remisión / soporte de recibido (imagen)</label>
+            <input class="input" type="file" name="remission" accept="image/*" />
+            
+          </div>
+
+          <div class="field">
+            <label>Observaciones</label>
+            <textarea name="notes" placeholder="Ej. llegó completo, llegaron faltantes, se detectó novedad, etc."></textarea>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar recibido</button>
+          </div>
+        </form>
+      `);
+
+      const receptionForm = document.getElementById('receptionForm');
+      receptionForm.querySelector('[name="receivedDate"]').value = new Date().toISOString().slice(0,16);
+
+      receptionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(receptionForm);
+        const file = receptionForm.querySelector('[name="remission"]').files[0];
+        let remissionData = order.reception?.remissionData || '';
+        let remissionName = order.reception?.remissionName || '';
+
+        if(file){
+          if(file.size > 2 * 1024 * 1024){
+            showToast('La remisión es muy pesada. Usa una imagen de máximo 2 MB.');
+            return;
+          }
+          remissionData = await fileToDataUrl(file);
+          remissionName = file.name;
+        }
+
+        order.reception = {
+          receivedDate: formData.get('receivedDate'),
+          condition: formData.get('condition'),
+          notes: formData.get('notes')?.toString().trim() || '',
+          receiverName: user?.name || 'Recepción',
+          remissionData,
+          remissionName
+        };
+        order.status = 'recibido';
+        saveData();
+        renderAll();
+        closeModal();
+        showToast('Recibido confirmado correctamente.');
+      }, { once:true });
+    }
+
+    window.openCompareModal = function(orderId){
+      const order = findOrder(orderId);
+      if(!order) return;
+      const receiptData = order.purchase?.receiptData;
+      const remissionData = order.reception?.remissionData;
+      if(!receiptData || !remissionData){
+        showToast('Debes tener cargados el recibo y la remisión para comparar.');
         return;
       }
-      const item = {
-        id: 'cmp-' + Math.random().toString(36).slice(2, 8),
-        code: 'COMP-' + String(Math.floor(Math.random() * 9000) + 1000),
-        concept: 'Nuevo registro local',
-        providerId: provider.id,
-        presetId: preset.id,
-        documentType: 'Factura electrónica',
-        documentNumber: '',
-        cufe: '',
-        accrualDate: '2026-03-24',
-        invoiceDate: '2026-03-24',
-        dueDate: '2026-03-31',
-        paymentDate: '',
-        paymentStatus: 'Pendiente',
-        paymentMethod: 'Transferencia',
-        accountType: 'Cuenta iglesia',
-        fund: 'Pago iglesia',
-        costCenter: 'Sin asignar',
-        category: preset.category,
-        supplierSupport: '',
-        baseAmount: 0,
-        ivaRate: preset.ivaRate,
-        retefuenteRate: preset.retefuenteRate,
-        reteivaRate: preset.reteivaRate,
-        reteicaRate: preset.reteicaRate,
-        notes: '',
-        createdBy: 'Usuario local',
-        approvedBy: '',
-        paidBy: '',
-        receivedBy: '',
-        auditTrail: [
-          { date: currentTimestamp(), action: 'Creó un nuevo registro local', user: 'Usuario local' }
-        ]
-      };
-      appState.purchases.unshift(item);
-      uiState.selectedPurchaseId = item.id;
-      persistState();
-      renderAll();
+      const receiptName = order.purchase?.receiptName || 'recibo_compra';
+      const remissionName = order.reception?.remissionName || 'remision_recibido';
+      openModal(`
+        <div class="image-viewer-wrap">
+          <div class="modal-head">
+            <div>
+              <h3>Comparar soportes · ${order.code}</h3>
+              
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="closeModal()">Cerrar</button>
+          </div>
+          <div class="compare-wrap">
+            <div class="compare-pane">
+              <div>
+                <h4>Recibo de compra</h4>
+                <p>${escapeHtml(receiptName)}</p>
+              </div>
+              <div class="compare-stage">
+                <img src="${receiptData}" alt="Recibo de compra" class="clickable-image" data-title="Recibo de compra · ${order.code}" data-filename="${escapeHtml(receiptName)}" />
+              </div>
+              <div class="compare-actions">
+                <button class="btn btn-soft view-image-trigger" data-src="${receiptData}" data-title="Recibo de compra · ${order.code}" data-filename="${escapeHtml(receiptName)}">Ver completa</button>
+                <a class="btn btn-soft" href="${receiptData}" download="${escapeHtml(receiptName)}">Descargar</a>
+              </div>
+            </div>
+            <div class="compare-pane">
+              <div>
+                <h4>Remisión de recibido</h4>
+                <p>${escapeHtml(remissionName)}</p>
+              </div>
+              <div class="compare-stage">
+                <img src="${remissionData}" alt="Remisión de recibido" class="clickable-image" data-title="Remisión de recibido · ${order.code}" data-filename="${escapeHtml(remissionName)}" />
+              </div>
+              <div class="compare-actions">
+                <button class="btn btn-soft view-image-trigger" data-src="${remissionData}" data-title="Remisión de recibido · ${order.code}" data-filename="${escapeHtml(remissionName)}">Ver completa</button>
+                <a class="btn btn-soft" href="${remissionData}" download="${escapeHtml(remissionName)}">Descargar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `, { imageMode: true });
     }
 
-    function saveSelectedPurchase() {
-      const purchase = getSelectedPurchase();
-      if (!purchase) return;
-      purchase.auditTrail = purchase.auditTrail || [];
-      purchase.auditTrail.unshift({ date: currentTimestamp(), action: 'Guardó cambios del registro', user: 'Usuario local' });
-      persistState();
-      renderAll();
-      alert('Registro guardado en esta demo local.');
+    window.openSupportModal = function(orderId, type = 'purchase'){
+      const order = findOrder(orderId);
+      if(!order) return;
+      const isPurchase = type === 'purchase';
+      const data = isPurchase ? order.purchase?.receiptData : order.reception?.remissionData;
+      const name = isPurchase ? order.purchase?.receiptName : order.reception?.remissionName;
+      const title = isPurchase ? 'Recibo de compra' : 'Remisión de recibido';
+      const alt = isPurchase ? 'Recibo de compra' : 'Remisión de recibido';
+      const fallbackName = isPurchase ? 'recibo_compra' : 'remision_recibido';
+      if(!data) return;
+      openModal(`
+        <div class="modal-head">
+          <div>
+            <h3>${title} · ${order.code}</h3>
+            <p>${escapeHtml(name || 'Soporte cargado')}</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="closeModal()">Cerrar</button>
+        </div>
+        <div class="receipt-preview">
+          <img src="${data}" alt="${alt}" class="clickable-image" data-title="${title} · ${order.code}" data-filename="${escapeHtml(name || fallbackName)}" />
+          <div class="image-viewer-actions">
+            <button class="btn btn-soft view-image-trigger" data-src="${data}" data-title="${title} · ${order.code}" data-filename="${escapeHtml(name || fallbackName)}">Ver imagen completa</button>
+            <a class="btn btn-soft" href="${data}" download="${escapeHtml(name || fallbackName)}">Descargar imagen</a>
+          </div>
+        </div>
+      `);
     }
 
-    function saveSelectedProvider() {
-      if (!getProvider(uiState.selectedProviderId)) {
-        alert('No hay proveedor seleccionado.');
+    window.openDetailsModal = function(orderId){
+      const order = findOrder(orderId);
+      if(!order) return;
+      const badge = statusLabel(order.status);
+      openModal(`
+        <div class="modal-head">
+          <div>
+            <h3>Detalle del pedido · ${order.code}</h3>
+            
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="closeModal()">Cerrar</button>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-card">
+            <small>Estado actual</small>
+            <span class="badge ${badge.cls}">${badge.text}</span>
+          </div>
+          <div class="detail-card">
+            <small>Proveedor / almacén</small>
+            <strong>${escapeHtml(order.supplier)}</strong>
+          </div>
+          <div class="detail-card">
+            <small>Fecha del pedido</small>
+            <strong>${formatDate(order.orderDate || order.createdAt)}</strong>
+          </div>
+          <div class="detail-card">
+            <small>Total estimado</small>
+            <strong>${formatCurrency(order.estimatedTotal)}</strong>
+          </div>
+          <div class="detail-card">
+            <small>Creado por</small>
+            <strong>${escapeHtml(order.createdBy)}</strong>
+          </div>
+          <div class="detail-card">
+            <small>Fecha de registro</small>
+            <strong>${formatDate(order.createdAt, true)}</strong>
+          </div>
+        </div>
+
+        <div class="panel top-space" style="padding:16px;box-shadow:none;">
+          <h4>Productos solicitados</h4>
+          ${renderProductCards(order.items)}
+        </div>
+
+        <div class="detail-grid top-space">
+          <div class="detail-card">
+            <small>Compra</small>
+            <strong>${order.purchase ? formatDate(order.purchase.purchaseDate, true) : 'Aún no registrada'}</strong>
+            ${order.purchase ? `<div class="muted" style="margin-top:8px;">Monto: ${formatCurrency(order.purchase.amount)} · ${escapeHtml(order.purchase.paymentType)} · ${escapeHtml(order.purchase.paymentSource)}</div>` : ''}
+            ${order.purchase?.paymentSourceDetail ? `<div class="muted" style="margin-top:6px;">${escapeHtml(order.purchase.paymentSourceDetail)}</div>` : ''}
+            ${order.purchase?.receiptData ? `<div style="margin-top:12px;"><button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','purchase')">Ver recibo de compra</button></div>` : ''}
+          </div>
+          <div class="detail-card">
+            <small>Recepción</small>
+            <strong>${order.reception ? formatDate(order.reception.receivedDate, true) : 'Aún no confirmada'}</strong>
+            ${order.reception ? `<div class="muted" style="margin-top:8px;">Estado: ${escapeHtml(order.reception.condition)} · Responsable: ${escapeHtml(order.reception.receiverName)}</div>` : ''}
+            ${order.reception?.remissionData ? `<div style="margin-top:12px;"><button class="btn btn-soft btn-sm" onclick="openSupportModal('${order.id}','reception')">Ver remisión</button></div>` : ''}
+            ${order.purchase?.receiptData && order.reception?.remissionData ? `<div style="margin-top:12px;"><button class="btn btn-soft btn-sm" onclick="openCompareModal('${order.id}')">Comparar soportes</button></div>` : ''}
+          </div>
+        </div>
+
+        ${order.notes ? `
+          <div class="detail-card top-space">
+            <small>Observaciones iniciales</small>
+            <strong>${escapeHtml(order.notes)}</strong>
+          </div>
+        ` : ''}
+
+        ${order.purchase?.notes ? `
+          <div class="detail-card top-space">
+            <small>Observaciones de compra</small>
+            <strong>${escapeHtml(order.purchase.notes)}</strong>
+          </div>
+        ` : ''}
+
+        ${order.reception?.notes ? `
+          <div class="detail-card top-space">
+            <small>Observaciones de recibido</small>
+            <strong>${escapeHtml(order.reception.notes)}</strong>
+          </div>
+        ` : ''}
+      `);
+    }
+
+    window.deleteOrder = function(orderId){
+      const user = getSessionUser();
+      if(user?.role !== 'admin'){
+        showToast('Solo el administrador puede eliminar pedidos.');
         return;
       }
-      persistState();
+      const order = findOrder(orderId);
+      if(!order) return;
+      const ok = confirm(`¿Seguro que deseas eliminar el pedido ${order.code}?`);
+      if(!ok) return;
+      state.data.orders = state.data.orders.filter(item => item.id !== orderId);
+      saveData();
       renderAll();
-      alert('Proveedor guardado localmente.');
+      showToast('Pedido eliminado.');
     }
 
-    function saveSelectedPreset() {
-      persistState();
+    function fileToDataUrl(file){
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim().toLowerCase();
+      const password = document.getElementById('password').value.trim();
+      const user = state.data.users.find(u => u.username === username && u.password === password);
+      if(!user){
+        showToast('Usuario o contraseña incorrectos.');
+        return;
+      }
+      state.session = { userId: user.id };
+      saveSession();
+      state.activeTab = TABS_BY_ROLE[user.role]?.[0]?.id || null;
+      showApp();
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      state.session = null;
+      saveSession();
+      closeModal();
+      appView.classList.add('hidden');
+      loginView.classList.remove('hidden');
+      loginForm.reset();
+    });
+
+    document.getElementById('addItemBtn').addEventListener('click', () => addItemRow());
+
+    createOrderForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const user = getSessionUser();
+      if(user?.role !== 'admin'){
+        showToast('Solo el administrador puede cargar pedidos.');
+        return;
+      }
+      const formData = new FormData(createOrderForm);
+      let items = [];
+      try {
+        items = await collectItems();
+      } catch (error) {
+        showToast(error.message || 'No fue posible procesar la imagen del producto.');
+        return;
+      }
+      if(!items.length){
+        showToast('Agrega al menos un producto al pedido.');
+        return;
+      }
+      const order = createOrder({
+        supplier: formData.get('supplier')?.toString().trim(),
+        orderDate: formData.get('orderDate')?.toString().trim(),
+        estimatedTotal: formData.get('estimatedTotal')?.toString().trim(),
+        items
+      });
+      createOrderForm.reset();
+      itemsContainer.innerHTML = '';
+      addItemRow();
       renderAll();
-      alert('Preset guardado localmente.');
+      showToast(`Pedido ${order.code} creado correctamente.`);
+    });
+
+    if(accountingForm){
+      const movementDateField = accountingForm.querySelector('[name="movementDate"]');
+      if(movementDateField) movementDateField.value = new Date().toISOString().slice(0,16);
+
+      const paymentTypeField = accountingForm.querySelector('[name="paymentType"]');
+      const paymentSourceField = accountingForm.querySelector('[name="paymentSource"]');
+      if(paymentTypeField) paymentTypeField.innerHTML = buildPaymentTypeOptions();
+      if(paymentSourceField) paymentSourceField.innerHTML = buildPaymentSourceOptions();
+      const relatedOrderField = document.getElementById('accountingRelatedOrder');
+      if(relatedOrderField) relatedOrderField.innerHTML = buildRelatedOrderOptions();
+
+      accountingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = getSessionUser();
+        const formData = new FormData(accountingForm);
+        const file = accountingForm.querySelector('[name="support"]').files[0];
+        let supportData = '';
+        let supportName = '';
+        if(file){
+          supportData = await fileToBase64(file);
+          supportName = file.name;
+        }
+
+        state.data.accountingEntries.unshift({
+          id: crypto.randomUUID(),
+          type: formData.get('type'),
+          category: formData.get('category'),
+          amount: moneyNumber(formData.get('amount')),
+          movementDate: formData.get('movementDate'),
+          sourceName: formData.get('sourceName'),
+          paymentType: formData.get('paymentType'),
+          paymentSource: formData.get('paymentSource'),
+          concept: formData.get('concept'),
+          notes: formData.get('notes'),
+          relatedOrderId: formData.get('relatedOrderId') || '',
+          supportData,
+          supportName,
+          createdAt: new Date().toISOString(),
+          createdBy: user?.name || 'Administrador'
+        });
+
+        saveData();
+        accountingForm.reset();
+        if(movementDateField) movementDateField.value = new Date().toISOString().slice(0,16);
+        if(paymentTypeField) paymentTypeField.innerHTML = buildPaymentTypeOptions();
+        if(paymentSourceField) paymentSourceField.innerHTML = buildPaymentSourceOptions();
+        if(relatedOrderField) relatedOrderField.innerHTML = buildRelatedOrderOptions();
+        closeAccountingEntryModal();
+        renderAll();
+        showToast('Movimiento contable guardado correctamente.');
+      });
+
+      accountingForm.addEventListener('reset', () => {
+        setTimeout(() => {
+          if(movementDateField) movementDateField.value = new Date().toISOString().slice(0,16);
+          if(paymentTypeField) paymentTypeField.innerHTML = buildPaymentTypeOptions();
+          if(paymentSourceField) paymentSourceField.innerHTML = buildPaymentSourceOptions();
+          if(relatedOrderField) relatedOrderField.innerHTML = buildRelatedOrderOptions();
+        }, 0);
+      });
     }
 
-    function bindGlobalActions() {
-      document.getElementById('newPurchaseBtn').addEventListener('click', createNewPurchase);
-      document.getElementById('deletePurchaseBtn').addEventListener('click', deleteSelectedPurchase);
-      document.getElementById('savePurchaseBtn').addEventListener('click', saveSelectedPurchase);
-      document.getElementById('newProviderBtn').addEventListener('click', createNewProvider);
-      document.getElementById('deleteProviderBtn').addEventListener('click', deleteSelectedProvider);
-      document.getElementById('saveProviderBtn').addEventListener('click', saveSelectedProvider);
-      document.getElementById('savePresetBtn').addEventListener('click', saveSelectedPreset);
-      document.getElementById('exportReportsBtn').addEventListener('click', exportReportsToExcel);
-    }
+    createOrderForm.addEventListener('reset', () => {
+      setTimeout(() => {
+        itemsContainer.innerHTML = '';
+        addItemRow();
+      }, 0);
+    });
 
-    function renderAll() {
-      renderTabs();
-      renderDashboard();
-      renderPurchaseList();
-      renderPurchaseDetail();
-      renderProviders();
-      renderPresets();
-      renderReports();
-      renderAlertsAudit();
-    }
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.view-image-trigger');
+      if(trigger){
+        const src = trigger.dataset.src;
+        if(!src) return;
+        const title = trigger.dataset.title || 'Imagen';
+        const fileName = trigger.dataset.filename || `${title.toLowerCase().replace(/[^a-z0-9]+/gi, '_')}.png`;
+        openImageViewer(src, title, fileName);
+        return;
+      }
 
-    bindGlobalActions();
-    renderAll();
+      const image = e.target.closest('.clickable-image');
+      if(!image) return;
+      const src = image.getAttribute('src');
+      if(!src) return;
+      const title = image.dataset.title || image.getAttribute('alt') || 'Imagen';
+      const fileName = image.dataset.filename || `${title.toLowerCase().replace(/[^a-z0-9]+/gi, '_')}.png`;
+      openImageViewer(src, title, fileName);
+    });
+
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    accountingEntryModal?.addEventListener('click', (e) => {
+      if(e.target === accountingEntryModal) closeAccountingEntryModal();
+    });
+
+    openAccountingModalBtn?.addEventListener('click', openAccountingEntryModal);
+
+    window.closeModal = closeModal;
+    window.openAccountingEntryModal = openAccountingEntryModal;
+    window.closeAccountingEntryModal = closeAccountingEntryModal;
+
+    loadState();
+    addItemRow();
+    if(state.session){
+      const user = getSessionUser();
+      if(user){
+        state.activeTab = TABS_BY_ROLE[user.role]?.[0]?.id || null;
+      }
+    }
+    showApp();
   </script>
 </body>
 </html>
